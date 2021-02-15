@@ -4,37 +4,53 @@
 
 
 
-<html class="theme-next muse use-motion" lang="zh-CN">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="generator" content="Hexo 3.9.0">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
 <meta name="theme-color" content="#222">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/flower128px.ico?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/flower32px.ico?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/flower32px.ico?v=7.3.0">
   <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "7f1bea3c"
+    });
+  daovoice('update');
+  </script>
+
 
 <link rel="stylesheet" href="/css/main.css?v=7.3.0">
 
 
 <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/fancybox/source/jquery.fancybox.css">
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
 
 
 <script id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '7.3.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    fancybox: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":true},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    copycode: {"enable":true,"show_result":true,"style":"mac"},
+    fancybox: true,
     mediumzoom: false,
-    lazyload: false,
-    pangu: false,
+    lazyload: true,
+    pangu: true,
     algolia: {
       applicationID: '',
       apiKey: '',
@@ -42,7 +58,7 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
     search: {
       root: '/',
       path: 'search.xml'
@@ -77,7 +93,7 @@
   };
 </script>
 
-  <title>LoveBettygirl</title>
+  <title>LoveBettygirl - Stay hungry, stay foolish.</title>
   
 
 
@@ -116,7 +132,7 @@
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
-  <div class="container sidebar-position-left page-home">
+  <div class="container sidebar-position-right page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -124,7 +140,7 @@
   <div class="site-meta">
 
     <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
+      <a href="/" class="brand" rel="start" title="主页">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">LoveBettygirl</span>
         <span class="logo-line-after"><i></i></span>
@@ -154,6 +170,8 @@
           <li class="menu-item menu-item-home menu-item-active">
       
     
+      
+    
 
     <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
@@ -165,19 +183,89 @@
           <li class="menu-item menu-item-archives">
       
     
+      
+    
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">22</span></a>
 
   </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+      
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">14</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+      
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">32</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+      
+    
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-search">
+          <a href="javascript:;" class="popup-trigger">
+          
+            <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
     </ul>
     
 
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+    </div>
 </nav>
 
 </div>
     </header>
 
     
+
+  <a href="https://github.com/LoveBettygirl" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
 
     <main id="main" class="main">
@@ -198,7 +286,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -217,6 +305,16 @@
         
 
         <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-thumb-tack"></i>
+              </span>     
+              
+                <font color=A262DE>置顶</font>
+              
+            </span>
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -307,6 +405,10 @@
       
     </div>
 
+    <div>
+      
+    </div>
+
     
     
     
@@ -333,7 +435,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -352,6 +454,7 @@
         
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -364,7 +467,7 @@
                 
               
 
-              <time title="创建时间：2021-02-16 00:55:18 / 修改时间：01:57:57" itemprop="dateCreated datePublished" datetime="2021-02-16T00:55:18+08:00">2021-02-16</time>
+              <time title="创建时间：2021-02-16 00:55:18 / 修改时间：01:58:58" itemprop="dateCreated datePublished" datetime="2021-02-16T00:55:18+08:00">2021-02-16</time>
             </span>
           
             
@@ -426,172 +529,25 @@
 
       
           
-            <p>我来炒冷饭了……这个Wireshark分析案例其实是我以前的作业。内容是从浏览器通过HTTP协议（注意，是HTTP不是HTTPS）访问某个网页，并分析TCP连接的全过程（包括三个阶段：连接的建立、数据传输、连接的关闭）。</p>
-<p>由于当时作业的重点是对TCP协议的分析，再加上我当时对应用层协议的学习也不够重视。所以我主要在传输层的层面上进行了分析，并没有对应用层协议（HTTP）进行分析。后来才发现大厂的面试经常会考HTTP/HTTPS协议，为了能够复习TCP协议和HTTP协议（也怕我今后找不到这个作业了），所以就把它贴到博客上了。如果以后有空的话我再简单分析这里面的HTTP报文（或者是其他应用层协议，例如DNS）吧。</p>
-<p>分析的流程可能有不少问题，如果读者发现了什么问题请及时指正。</p>
-<hr>
-<h2 id="实验环境">实验环境</h2>
-<ol type="1">
-<li>Windows 10 64位专业版</li>
-<li>Wireshark Version 2.4.1</li>
-<li>Google Chrome</li>
-</ol>
-<h2 id="抓包前准备">抓包前准备</h2>
-<p>这里就以最常用的百度为例进行分析。</p>
-<p>先打开cmd，输入命令<code>ping</code>查询域名<code>www.baidu.com</code>对应的IP地址。</p>
-<p><img src="/posts/7ce21a5/2.PNG" width="50%" height="50%"></p>
-<p>由此得知<code>www.baidu.com</code>的IP地址为<code>39.156.66.18</code>。</p>
-<p id="div-border-left-red">
-注意：在这里DNS解析出来的IP地址是不唯一的。大网站访问的用户很多，单个服务器无法负担如此高的访问流量，为了做到DNS负载均衡，通常都是一个域名对应多个内部服务器IP地址的。
-</p>
-<h2 id="开始抓包">开始抓包</h2>
-<p>打开Wireshark，选中图中的网卡<code>WLAN</code>，并双击打开它，这就开始了捕获流经网卡<code>WLAN</code>的数据包。</p>
-<p><img src="/posts/7ce21a5/1.PNG" width="50%" height="50%"></p>
-<p>然后打开Google Chrome，输入URL：<code>http://39.156.66.18</code>。由此也可进入百度首页。</p>
-<p><img src="/posts/7ce21a5/3.PNG" width="50%" height="50%"></p>
-<figure>
-<img src="/posts/7ce21a5/4.PNG" alt><figcaption>4</figcaption>
-</figure>
-<p>过一段时间后（以确保TCP连接已经正常被关闭），在Wireshark停止捕获数据包，并在本地保存文件为<code>baidu.pcapng</code>。下载<a href="https://pan.baidu.com/s/143gFBlBf090yqTX5kFWZ2Q" target="_blank" rel="noopener">链接</a>在此，提取码为 he6e。</p>
-<h2 id="对tcp连接过程的分析">对TCP连接过程的分析</h2>
-<p>在Wireshark中打开文件<code>baidu.pcapng</code>。并输入过滤器：<code>tcp and ip.addr==39.156.66.18 and tcp.port==8031</code>。以下是本次TCP连接的所有数据包（共78条记录）：</p>
-<figure>
-<img src="/posts/7ce21a5/29.PNG" alt><figcaption>29</figcaption>
-</figure>
-<figure>
-<img src="/posts/7ce21a5/30.PNG" alt><figcaption>30</figcaption>
-</figure>
-<figure>
-<img src="/posts/7ce21a5/31.PNG" alt><figcaption>31</figcaption>
-</figure>
-<h3 id="tcp连接建立">TCP连接建立</h3>
-<p>下图中的前三个数据包（标号为12、14、15）表示TCP建立连接的过程（三次握手）。</p>
-<figure>
-<img src="/posts/7ce21a5/5.PNG" alt><figcaption>5</figcaption>
-</figure>
-<h4 id="第一次握手">第一次握手</h4>
-<p><strong>第一次握手</strong>（12），客户端（源IP<code>10.130.170.79</code>，源端口<code>8031</code>）向服务器端（目的IP<code>39.156.66.18</code>，目的端口<code>80</code>）发送建立连接的请求。此时序列号<code>Seq</code>为0，标志位<code>Syn</code>被置1，数据段长度为0。由于是客户端发起连接，期望服务器端发送的下一个序列号还不知道，所以<code>Ack</code>字段被置0。</p>
-<figure>
-<img src="/posts/7ce21a5/6.PNG" alt><figcaption>6</figcaption>
-</figure>
-<p>客户端还在选项字段中约定了一些值，共12 Byte。例如MSS（最大报文段长度）为1460 Byte，即客户端的一次接收的报文段的数据长度最多为1460 Byte；窗口放大因子为8，表明在之后客户端发送的数据包的实际通告窗口大小为<code>Wnd</code>字段的值左移8位（2<sup>8</sup> = 256），当然在<code>Syn</code>为1的报文段是不乘以这个因子的；<code>SACK permitted</code>为允许选择重传；NOP选项为填充的0字节，以凑够TCP首部为4的倍数。由于选项字段为12 Byte，TCP首部的基础长度为20 Byte，因此这个数据包总的TCP首部长度为32 Byte。</p>
-<figure>
-<img src="/posts/7ce21a5/13.PNG" alt><figcaption>13</figcaption>
-</figure>
-<h4 id="第二次握手">第二次握手</h4>
-<p><strong>第二次握手</strong>（14），服务器同意建立连接，向客户端发回连接确认。服务器端的序列号<code>Seq</code>也为0，标志位<code>Syn</code>和<code>Ack</code>被置1，数据段长度也为0。此时，服务器端期望收到的序列号<code>Ack</code>为1，虽然客户端建立连接的请求并不携带任何数据，但是<code>Syn</code>为1的报文段是一个特殊的报文段，也需要消耗一个序列号，因此期望的序列号为上一个报文段的<code>Seq+1</code>。</p>
-<figure>
-<img src="/posts/7ce21a5/7.PNG" alt><figcaption>7</figcaption>
-</figure>
-<p>服务器端也在选项中约定了一些值，共12 Byte。MSS（最大报文段长度）为1452 Byte，即服务器端的一次接收的报文段的数据长度最多为1452 Byte；窗口放大因子为5，表明在之后服务器端发送的数据包的实际通告窗口大小为<code>Wnd</code>字段的值左移5位（2<sup>5</sup> = 32），当然在<code>Syn</code>为1的报文段是不乘以这个因子的；也允许选择重传。由于选项字段为12 Byte，TCP首部的基础长度为20 Byte，因此这个数据包总的TCP首部长度为32 Byte。</p>
-<figure>
-<img src="/posts/7ce21a5/14.PNG" alt><figcaption>14</figcaption>
-</figure>
-<p>由于这些选项只在标志位<code>Syn</code>为1的时候才有，因此客户端或服务器端之后发送的数据包大部分都没有选项字段（除了选择重传选项以外），因此这些首部的长度都为20 Byte。选项部分的空字节是穿插在中间的，并非紧接在所有选项之后数据段之前，是为了字节对齐，让不空的选项从4 Byte的整数倍开始。如下图所示：（注意下图的数据是大端对齐）</p>
-<p><img src="/posts/7ce21a5/38.PNG" width="50%" height="50%"></p>
-<h4 id="第三次握手">第三次握手</h4>
-<p><strong>第三次握手</strong>（15），客户端收到连接确认以后，还要向服务器端确认。此时序列号<code>Seq</code>变为1，标志位<code>Syn</code>被置0，<code>Ack</code>被置1，数据段长度也为0。此时，客户端期望收到的序列号<code>Ack</code>为1，虽然服务器端的连接确认也并不携带任何数据，但是这也是一个特殊的报文段，也需要消耗一个序列号，因此期望的序列号也为上一个报文段的<code>Seq+1</code>。</p>
-<figure>
-<img src="/posts/7ce21a5/8.PNG" alt><figcaption>8</figcaption>
-</figure>
-<p>至此，一个TCP连接成功建立，接下来就可以传输数据了。</p>
-<p>事实上，在TCP中的连接建立请求中客户端会随机选择一个序列号，在连接确认时服务器端也会随机选择一个序列号。但是在Wireshark 中看到的起始序列号都为0。查阅资料发现，为了方便分析，Wireshark在序列号上默认采用相对值，后面的<code>seq</code>和<code>Ack</code>都在这个0值的基础上累加，而不是绝对序列号。也可以在首选项中设置为采用绝对序列号。</p>
-<p><img src="/posts/7ce21a5/9.PNG" width="50%" height="50%"></p>
-<h3 id="数据传输过程">数据传输过程</h3>
-<p>首先（16），客户端向服务器端发送一个HTTP（版本1.1）的GET请求，这个是来自应用层的数据段，长度为434 Byte。由此可见HTTP的确是使用TCP建立连接的。此时序列号<code>Seq</code>仍为1，标志位<code>Ack</code>仍为1，<code>Psh</code>被置1，数据段长度为434。此时，客户端期望收到的序列号<code>Ack</code>仍为1（因为服务器端还没回应）。<code>Psh</code>被置1表示发送方希望接收方把数据立即上交给上层应用进程，而不是等到缓存填满。由于TCP中连接建立后所发送的报文段标志位<code>Ack</code>都会置1，因此在后续分析中，关闭连接前就不再提及标志位<code>Ack</code>了。<code>Seq</code>仍为1的原因是在第三次握手的时候，客户端的<code>Seq</code>为1，没有携带数据，而第三次握手的报文段只有标志位<code>Ack</code>为1，是普通报文段，是可以携带数据的，若不携带数据则不消耗序列号。</p>
-<figure>
-<img src="/posts/7ce21a5/10.PNG" alt><figcaption>10</figcaption>
-</figure>
-<p>之后（19），服务器端对客户端的上个报文段进行确认。序列号<code>Seq</code>为1，标志位<code>Ack</code>仍为1，数据段长度为0。期望收到的序列号<code>Ack</code>为435，是上一个客户端的报文段的<code>len+Seq</code>。之后在正常情况下，一方发送的报文段数据长度为<code>len</code>；下次对方发来的报文段中<code>Ack</code>的值为上次这一方发送的报文段数据长度<code>len+Seq</code>，<code>Seq</code>值为上次这一方发送的报文段的<code>Ack</code>字段值，因此后续分析中的正常情况也不详细说明了。在Wireshark中，正常的TCP报文段以绿色标记，异常的（丢失、乱序等）以黑色标记。</p>
-<figure>
-<img src="/posts/7ce21a5/11.PNG" alt><figcaption>10</figcaption>
-</figure>
-<p>第20个数据包，服务器端继续发送报文段，序列号<code>Seq</code>仍为1（因为19号数据包的报文段数据长度为0，不消耗序列号），<code>Ack</code>仍为435（因为客户端还没有确认），数据段长度为1460。</p>
-<figure>
-<img src="/posts/7ce21a5/12.PNG" alt><figcaption>11</figcaption>
-</figure>
-<p>第21个数据包，服务器端也继续发送报文段。序列号<code>Seq</code>为15349，不等于上一个数据包的<code>Seq+len</code>。<code>Ack</code>仍为435（因为客户端还没有确认），数据段长度为1460。Wireshark将这个数据包用黑色作标记，标记是<code>TCP Previous segment not captured</code>，表示[上一个报文段的<code>Seq+len</code>, 这个报文段的<code>Seq</code>)的报文段没有在这个数据包捕获之前被捕获，由此认为这些报文段可能是丢失了或者是出现了长延时。</p>
-<figure>
-<img src="/posts/7ce21a5/15.PNG" alt><figcaption>15</figcaption>
-</figure>
-<p>第22个来自服务器端的数据包同理，<code>Seq</code>为17723，<code>Ack</code>为435，数据段长度为2。下面主要对异常情况作解释，因此会分析的简略一些。</p>
-<p>第23个数据包，是客户端发来的确认。<code>Seq</code>是435，<code>Ack</code>是1461，数据段长度为0。也就是说来自服务器端的<code>Seq</code>为1461及之后的报文段没有收到。并且首部长度变为32 Byte，因为多了选择确认的选项。第24个数据包的内容除了首部选择确认的选项以外和这个一样，Wireshark将其标记为第一个重复ACK<code>TCP Dup ACK 23#1</code>。</p>
-<figure>
-<img src="/posts/7ce21a5/16.PNG" alt><figcaption>16</figcaption>
-</figure>
-<p>23和24号数据包的选项部分为选择重传，左边界(left edge)和右边界(right edge)表示已经正确接收的字节序列号。即21号和22号数据包已被正确接收。下图为24号数据包的选项，共20 Byte。在服务器端<code>Seq</code>为[1461,15349)，[16809,17723)，17725及之后的报文段没有收到。</p>
-<p><img src="/posts/7ce21a5/18.PNG" width="50%" height="50%"></p>
-<p>以下是25号到50号数据包的截图：</p>
-<figure>
-<img src="/posts/7ce21a5/34.PNG" alt><figcaption>34</figcaption>
-</figure>
-<p>25、26、27号数据包均来自服务器端。25号数据包的<code>Seq</code>为9509，26号数据包的<code>Seq</code>为1461，27号数据包的<code>Seq</code>为2921。25和26号数据包的数据段长度为1460，27号数据包数据段长度为1176。在Wireshark中，如果序列号大的数据包先被捕获，则被标记为乱序<code>TCP Out-Of-Order</code>。</p>
-<p>28号数据包是23号数据包的第二个副本。选项部分已指示服务器端的<code>Seq</code>为9509的报文段已成功收到。在<code>Seq</code>为[1461,9509)，[10969,15349)，[16809,17723)，17725及之后的没有收到。</p>
-<p><img src="/posts/7ce21a5/19.PNG" width="50%" height="50%"></p>
-<p>29号、30号数据包均来自客户端，<code>Seq</code>均为435，数据段长度均为0。29号数据包的<code>Ack</code>为2921，30号数据包的<code>Ack</code>为4097。说明服务器端<code>Seq</code>为2921的报文段已被正确接收。由30号的选择确认选项可知，<code>Seq</code>为[4097,9509)的报文段还没收到。</p>
-<p><img src="/posts/7ce21a5/20.PNG" width="50%" height="50%"></p>
-<p>31号到35号，客户端没有发送<code>Ack</code>为6873的报文段，但是发送了<code>Ack</code>为8333的报文段，由于TCP是累积确认的，因此服务器端<code>Seq</code>为8333之前的报文段均已正确接收。由于服务器端前面出现过乱序标记，前面已接收的序列号仍然有空洞，仍然是乱序，因此31、32、33即使不乱序也被标记为乱序。</p>
-<p>注意，36、37号数据包中没有出现来自服务器端的<code>Seq</code>为9509的报文段，因为早已被正确接收。</p>
-<p>38号到43号的分析略。</p>
-<p>44、45号是来自服务器端的HTTP响应，继续传输网页，都很正常。没有乱序标记的原因是<code>Seq</code>为17723之前的包都已经按序接收了（没有空洞了），后面的数据包也是按序的。<code>Seq</code>分别为：17725、19185，数据段长度均为1460。</p>
-<p>46号的<code>Seq</code>为21821。46到49号表示服务器端的<code>Seq</code>为[20845,21821)的报文段没有收到，可能出现了丢失或长延时。50号表明这个报文段出现了长延时，因此乱序。50号数据包收到以后，前面的报文段已经按序，51到64号数据包也是按序接收的，因此51到64号数据包没有乱序标记。</p>
-<p>以下是51号64号数据包的截图：</p>
-<figure>
-<img src="/posts/7ce21a5/35.PNG" alt><figcaption>35</figcaption>
-</figure>
-<p>51号到64号都很正常。不再过多分析。其中64号数据包的<code>Seq</code>为435，<code>Ack</code>为34678，数据段长度为0，首部长度 20 Byte。</p>
-<p>以下是65号到86号数据包的截图：</p>
-<figure>
-<img src="/posts/7ce21a5/36.PNG" alt><figcaption>36</figcaption>
-</figure>
-<p>65到67号数据包被标记为<code>TCP Spurious Retransmission</code>（伪重传），表明这三个包是服务器端重传的，<code>Seq</code>分别为：1461、2921、4097。这是不必要的重传。由上述的记录可知，这三个报文段并没有丢失，只是时延比较长，导致了失序，被判定为丢失。</p>
-<p>68、68、70号数据包是64号的三个副本。下图分别是这三个包的选择确认选项。指示服务器端这三个报文段早已被正确接收，不要再重传了。</p>
-<p><img src="/posts/7ce21a5/23.PNG" width="50%" height="50%"></p>
-<p><img src="/posts/7ce21a5/22.PNG" width="50%" height="50%"></p>
-<p><img src="/posts/7ce21a5/21.PNG" width="50%" height="50%"></p>
-<p>71号到79号数据包同理。在这里服务器端重传报文段的<code>Seq</code>分别是：5413、6873、8333、10969、12429、13889。由这些数据包可以看出，这些被重传报文段的序列号并没有在前面客户端的<code>Ack</code>的选择确认选项中指明收到了（虽然出现过了相应的<code>Ack</code>）。</p>
-<p>80到84号，服务器端继续进行网页传输。80号数据包的<code>Seq</code>是34678，没有任何异常标记。因为服务器端还没有发送这个报文段，因此没有快速重传<code>TCP Fast Retransmission</code>的标记。尽管来自客户端的<code>Ack</code>34678的报文段已经重复了很多次。后面81~84号的<code>Seq</code>分别为：36138、37598、39058、40518。</p>
-<p>85号数据包是客户端对78、79号数据包的回应。选择确认选项如下：</p>
-<p><img src="/posts/7ce21a5/37.PNG" width="50%" height="50%"></p>
-<p>86号数据包来自客户端，<code>Ack</code>为41963，表明在此之前的报文段均已正确接收。此时网页应该已经传完了。所以在485号数据包之前这个TCP连接一直没有数据的传输。</p>
-<p>485号数据包，客户端向服务器端发送一个Keep-Alive数据包，以确认在长时间无数据交互时对方的状态是否还正常。<code>Seq</code>值被减1，数据部分只有一个0字节；<code>Ack</code>值没变。</p>
-<figure>
-<img src="/posts/7ce21a5/32.PNG" alt><figcaption>32</figcaption>
-</figure>
-<p>486号数据包，服务器端对这个Keep-Alive数据包作确认回应，表明自己的状态正常。<code>Seq</code>是41963，是上次这个Keep-Alive数据包的<code>Ack</code>值，<code>Seq</code>是435，是上次这个Keep-Alive数据包的<code>Ack</code>值+1，数据段长度为0。之后在1135号数据包之前这个TCP连接一直没有数据的传输。</p>
-<figure>
-<img src="/posts/7ce21a5/33.PNG" alt><figcaption>33</figcaption>
-</figure>
-<p>在建立连接的时候，客户端通告自己的MSS为1460。而一个网页的容量远大于1460 Byte。因此网页的HTTP报文在传输层被分成了很多个报文段。在网页传输的过程中，双方的通告窗口总是足够，没有出现窗口满了的情况。</p>
-<h3 id="tcp连接关闭">TCP连接关闭</h3>
-<p>下图中的最后四个数据包（标号为1135、1136、1137、1139）表示TCP释放连接的过程（四次挥手）。由于长时间没有数据传输并且双方状态正常，服务器端选择关闭这个连接并释放资源，以节省资源为其他客户端传输网页。</p>
-<figure>
-<img src="/posts/7ce21a5/24.PNG" alt><figcaption>24</figcaption>
-</figure>
-<h4 id="第一次挥手">第一次挥手</h4>
-<p><strong>第一次挥手</strong>（1135），服务器端发送连接释放的报文段，请求关闭服务器端到客户端的连接。此时序列号<code>Seq</code>为41963，<code>Ack</code>为435。标志位<code>Fin</code>和<code>Ack</code>都被置1，数据段长度为0。</p>
-<figure>
-<img src="/posts/7ce21a5/25.PNG" alt><figcaption>25</figcaption>
-</figure>
-<h4 id="第二次挥手">第二次挥手</h4>
-<p><strong>第二次挥手</strong>（1136），客户端向服务器端对连接释放报文段进行确认。此时序列号<code>Seq</code>为435，<code>Ack</code>为41964（须注意，<code>Fin</code>被置为1的报文段也是一个特殊的报文段，不携带数据也需要消耗一个序列号，因此期望的序列号为上一格连接释放请求的<code>Seq+1</code>。）。标志位只有<code>Ack</code>被置1，数据段长度为0。此时服务器端到客户端的连接被释放，但是客户端到服务器端的连接没有被释放。</p>
-<figure>
-<img src="/posts/7ce21a5/26.PNG" alt><figcaption>26</figcaption>
-</figure>
-<h4 id="第三次挥手">第三次挥手</h4>
-<p><strong>第三次挥手</strong>（1137），由于服务器端到客户端的连接已经被释放，并且客户端也没有要发送的数据，因此客户端请求关闭客户端到服务器端的连接。此时<code>Seq</code>为435，<code>Ack</code>为41964，标志位<code>Fin</code>和<code>Ack</code>都被置1，数据段长度为0。因为上一次挥手发送的报文段只是一个普通的报文段（只有标志位<code>Ack</code>为1），因此没有数据的时候不消耗序列号，因此<code>Seq</code>是435。</p>
-<figure>
-<img src="/posts/7ce21a5/27.PNG" alt><figcaption>27</figcaption>
-</figure>
-<h4 id="第四次挥手">第四次挥手</h4>
-<p><strong>第四次挥手</strong>（1139），服务器端对客户端的连接释放报文段进行确认。此时序列号<code>Seq</code>为41964，<code>Ack</code>为436（<code>Fin</code>不携带数据也需要消耗一个序列号），标志位只有<code>Ack</code>被置1，数据段长度为0。如果客户端收到这个<code>Ack</code>，则客户端立即进入关闭状态，此时服务器端要等待两倍段生存期的时间才能真正进入关闭状态，因为<code>Ack</code>可能丢失并需要重传。</p>
-<figure>
-<img src="/posts/7ce21a5/28.PNG" alt><figcaption>28</figcaption>
-</figure>
-<p>至此，对这次TCP连接的分析结束。</p>
-
+            <p>
+              我来炒冷饭了……这个Wireshark分析案例其实是我以前的作业。内容是从浏览器通过HTTP协议（注意，是HTTP不是HTTPS）访问某个网页，并分析TCP连接的全过程（包括三个阶段：连接的建立、数据传输、连接的关闭）。
+由于当时作业的重点是对TCP协议的分析，再加上我当时对应用层协议的学习也不够重
+              ...
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/7ce21a5/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
+      
+    </div>
+
+    <div>
       
     </div>
 
@@ -621,7 +577,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -640,6 +596,7 @@
         
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -727,6 +684,10 @@
       
     </div>
 
+    <div>
+      
+    </div>
+
     
     
     
@@ -753,7 +714,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -772,6 +733,7 @@
         
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -869,6 +831,10 @@
       
     </div>
 
+    <div>
+      
+    </div>
+
     
     
     
@@ -895,7 +861,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -914,6 +880,7 @@
         
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1013,6 +980,10 @@
       
     </div>
 
+    <div>
+      
+    </div>
+
     
     
     
@@ -1039,7 +1010,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1058,6 +1029,7 @@
         
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1149,6 +1121,10 @@
       
     </div>
 
+    <div>
+      
+    </div>
+
     
     
     
@@ -1175,7 +1151,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1194,6 +1170,7 @@
         
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1271,10 +1248,25 @@
 
       
           
-            
+            <p>
+              
 
+              
+            </p>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/97940cff/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
         
+      
+    </div>
+
+    <div>
       
     </div>
 
@@ -1304,7 +1296,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1323,6 +1315,7 @@
         
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1416,6 +1409,10 @@
       
     </div>
 
+    <div>
+      
+    </div>
+
     
     
     
@@ -1442,7 +1439,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1461,6 +1458,7 @@
         
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1553,6 +1551,10 @@
       
     </div>
 
+    <div>
+      
+    </div>
+
     
     
     
@@ -1579,7 +1581,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LoveBettygirl">
       <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1598,6 +1600,7 @@
         
 
         <div class="post-meta">
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1688,6 +1691,10 @@
       
     </div>
 
+    <div>
+      
+    </div>
+
     
     
     
@@ -1729,9 +1736,16 @@
 
       <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">LoveBettygirl</p>
+    <a href="/" title="点击回到主页（头像图片来自网络）">
+      <img class="site-author-image" itemprop="image"
+        src="/images/avatar.jpg"
+        alt="LoveBettygirl">
+    </a>
+  <a href="/" title="点击回到主页">
+    <p class="site-author-name" itemprop="name">LoveBettygirl</p>
+  </a>
+  <!--p class="site-author-name" itemprop="name">LoveBettygirl</p-->
   <div class="site-description motion-element" itemprop="description">人生得意须尽欢，莫使金樽空对月。</div>
 </div>
   <nav class="site-state motion-element">
@@ -1872,11 +1886,79 @@
       <i class="fa fa-rss"></i>RSS
     </a>
   </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/LoveBettygirl" title="GitHub &rarr; https://github.com/LoveBettygirl" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:bettycyygirl@163.com" title="E-Mail &rarr; mailto:bettycyygirl@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
+
+
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+    <div class="links-of-blogroll-title">
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+    </div>
+    <ul class="links-of-blogroll-list">
+        
+        
+        <li>
+            <a href="/posts/7ce21a5/" title="使用Wireshark抓包分析TCP协议" target="_blank">使用Wireshark抓包分析TCP协议</a>
+        </li>
+        
+        <li>
+            <a href="/posts/6bcee09b/" title="【LeetCode】75. 颜色分类" target="_blank">【LeetCode】75. 颜色分类</a>
+        </li>
+        
+        <li>
+            <a href="/posts/1b5d2414/" title="【Python爬虫学习】BeautifulSoup中.text和.string的区别" target="_blank">【Python爬虫学习】BeautifulSoup中.text和.string的区别</a>
+        </li>
+        
+        <li>
+            <a href="/posts/9789a339/" title="【Python爬虫学习】爬取虾米音乐旧版网站评论" target="_blank">【Python爬虫学习】爬取虾米音乐旧版网站评论</a>
+        </li>
+        
+        <li>
+            <a href="/posts/715f63dd/" title="【备忘】Miniconda安装与使用" target="_blank">【备忘】Miniconda安装与使用</a>
+        </li>
+        
+    </ul>
+    </div>
 
         </div>
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
 
     </div>
   </aside>
@@ -1888,25 +1970,55 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2021</span>
   <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">LoveBettygirl</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    
     <span title="站点总字数">75k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
     <span title="站点阅读时长">1:08</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <!--div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div-->
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
+  <!--div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div-->
+  <div class="theme-info">Based on <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 网站运行时间的设置 -->
+<span id="timeDate">Loading...</span>
+<span id="times"></span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("07/31/2019 17:43:07");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = ((now - grt ) / 1000 / 60 / 60 - (24 * dnum))%60; hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = ((now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum))%60;
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = ((now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum))%60;
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "Service time: "+dnum+" days ";
+        document.getElementById("times").innerHTML = hnum + ":" + mnum + ":" + snum;
+    }
+setInterval("createtime()",250);
+</script>
 
         
 
@@ -1920,16 +2032,51 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-      </div>
 
     
+  
+  <div id="needsharebutton-float">
+    <span class="btn">
+      <i class="fa fa-share-alt" aria-hidden="true"></i>
+    </span>
+  </div>
+<script src="/lib/needsharebutton/needsharebutton.js"></script>
+<script>
+    pbOptions = {};
+      pbOptions.iconStyle = "default";
+    
+      pbOptions.boxForm = "horizontal";
+    
+      pbOptions.position = "bottomCenter";
+    
+      pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+    
+    new needShareButton('#needsharebutton-postbottom', pbOptions);
+    flOptions = {};
+      flOptions.iconStyle = "default";
+    
+      flOptions.boxForm = "vertical";
+    
+      flOptions.position = "topRight";
+    
+      flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+    
+    new needShareButton('#needsharebutton-float', flOptions);
+</script>
+
 
   </div>
 
   
+    
+    
+  
+  <script color='230,230,230' opacity='0.5' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script src="/lib/lazyload/lozad.min.js?v=1.10.0"></script>
+  <script src="/lib/pangu/dist/pangu.min.js?v=4.0.7"></script>
+  <script src="/lib/reading_progress/reading_progress.js"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
@@ -1938,6 +2085,7 @@
 
   
   <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
 
 
   
@@ -1957,6 +2105,50 @@
 
 
 
+  
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+
+    
+      
+    
+  
+    <script src="/lib/quicklink/quicklink.umd.js"></script>
+    <script>
+      
+        window.addEventListener('load', () => {
+      
+        quicklink({
+          timeout: 3000,
+          priority: true,
+          ignores: [uri => uri.includes('#'),uri => uri == 'https://lovebettygirl.github.io/',]
+        });
+      
+        });
+      
+    </script>
+  
 
 
 
@@ -1974,6 +2166,7 @@
 
 
 
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -1987,6 +2180,13 @@
 
 
 
+
+  <!-- clicklove -->
+  <script type="text/javascript" src="/js/clicklove.js"></script>
+
+  <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+  <!--style type="text/css" src="/css/_custom/custom.styl"></style-->
 
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"position":"right","width":100,"height":200,"hOffset":1165,"vOffset":-20},"mobile":{"show":true},"log":false,"tagMode":false});</script></body>
 </html>
