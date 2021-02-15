@@ -81,7 +81,7 @@
 <meta property="og:site_name" content="LoveBettygirl">
 <meta property="og:description" content="我来炒冷饭了……这个Wireshark分析案例其实是我以前的作业。内容是从浏览器通过HTTP协议（注意，是HTTP不是HTTPS）访问某个网页，并分析TCP连接的全过程（包括三个阶段：连接的建立、数据传输、连接的关闭）。 由于当时作业的重点是对TCP协议的分析，再加上我当时对应用层协议的学习也不够重视。所以我主要在传输层的层面上进行了分析，并没有对应用层协议（HTTP）进行分析。后来才发现大厂的面">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-02-15T17:58:58.938Z">
+<meta property="og:updated_time" content="2021-02-15T18:04:17.193Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Wireshark抓包分析TCP协议">
 <meta name="twitter:description" content="我来炒冷饭了……这个Wireshark分析案例其实是我以前的作业。内容是从浏览器通过HTTP协议（注意，是HTTP不是HTTPS）访问某个网页，并分析TCP连接的全过程（包括三个阶段：连接的建立、数据传输、连接的关闭）。 由于当时作业的重点是对TCP协议的分析，再加上我当时对应用层协议的学习也不够重视。所以我主要在传输层的层面上进行了分析，并没有对应用层协议（HTTP）进行分析。后来才发现大厂的面">
@@ -320,7 +320,7 @@
                 
               
 
-              <time title="创建时间：2021-02-16 00:55:18 / 修改时间：01:58:58" itemprop="dateCreated datePublished" datetime="2021-02-16T00:55:18+08:00">2021-02-16</time>
+              <time title="创建时间：2021-02-16 00:55:18 / 修改时间：02:04:17" itemprop="dateCreated datePublished" datetime="2021-02-16T00:55:18+08:00">2021-02-16</time>
             </span>
           
             
@@ -384,6 +384,7 @@
         <p>我来炒冷饭了……这个Wireshark分析案例其实是我以前的作业。内容是从浏览器通过HTTP协议（注意，是HTTP不是HTTPS）访问某个网页，并分析TCP连接的全过程（包括三个阶段：连接的建立、数据传输、连接的关闭）。</p>
 <p>由于当时作业的重点是对TCP协议的分析，再加上我当时对应用层协议的学习也不够重视。所以我主要在传输层的层面上进行了分析，并没有对应用层协议（HTTP）进行分析。后来才发现大厂的面试经常会考HTTP/HTTPS协议，为了能够复习TCP协议和HTTP协议（也怕我今后找不到这个作业了），所以就把它贴到博客上了。如果以后有空的话我再简单分析这里面的HTTP报文（或者是其他应用层协议，例如DNS）吧。</p>
 <p>分析的流程可能有不少问题，如果读者发现了什么问题请及时指正。</p>
+<a id="more"></a>
 <hr>
 <h2 id="实验环境">实验环境</h2>
 <ol type="1">
