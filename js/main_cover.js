@@ -11,46 +11,19 @@ let randomNum = function(minNum, maxNum) {
 let setDomHomePosition = function () {
     $('#main').css('margin-top', ($('.main-cover').outerHeight() + 120) + 'px');
 };
+let temScroll = null;
 let scrollMonitor = function () {
-    let homeScroll     = $('#main').offset().top - 40,
-        docScroll      = $(document).scrollTop();
 
-    // 设置头部底部按钮
-    if (homeScroll <= docScroll) {
-        $('#needsharebutton-float').show();
-    } else {
-        $('#needsharebutton-float').hide();
-    }
-
-    // 设置上下滚动
-    // if (temScroll < docScroll) { // 向下滚动
-
-    //     if (homeScroll <= docScroll) { // 滚过头图
-
-    //         // 设置菜单按钮
-    //         if (!openButton.hasClass('menu-button-scroll')) {
-    //             openButton.addClass('menu-button-scroll');
-    //             openButton.text('');
-    //         }
-    //     }
-
-    // } else { // 向上滚动
-
-    //     if (homeScroll >= docScroll) { // 滚入头图
-
-    //         // 设置菜单按钮
-    //         if (openButton.hasClass('menu-button-scroll')) {
-    //             openButton.removeClass('menu-button-scroll');
-    //             openButton.text('MENU');
-    //         }
-    //     }
-    // }
-    temScroll = docScroll;
 };
 (function () {
-    scrollMonitor();
+    // scrollMonitor();
+    let mainCover = $('.main-cover');
+    if (mainCover === null) {
+        return;
+    }
     let hitokoto = $('#hitokoto');
-    let bgImg = "https://img.paulzzh.tech/touhou/random?tag=night";
+    // let bgImg = "https://img.paulzzh.tech/touhou/random?tag=night";
+    let bgImg = "https://img.onesnas.com";
     $('.main-cover').css({
         'background': '#222 url("'+encodeURI(bgImg)+'")  center center no-repeat',
         'background-size': 'cover'
@@ -137,9 +110,9 @@ let scrollMonitor = function () {
         let endScroll;
         endScroll = $('.main-inner').offset().top - 110; 
         $('html,body').stop().animate({scrollTop: endScroll}, 1000);
-        window.setTimeout(function () {
-            scrollMonitor();
-        }, 1000);
+        // window.setTimeout(function () {
+        //     scrollMonitor();
+        // }, 1000);
     });
-    $(window).scroll(function() { scrollMonitor(); });
+    // $(window).scroll(function() { scrollMonitor(); });
 })();
