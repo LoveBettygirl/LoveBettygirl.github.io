@@ -50,7 +50,7 @@ let scrollMonitor = function () {
 (function () {
     scrollMonitor();
     let hitokoto = $('#hitokoto');
-    let bgImg = "https://files.dbnuo.com/wallpaper/wallhaven-4ylgl0.webp";
+    let bgImg = "https://img.paulzzh.tech/touhou/random?tag=night";
     $('.main-cover').css({
         'background': '#222 url("'+encodeURI(bgImg)+'")  center center no-repeat',
         'background-size': 'cover'
@@ -134,7 +134,6 @@ let scrollMonitor = function () {
     }
     $('.scroll-down').click(function () {
         // $('.main-cover').hide();
-        console.log('aaa');
         let endScroll;
         endScroll = $('.main-inner').offset().top - 110; 
         $('html,body').stop().animate({scrollTop: endScroll}, 1000);
