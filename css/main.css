@@ -2145,7 +2145,7 @@ span#inline-toc-blue {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #a1ff44;
+  background: #e4ff41;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -3274,6 +3274,16 @@ hr {
 ::-moz-selection {
   background: #f5f5f5;
   color: #222;
+}
+@font-face {
+  font-family: 'Long Cang';
+  font-weight: normal;
+  src: local('Long Cang'), url("/fonts/LongCang-Regular.ttf");
+}
+@font-face {
+  font-family: 'Playball';
+  font-weight: normal;
+  src: local('Playball'), url("/fonts/Playball-Regular.ttf");
 }
 .main-cover {
   display: table;
