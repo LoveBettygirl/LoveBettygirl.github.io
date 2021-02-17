@@ -9,7 +9,7 @@ let randomNum = function(minNum, maxNum) {
     }
 };
 let setDomHomePosition = function () {
-    $('#main').css('margin-top', ($('.main-cover').outerHeight() + 120) + 'px');
+    $('#main').css('margin-top', ($('.main-cover').outerHeight() + 130) + 'px');
 };
 let temScroll = null;
 let scrollMonitor = function () {
