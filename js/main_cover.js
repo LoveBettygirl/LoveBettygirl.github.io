@@ -9,7 +9,7 @@ let randomNum = function(minNum, maxNum) {
     }
 };
 let setDomHomePosition = function () {
-    $('#main').css('margin-top', ($('.main-cover').outerHeight() + 140) + 'px');
+    $('#main').css('margin-top', ($('.main-cover').outerHeight() + 120) + 'px');
 };
 let temScroll = null;
 let scrollMonitor = function () {
@@ -108,7 +108,7 @@ let scrollMonitor = function () {
     $('.scroll-down').click(function () {
         // $('.main-cover').hide();
         let endScroll;
-        endScroll = $('.main-inner').offset().top - 110; 
+        endScroll = $('.main-inner').offset().top - 130; 
         $('html,body').stop().animate({scrollTop: endScroll}, 1000);
         // window.setTimeout(function () {
         //     scrollMonitor();
