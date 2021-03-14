@@ -1,333 +1,308 @@
 /* global CONFIG */
 
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', () => {
+  if (!CONFIG.path) {
+    // Search DB path
+    console.warn('`hexo-generator-searchdb` plugin is not installed!');
+    return;
+  }
   // Popup Window
-  var isfetched = false;
-  var datas;
-  var isXml = true;
-  // Search DB path
-  var searchPath = CONFIG.search.path;
-  if (searchPath.length === 0) {
-    searchPath = 'search.xml';
-  } else if (/json$/i.test(searchPath)) {
-    isXml = false;
-  }
-  var path = CONFIG.search.root + searchPath;
-  var input = document.getElementById('local-search-input');
-  var resultContent = document.getElementById('local-search-result');
+  let isfetched = false;
+  let datas;
+  const input = document.querySelector('.search-input');
 
-  // Ref: https://github.com/ForbesLindesay/unescape-html
-  function unescapeHtml(html) {
-    return String(html)
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, '\'')
-      .replace(/&#x3A;/g, ':')
-      // Replace all the other &#x; chars
-      .replace(/&#(\d+);/g, function(m, p) {
-        return String.fromCharCode(p);
-      })
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&amp;/g, '&');
-  }
-  function getIndexByWord(word, text, caseSensitive) {
-    var wordLen = word.length;
-    if (wordLen === 0) {
-      return [];
-    }
-    var startPosition = 0; var position = []; var index = [];
-    if (!caseSensitive) {
-      text = text.toLowerCase();
-      word = word.toLowerCase();
-    }
-    while ((position = text.indexOf(word, startPosition)) > -1) {
-      index.push({
-        position: position,
-        word    : word
-      });
-      startPosition = position + wordLen;
-    }
-    return index;
-  }
+  const getIndexByWord = (words, text, caseSensitive = false) => {
+    const index = [];
+    const included = new Set();
+    words.forEach(word => {
+      if (CONFIG.localsearch.unescape) {
+        const div = document.createElement('div');
+        div.innerText = word;
+        word = div.innerHTML;
+      }
+      const wordLen = word.length;
+      if (wordLen === 0) return;
+      let startPosition = 0;
+      let position = -1;
+      if (!caseSensitive) {
+        text = text.toLowerCase();
+        word = word.toLowerCase();
+      }
+      while ((position = text.indexOf(word, startPosition)) > -1) {
+        index.push({ position, word });
+        included.add(word);
+        startPosition = position + wordLen;
+      }
+    });
+    // Sort index by position of keyword
+    index.sort((left, right) => {
+      if (left.position !== right.position) {
+        return left.position - right.position;
+      }
+      return right.word.length - left.word.length;
+    });
+    return [index, included];
+  };
 
   // Merge hits into slices
-  function mergeIntoSlice(text, start, end, index, searchText) {
-    var item = index[index.length - 1];
-    var position = item.position;
-    var word = item.word;
-    var hits = [];
-    var searchTextCountInSlice = 0;
+  const mergeIntoSlice = (start, end, index) => {
+    let item = index[0];
+    let { position, word } = item;
+    const hits = [];
+    const count = new Set();
     while (position + word.length <= end && index.length !== 0) {
-      if (word === searchText) {
-        searchTextCountInSlice++;
-      }
+      count.add(word);
       hits.push({
-        position: position,
-        length  : word.length
+        position,
+        length: word.length
       });
-      var wordEnd = position + word.length;
+      const wordEnd = position + word.length;
 
       // Move to next position of hit
-      index.pop();
+      index.shift();
       while (index.length !== 0) {
-        item = index[index.length - 1];
+        item = index[0];
         position = item.position;
         word = item.word;
         if (wordEnd > position) {
-          index.pop();
+          index.shift();
         } else {
           break;
         }
       }
     }
     return {
-      hits           : hits,
-      start          : start,
-      end            : end,
-      searchTextCount: searchTextCountInSlice
+      hits,
+      start,
+      end,
+      count: count.size
     };
-  }
+  };
 
   // Highlight title and content
-  function highlightKeyword(text, slice) {
-    var result = '';
-    var prevEnd = slice.start;
-    slice.hits.forEach(function(hit) {
-      result += text.substring(prevEnd, hit.position);
-      var end = hit.position + hit.length;
-      result += `<b class="search-keyword">${text.substring(hit.position, end)}</b>`;
-      prevEnd = end;
-    });
-    result += text.substring(prevEnd, slice.end);
-    return result;
-  }
-  function inputEventFunction() {
-    var searchText = input.value.trim().toLowerCase();
-    var keywords = searchText.split(/[-\s]+/);
-    if (keywords.length > 1) {
-      keywords.push(searchText);
+  const highlightKeyword = (val, slice) => {
+    let result = '';
+    let index = slice.start;
+    for (const { position, length } of slice.hits) {
+      result += val.substring(index, position);
+      index = position + length;
+      result += `<mark class="search-keyword">${val.substr(position, length)}</mark>`;
     }
-    var resultItems = [];
+    result += val.substring(index, slice.end);
+    return result;
+  };
+
+  const getResultItems = keywords => {
+    const resultItems = [];
+    datas.forEach(({ title, content, url }) => {
+      // The number of different keywords included in the article.
+      const [indexOfTitle, keysOfTitle] = getIndexByWord(keywords, title);
+      const [indexOfContent, keysOfContent] = getIndexByWord(keywords, content);
+      const includedCount = new Set([...keysOfTitle, ...keysOfContent]).size;
+
+      // Show search results
+      const hitCount = indexOfTitle.length + indexOfContent.length;
+      if (hitCount === 0) return;
+
+      const slicesOfTitle = [];
+      if (indexOfTitle.length !== 0) {
+        slicesOfTitle.push(mergeIntoSlice(0, title.length, indexOfTitle));
+      }
+
+      let slicesOfContent = [];
+      while (indexOfContent.length !== 0) {
+        const item = indexOfContent[0];
+        const { position } = item;
+        // Cut out 100 characters. The maxlength of .search-input is 80.
+        const start = Math.max(0, position - 20);
+        const end = Math.min(content.length, position + 80);
+        slicesOfContent.push(mergeIntoSlice(start, end, indexOfContent));
+      }
+
+      // Sort slices in content by included keywords' count and hits' count
+      slicesOfContent.sort((left, right) => {
+        if (left.count !== right.count) {
+          return right.count - left.count;
+        } else if (left.hits.length !== right.hits.length) {
+          return right.hits.length - left.hits.length;
+        }
+        return left.start - right.start;
+      });
+
+      // Select top N slices in content
+      const upperBound = parseInt(CONFIG.localsearch.top_n_per_article, 10);
+      if (upperBound >= 0) {
+        slicesOfContent = slicesOfContent.slice(0, upperBound);
+      }
+
+      let resultItem = '';
+
+      url = new URL(url, location.origin);
+      url.searchParams.append('highlight', keywords.join(' '));
+
+      if (slicesOfTitle.length !== 0) {
+        resultItem += `<li><a href="${url.href}" class="search-result-title">${highlightKeyword(title, slicesOfTitle[0])}</a>`;
+      } else {
+        resultItem += `<li><a href="${url.href}" class="search-result-title">${title}</a>`;
+      }
+
+      slicesOfContent.forEach(slice => {
+        resultItem += `<a href="${url.href}"><p class="search-result">${highlightKeyword(content, slice)}...</p></a>`;
+      });
+
+      resultItem += '</li>';
+      resultItems.push({
+        item: resultItem,
+        id  : resultItems.length,
+        hitCount,
+        includedCount
+      });
+    });
+    return resultItems;
+  };
+
+  const inputEventFunction = () => {
+    if (!isfetched) return;
+    const searchText = input.value.trim().toLowerCase();
+    const keywords = searchText.split(/[-\s]+/);
+    const container = document.querySelector('.search-result-container');
+    let resultItems = [];
     if (searchText.length > 0) {
       // Perform local searching
-      datas.forEach(function(data) {
-        // Only match articles with not empty titles
-        if (!data.title) {
-          return;
-        }
-        var searchTextCount = 0;
-        var title = data.title.trim();
-        var titleInLowerCase = title.toLowerCase();
-        var content = data.content ? data.content.trim().replace(/<[^>]+>/g, '') : '';
-        if (CONFIG.localsearch.unescape) {
-          content = unescapeHtml(content);
-        }
-        var contentInLowerCase = content.toLowerCase();
-        var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
-        var indexOfTitle = [];
-        var indexOfContent = [];
-        keywords.forEach(function(keyword) {
-          indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-          indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-        });
-
-        // Show search results
-        if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-          var hitCount = indexOfTitle.length + indexOfContent.length;
-          // Sort index by position of keyword
-          [indexOfTitle, indexOfContent].forEach(function(index) {
-            index.sort(function(itemLeft, itemRight) {
-              if (itemRight.position !== itemLeft.position) {
-                return itemRight.position - itemLeft.position;
-              }
-              return itemLeft.word.length - itemRight.word.length;
-            });
-          });
-
-          var slicesOfTitle = [];
-          if (indexOfTitle.length !== 0) {
-            var tmp = mergeIntoSlice(title, 0, title.length, indexOfTitle, searchText);
-            searchTextCount += tmp.searchTextCountInSlice;
-            slicesOfTitle.push(tmp);
-          }
-
-          var slicesOfContent = [];
-          while (indexOfContent.length !== 0) {
-            var item = indexOfContent[indexOfContent.length - 1];
-            var position = item.position;
-            var word = item.word;
-            // Cut out 100 characters
-            var start = position - 20;
-            var end = position + 80;
-            if (start < 0) {
-              start = 0;
-            }
-            if (end < position + word.length) {
-              end = position + word.length;
-            }
-            if (end > content.length) {
-              end = content.length;
-            }
-            let tmp = mergeIntoSlice(content, start, end, indexOfContent, searchText);
-            searchTextCount += tmp.searchTextCountInSlice;
-            slicesOfContent.push(tmp);
-          }
-
-          // Sort slices in content by search text's count and hits' count
-          slicesOfContent.sort(function(sliceLeft, sliceRight) {
-            if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-              return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-            } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-              return sliceRight.hits.length - sliceLeft.hits.length;
-            }
-            return sliceLeft.start - sliceRight.start;
-          });
-
-          // Select top N slices in content
-          var upperBound = parseInt(CONFIG.localsearch.top_n_per_article, 10);
-          if (upperBound >= 0) {
-            slicesOfContent = slicesOfContent.slice(0, upperBound);
-          }
-
-          var resultItem = '';
-
-          if (slicesOfTitle.length !== 0) {
-            resultItem += `<li><a href="${articleUrl}" class="search-result-title">${highlightKeyword(title, slicesOfTitle[0])}</a>`;
-          } else {
-            resultItem += `<li><a href="${articleUrl}" class="search-result-title">${title}</a>`;
-          }
-
-          slicesOfContent.forEach(function(slice) {
-            resultItem += `<a href="${articleUrl}"><p class="search-result">${highlightKeyword(content, slice)}...</p></a>`;
-          });
-
-          resultItem += '</li>';
-          resultItems.push({
-            item           : resultItem,
-            searchTextCount: searchTextCount,
-            hitCount       : hitCount,
-            id             : resultItems.length
-          });
-        }
-      });
+      resultItems = getResultItems(keywords);
     }
     if (keywords.length === 1 && keywords[0] === '') {
-      resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>';
+      container.classList.add('no-result');
+      container.innerHTML = '<div class="search-result-icon"><i class="fa fa-search fa-5x"></i></div>';
     } else if (resultItems.length === 0) {
-      resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>';
+      container.classList.add('no-result');
+      container.innerHTML = '<div class="search-result-icon"><i class="far fa-frown fa-5x"></i></div>';
     } else {
-      resultItems.sort(function(resultLeft, resultRight) {
-        if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-          return resultRight.searchTextCount - resultLeft.searchTextCount;
-        } else if (resultLeft.hitCount !== resultRight.hitCount) {
-          return resultRight.hitCount - resultLeft.hitCount;
+      resultItems.sort((left, right) => {
+        if (left.includedCount !== right.includedCount) {
+          return right.includedCount - left.includedCount;
+        } else if (left.hitCount !== right.hitCount) {
+          return right.hitCount - left.hitCount;
         }
-        return resultRight.id - resultLeft.id;
+        return right.id - left.id;
       });
-      var searchResultList = '<ul class="search-result-list">';
-      resultItems.forEach(function(result) {
-        searchResultList += result.item;
-      });
-      searchResultList += '</ul>';
-      resultContent.innerHTML = searchResultList;
+      const stats = CONFIG.i18n.hits.replace(/\$\{hits}/, resultItems.length);
+
+      container.classList.remove('no-result');
+      container.innerHTML = `<div class="search-stats">${stats}</div>
+        <hr>
+        <ul class="search-result-list">${resultItems.map(result => result.item).join('')}</ul>`;
+      window.pjax && window.pjax.refresh(container);
     }
-  }
-  function fetchData(callback) {
-    $.ajax({
-      url     : path,
-      dataType: isXml ? 'xml' : 'json',
-      success : function(res) {
+  };
+
+  const fetchData = () => {
+    const isXml = !CONFIG.path.endsWith('json');
+    fetch(CONFIG.path)
+      .then(response => response.text())
+      .then(res => {
         // Get the contents from search data
         isfetched = true;
-        datas = isXml ? $('entry', res).map(function() {
+        datas = isXml ? [...new DOMParser().parseFromString(res, 'text/xml').querySelectorAll('entry')].map(element => {
           return {
-            title  : $('title', this).text(),
-            content: $('content', this).text(),
-            url    : $('url', this).text()
+            title  : element.querySelector('title').textContent,
+            content: element.querySelector('content').textContent,
+            url    : element.querySelector('url').textContent
           };
-        }).get() : res;
-
+        }) : JSON.parse(res);
+        // Only match articles with non-empty titles
+        datas = datas.filter(data => data.title).map(data => {
+          data.title = data.title.trim();
+          data.content = data.content ? data.content.trim().replace(/<[^>]+>/g, '') : '';
+          data.url = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+          return data;
+        });
         // Remove loading animation
-        $('.local-search-pop-overlay').remove();
-        $('body').css('overflow', '');
+        inputEventFunction();
+      });
+  };
 
-        if (callback) {
-          callback();
-        }
-      }
+  // Highlight by wrapping node in mark elements with the given class name
+  const highlightText = (node, slice, className) => {
+    const val = node.nodeValue;
+    let index = slice.start;
+    const children = [];
+    for (const { position, length } of slice.hits) {
+      const text = document.createTextNode(val.substring(index, position));
+      index = position + length;
+      const mark = document.createElement('mark');
+      mark.className = className;
+      mark.appendChild(document.createTextNode(val.substr(position, length)));
+      children.push(text, mark);
+    }
+    node.nodeValue = val.substring(index, slice.end);
+    children.forEach(element => {
+      node.parentNode.insertBefore(element, node);
     });
-  }
+  };
+
+  // Highlight the search words provided in the url in the text
+  const highlightSearchWords = () => {
+    const params = new URL(location.href).searchParams.get('highlight');
+    const keywords = params ? params.split(' ') : [];
+    const body = document.querySelector('.post-body');
+    if (!keywords.length || !body) return;
+    const walk = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, null);
+    const allNodes = [];
+    while (walk.nextNode()) {
+      if (!walk.currentNode.parentNode.matches('button, select, textarea')) allNodes.push(walk.currentNode);
+    }
+    allNodes.forEach(node => {
+      const [indexOfNode] = getIndexByWord(keywords, node.nodeValue);
+      if (!indexOfNode.length) return;
+      const slice = mergeIntoSlice(0, node.nodeValue.length, indexOfNode);
+      highlightText(node, slice, 'search-keyword');
+    });
+  };
+
+  highlightSearchWords();
   if (CONFIG.localsearch.preload) {
     fetchData();
-  }
-
-  // Monitor main search box
-  function onPopupClose() {
-    $('.popup').hide();
-    $('#local-search-input').val('');
-    $('.search-result-list').remove();
-    $('#no-result').remove();
-    $('.local-search-pop-overlay').remove();
-    $('body').css('overflow', '');
-  }
-
-  function proceedSearch() {
-    $('body')
-      .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-      .css('overflow', 'hidden');
-    $('.search-popup-overlay').click(onPopupClose);
-    $('.popup').toggle();
-    var $localSearchInput = $('#local-search-input');
-    $localSearchInput.attr('autocapitalize', 'none');
-    $localSearchInput.attr('autocorrect', 'off');
-    $localSearchInput.focus();
-  }
-
-  // Search function
-  function searchFunc() {
-    // Start loading animation
-    $('body')
-      .append(`<div class="search-popup-overlay local-search-pop-overlay">
-          <div id="search-loading-icon">
-            <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-          </div>
-        </div>`)
-      .css('overflow', 'hidden');
-    $('#search-loading-icon').css({
-      margin      : '20% auto 0 auto',
-      'text-align': 'center'
-    });
-    fetchData(proceedSearch);
   }
 
   if (CONFIG.localsearch.trigger === 'auto') {
     input.addEventListener('input', inputEventFunction);
   } else {
-    $('.search-icon').click(inputEventFunction);
-    input.addEventListener('keypress', function(event) {
-      if (event.keyCode === 13) {
+    document.querySelector('.search-icon').addEventListener('click', inputEventFunction);
+    input.addEventListener('keypress', event => {
+      if (event.key === 'Enter') {
         inputEventFunction();
       }
     });
   }
 
   // Handle and trigger popup window
-  $('.popup-trigger').click(function(e) {
-    e.stopPropagation();
-    if (isfetched === false) {
-      searchFunc();
-    } else {
-      proceedSearch();
-    }
+  document.querySelectorAll('.popup-trigger').forEach(element => {
+    element.addEventListener('click', () => {
+      document.body.classList.add('search-active');
+      // Wait for search-popup animation to complete
+      setTimeout(() => input.focus(), 500);
+      if (!isfetched) fetchData();
+    });
   });
 
-  $('.popup-btn-close').click(onPopupClose);
-  $('.popup').click(function(e) {
-    e.stopPropagation();
+  // Monitor main search box
+  const onPopupClose = () => {
+    document.body.classList.remove('search-active');
+  };
+
+  document.querySelector('.search-pop-overlay').addEventListener('click', event => {
+    if (event.target === document.querySelector('.search-pop-overlay')) {
+      onPopupClose();
+    }
   });
-  $(document).on('keyup', function(event) {
-    var shouldDismissSearchPopup = event.which === 27 && $('.search-popup').is(':visible');
-    if (shouldDismissSearchPopup) {
+  document.querySelector('.popup-btn-close').addEventListener('click', onPopupClose);
+  document.addEventListener('pjax:success', () => {
+    highlightSearchWords();
+    onPopupClose();
+  });
+  window.addEventListener('keyup', event => {
+    if (event.key === 'Escape') {
       onPopupClose();
     }
   });

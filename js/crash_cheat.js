@@ -1,4 +1,4 @@
-var OriginTitle = document.title;
+﻿var OriginTitle = document.title;
 var titleTime;
 document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
