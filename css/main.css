@@ -3019,7 +3019,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #e4247d;
+  background: #fff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3240,6 +3240,25 @@ code {
   color: #ff7242;
   border-bottom: none;
   border-bottom: 1px solid #ff7242;
+}
+figure,
+a.fancybox {
+  text-align: center;
+}
+figcaption,
+p.image-caption {
+  min-width: 20%;
+  max-width: 80%;
+  min-height: 43px;
+  display: inline-block;
+  padding: 10px;
+  margin: 0 auto;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+  color: #999;
+}
+a.fancybox {
+  border-bottom: none;
 }
 /* Footer */
 .footer,
