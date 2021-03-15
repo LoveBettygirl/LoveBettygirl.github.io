@@ -6,7 +6,7 @@
   <link href="https://lovebettygirl.github.io/atom.xml" rel="self"/>
   
   <link href="https://lovebettygirl.github.io/"/>
-  <updated>2021-03-14T05:21:20.422Z</updated>
+  <updated>2021-03-15T12:22:27.503Z</updated>
   <id>https://lovebettygirl.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>解决VMware Linux虚拟机出现的Read-only file system的问题</title>
+    <link href="https://lovebettygirl.github.io/posts/e809bf36/"/>
+    <id>https://lovebettygirl.github.io/posts/e809bf36/</id>
+    <published>2021-03-15T03:04:10.000Z</published>
+    <updated>2021-03-15T12:22:27.503Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天想要用实验室的一台Ubuntu 18的虚拟机（一直处于运行状态，但是也没有做任何操作），打开它的界面之后出现了莫名其妙的错误，屏幕整个都是黑的，一直在输出类似如下的文字，也不能用命令行操作：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-journald[404]: Failed to write entry (22 items，750 bytes),ignoring: Read-only file system</span><br></pre></td></tr></table></figure><p>之前遇到这样的问题我都是直接用虚拟机快照恢复到最近的的状态，但是这台虚拟机我并没有备份快照……</p><p>从网上找了一些解决方案，总算找到了解决方法，现在记录在这里。</p><a id="more"></a><h2 id="ssh登录">SSH登录</h2><p>因为出现问题的虚拟机不能直接用命令行操作，所以先尝试使用SSH登录来使用命令行操作这台虚拟机。可以使用另外一台正常的虚拟机，打开终端，输入以下命令登录到出问题的虚拟机：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 用户名@IP地址</span><br></pre></td></tr></table></figure><p>如果不记得这台虚拟机的IP地址，可以在虚拟机列表当中右击这台虚拟机，找到SSH选项，再点击「连接到SSH」</p><figure><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142441090.png" alt><figcaption>image-20210315142441090</figcaption></figure><p>首次连接会出现以下对话框，填写当前用户名，点击连接，即可登录。</p><p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142635078.png" alt="image-20210315142635078" style="zoom:50%;"></p><h2 id="修复错误">修复错误</h2><p>登录到这台虚拟机之后，通过执行以下命令发现系统无法创建日志文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl --verify</span><br></pre></td></tr></table></figure><figure><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104333744.png" alt><figcaption>image-20210315104333744</figcaption></figure><p>然后执行此命令修复根目录挂载点下的文件系统：（注意：最好不要贸然执行这条命令，可能也会导致系统无法正常启动）</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fsck -y /</span><br></pre></td></tr></table></figure><figure><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104414931.png" alt><figcaption>image-20210315104414931</figcaption></figure><figure><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104923282.png" alt><figcaption>image-20210315104923282</figcaption></figure><p>可以发现是 <code>/dev/sda1</code> 分区出了问题，并且现在已经修复，重启虚拟机：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -r now</span><br></pre></td></tr></table></figure><p>这样虚拟机重启之后，居然也没有进入 initramfs 命令行，直接正常进入系统了。</p><h2 id="参考">参考</h2><p><a href="https://blog.csdn.net/qin1137248135/article/details/108273596">https://blog.csdn.net/qin1137248135/article/details/108273596</a></p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;今天想要用实验室的一台Ubuntu 18的虚拟机（一直处于运行状态，但是也没有做任何操作），打开它的界面之后出现了莫名其妙的错误，屏幕整个都是黑的，一直在输出类似如下的文字，也不能用命令行操作：&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;systemd-journald[404]: Failed to write entry (22 items，750 bytes),ignoring: Read-only file system&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;之前遇到这样的问题我都是直接用虚拟机快照恢复到最近的的状态，但是这台虚拟机我并没有备份快照……&lt;/p&gt;
+&lt;p&gt;从网上找了一些解决方案，总算找到了解决方法，现在记录在这里。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Hexo NexT 主题v8.0版本深度定制（一）：基础配置</title>
@@ -465,9 +485,9 @@
     
     <category term="C++" scheme="https://lovebettygirl.github.io/tags/C/"/>
     
-    <category term="双指针" scheme="https://lovebettygirl.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
     <category term="哈希表" scheme="https://lovebettygirl.github.io/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
+    
+    <category term="双指针" scheme="https://lovebettygirl.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
     
     <category term="二分查找" scheme="https://lovebettygirl.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
     
@@ -496,9 +516,9 @@
     
     <category term="C++" scheme="https://lovebettygirl.github.io/tags/C/"/>
     
-    <category term="字符串" scheme="https://lovebettygirl.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    
     <category term="哈希表" scheme="https://lovebettygirl.github.io/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
+    
+    <category term="字符串" scheme="https://lovebettygirl.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
   </entry>
   
@@ -526,33 +546,6 @@
     <category term="C++" scheme="https://lovebettygirl.github.io/tags/C/"/>
     
     <category term="双指针" scheme="https://lovebettygirl.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
-    <category term="字符串" scheme="https://lovebettygirl.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【LeetCode】696. 计数二进制子串</title>
-    <link href="https://lovebettygirl.github.io/posts/465fd6ee/"/>
-    <id>https://lovebettygirl.github.io/posts/465fd6ee/</id>
-    <published>2020-12-03T13:38:55.000Z</published>
-    <updated>2021-02-09T13:02:49.725Z</updated>
-    
-    <content type="html"><![CDATA[<p>题目链接：https://leetcode-cn.com/problems/count-binary-substrings/</p><a id="more"></a><h2 id="v1.0">v1.0</h2><p>起初认为这个题的描述类似于括号匹配问题的变种，于是就维护了两个栈（<code>v0</code>、<code>v1</code>），用来存储未被右边字符匹配的字符的位置，<code>v0</code>、<code>v1</code>一个存0的位置，一个存1的位置。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">countBinarySubstrings</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> size = s.length(), count = <span class="number">0</span>, prev = <span class="number">-1</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v1, v0;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 如果前一段连续的1有未被匹配的字符</span></span><br><span class="line">                <span class="keyword">if</span> (v1.size())</span><br><span class="line">                &#123;</span><br><span class="line">                    v1.pop_back();</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 如果前一段连续的1之前还有0未被匹配，则这些0永远不会被匹配，因此需要将栈清空</span></span><br><span class="line">                <span class="keyword">if</span> (prev != <span class="number">0</span>)</span><br><span class="line">                    v0.clear();</span><br><span class="line">                v0.push_back(i); <span class="comment">// 当前字符未被右边字符匹配，因此需要入栈</span></span><br><span class="line">                prev = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">&#x27;1&#x27;</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 同理</span></span><br><span class="line">                <span class="keyword">if</span> (v0.size())</span><br><span class="line">                &#123;</span><br><span class="line">                    v0.pop_back();</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (prev != <span class="number">1</span>)</span><br><span class="line">                    v1.clear();</span><br><span class="line">                v1.push_back(i);</span><br><span class="line">                prev = <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>变量 <code>prev</code> 用于在遍历 <code>s</code> 的时候记录 <code>i - 1</code> 位置的字符。之前没有注意到有的0或1肯定不会被匹配的情况，就没有做是否需要将栈清空的判断，因此就失败了。</p><h2 id="v2.0-v3.0">v2.0 &amp; v3.0</h2><p>参考了官方题解的做法：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">countBinarySubstrings</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> size = s.length(), first = <span class="number">0</span>, end = <span class="number">0</span>, sum = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; nums;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= size; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span> || i == size || s[i] != s[i - <span class="number">1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (i &gt; <span class="number">0</span>)</span><br><span class="line">                    nums.push_back(end - first);</span><br><span class="line">                first = end = i;</span><br><span class="line">            &#125;</span><br><span class="line">            end++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.size(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            sum += min(nums[i], nums[i - <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>在 <code>v2.0</code> 中，需要先遍历一次字符串 <code>s</code> 将连续0或1的个数记录到 <code>nums</code> 数组中，然后再遍历 <code>nums</code> 数组来计算符合条件的子串个数。然而可以发现，在第二次循环中，计算符合条件的子串个数时也只用到了上一个连续0或1的个数。因此，完全可以不用 <code>nums</code> 数组，只需要遍历一次字符串 <code>s</code> ，使用一个变量 <code>count</code> 记录上一个连续0或1的个数即可（<code>v3.0</code>）：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">countBinarySubstrings</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> size = s.length(), first = <span class="number">0</span>, end = <span class="number">0</span>, sum = <span class="number">0</span>, count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= size; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (i == <span class="number">0</span> || i == size || s[i] != s[i - <span class="number">1</span>])</span><br><span class="line">            &#123;</span><br><span class="line">                sum += min(count, end - first);</span><br><span class="line">                count = end - first;</span><br><span class="line">                first = end = i;</span><br><span class="line">            &#125;</span><br><span class="line">            end++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;题目链接：https://leetcode-cn.com/problems/count-binary-substrings/&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="刷题 - LeetCode" scheme="https://lovebettygirl.github.io/categories/%E5%88%B7%E9%A2%98-LeetCode/"/>
-    
-    
-    <category term="LeetCode" scheme="https://lovebettygirl.github.io/tags/LeetCode/"/>
-    
-    <category term="算法" scheme="https://lovebettygirl.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="C++" scheme="https://lovebettygirl.github.io/tags/C/"/>
     
     <category term="字符串" scheme="https://lovebettygirl.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     

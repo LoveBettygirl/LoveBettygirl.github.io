@@ -27,18 +27,26 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"lovebettygirl.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="人生得意须尽欢，莫使金樽空对月。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LoveBettygirl">
-<meta property="og:url" content="https://lovebettygirl.github.io/tags/git/index.html">
+<meta name="description" content="今天想要用实验室的一台Ubuntu 18的虚拟机（一直处于运行状态，但是也没有做任何操作），打开它的界面之后出现了莫名其妙的错误，屏幕整个都是黑的，一直在输出类似如下的文字，也不能用命令行操作： 1systemd-journald[404]: Failed to write entry (22 items，750 bytes),ignoring: Read-only file system 之前遇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决VMware Linux虚拟机出现的Read-only file system的问题">
+<meta property="og:url" content="https://lovebettygirl.github.io/posts/e809bf36/index.html">
 <meta property="og:site_name" content="LoveBettygirl">
-<meta property="og:description" content="人生得意须尽欢，莫使金樽空对月。">
+<meta property="og:description" content="今天想要用实验室的一台Ubuntu 18的虚拟机（一直处于运行状态，但是也没有做任何操作），打开它的界面之后出现了莫名其妙的错误，屏幕整个都是黑的，一直在输出类似如下的文字，也不能用命令行操作： 1systemd-journald[404]: Failed to write entry (22 items，750 bytes),ignoring: Read-only file system 之前遇">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142441090.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142635078.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104333744.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104414931.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104923282.png">
+<meta property="article:published_time" content="2021-03-15T03:04:10.000Z">
+<meta property="article:modified_time" content="2021-03-15T12:22:27.503Z">
 <meta property="article:author" content="LoveBettygirl">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142441090.png">
 
 
-<link rel="canonical" href="https://lovebettygirl.github.io/tags/git/">
+<link rel="canonical" href="https://lovebettygirl.github.io/posts/e809bf36/">
 
 
 <script data-pjax class="page-configurations">
@@ -46,12 +54,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script><script src="https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/autoload.js"></script>
 
-<title>标签: git | LoveBettygirl</title>
+<title>解决VMware Linux虚拟机出现的Read-only file system的问题 | LoveBettygirl</title>
   
 
 
@@ -177,7 +185,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -190,6 +198,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh%E7%99%BB%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">SSH登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8D%E9%94%99%E8%AF%AF"><span class="nav-number">2.</span> <span class="nav-text">修复错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -302,50 +311,152 @@
 </noscript>
 
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h2 class="collection-header">git
-          <small>标签</small>
-        </h2>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lovebettygirl.github.io/posts/e809bf36/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="LoveBettygirl">
+      <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LoveBettygirl">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          解决VMware Linux虚拟机出现的Read-only file system的问题<a href="https://github.com/LoveBettygirl/Personal-Blog/tree/master/source/_posts/%E8%A7%A3%E5%86%B3VMware-Linux%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%87%BA%E7%8E%B0%E7%9A%84Read-only-file-system%E7%9A%84%E9%97%AE%E9%A2%98.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+
+      <time title="创建时间：2021-03-15 11:04:10 / 修改时间：20:22:27" itemprop="dateCreated datePublished" datetime="2021-03-15T11:04:10+08:00">2021-03-15</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>816</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>今天想要用实验室的一台Ubuntu 18的虚拟机（一直处于运行状态，但是也没有做任何操作），打开它的界面之后出现了莫名其妙的错误，屏幕整个都是黑的，一直在输出类似如下的文字，也不能用命令行操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-journald[404]: Failed to write entry (22 items，750 bytes),ignoring: Read-only file system</span><br></pre></td></tr></table></figure>
+<p>之前遇到这样的问题我都是直接用虚拟机快照恢复到最近的的状态，但是这台虚拟机我并没有备份快照……</p>
+<p>从网上找了一些解决方案，总算找到了解决方法，现在记录在这里。</p>
+<a id="more"></a>
+<h2 id="ssh登录">SSH登录</h2>
+<p>因为出现问题的虚拟机不能直接用命令行操作，所以先尝试使用SSH登录来使用命令行操作这台虚拟机。可以使用另外一台正常的虚拟机，打开终端，输入以下命令登录到出问题的虚拟机：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 用户名@IP地址</span><br></pre></td></tr></table></figure>
+<p>如果不记得这台虚拟机的IP地址，可以在虚拟机列表当中右击这台虚拟机，找到SSH选项，再点击「连接到SSH」</p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142441090.png" alt><figcaption>image-20210315142441090</figcaption>
+</figure>
+<p>首次连接会出现以下对话框，填写当前用户名，点击连接，即可登录。</p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142635078.png" alt="image-20210315142635078" style="zoom:50%;"></p>
+<h2 id="修复错误">修复错误</h2>
+<p>登录到这台虚拟机之后，通过执行以下命令发现系统无法创建日志文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl --verify</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104333744.png" alt><figcaption>image-20210315104333744</figcaption>
+</figure>
+<p>然后执行此命令修复根目录挂载点下的文件系统：（注意：最好不要贸然执行这条命令，可能也会导致系统无法正常启动）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fsck -y /</span><br></pre></td></tr></table></figure>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104414931.png" alt><figcaption>image-20210315104414931</figcaption>
+</figure>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104923282.png" alt><figcaption>image-20210315104923282</figcaption>
+</figure>
+<p>可以发现是 <code>/dev/sda1</code> 分区出了问题，并且现在已经修复，重启虚拟机：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -r now</span><br></pre></td></tr></table></figure>
+<p>这样虚拟机重启之后，居然也没有进入 initramfs 命令行，直接正常进入系统了。</p>
+<h2 id="参考">参考</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qin1137248135/article/details/108273596">https://blog.csdn.net/qin1137248135/article/details/108273596</a></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2020-07-07T18:32:47+08:00"
-              content="2020-07-07">
-          07-07
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/e7168358/" itemprop="url">
-            <span itemprop="name">如何将hexo博客站点迁移到其他电脑上</span>
-          </a>
-      </div>
-
+    
+    
+    
       
-    </header>
+
+
+    <footer class="post-footer"><div style="text-align: center; color: #ccc; font-size: 1em;">------------- END -------------</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>LoveBettygirl
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://lovebettygirl.github.io/posts/e809bf36/" title="解决VMware Linux虚拟机出现的Read-only file system的问题">https://lovebettygirl.github.io/posts/e809bf36/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/1f255d04/" rel="next" title="Hexo NexT 主题v8.0版本深度定制（一）：基础配置">
+                  Hexo NexT 主题v8.0版本深度定制（一）：基础配置 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 
 <script>
@@ -567,41 +678,11 @@ if (document.querySelectorAll('.mermaid').length) {
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://lovebettygirl.github.io/tags/git/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://lovebettygirl.github.io/posts/e809bf36/',]
       });
       });
   </script>
 <script src="/js/run_time.js"></script>
-
-
-
-
-  <script src="/js/crash_cheat.js"></script>
-
-
-
-
-
-  
-    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas>
-    <script src="https://cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
-    <script async src="/js/cursor/explosion.min.js"></script>
-  
-
-
-
-  <script src="/js/typing/activate-power-mode.js"></script>
-  <script>
-    POWERMODE.colorful = true;
-    POWERMODE.shake = true;
-    document.body.addEventListener('input', POWERMODE);
-  </script>
-
-
-    </div>
-</body>
-</html>
-run_time.js"></script>
 
 
 
