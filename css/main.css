@@ -3019,7 +3019,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #049c77;
+  background: #0120ff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3242,23 +3242,25 @@ code {
   border-bottom: 1px solid #ff7242;
 }
 figure,
-a.fancybox {
+.post-body p a.fancybox {
   text-align: center;
+}
+.post-body p a.fancybox {
+  border-bottom: none;
+  display: block;
 }
 figcaption,
 p.image-caption {
   min-width: 20%;
   max-width: 80%;
-  min-height: 43px;
+  min-height: 33px;
   display: inline-block;
   padding: 10px;
   margin: 0 auto;
-  border-bottom: 1px solid #eee;
-  font-size: 13px;
+  border-bottom: 1px solid #ccc;
+  font-size: 13px !important;
+  font-weight: normal !important;
   color: #999;
-}
-a.fancybox {
-  border-bottom: none;
 }
 /* Footer */
 .footer,
