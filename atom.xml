@@ -6,7 +6,7 @@
   <link href="https://lovebettygirl.github.io/atom.xml" rel="self"/>
   
   <link href="https://lovebettygirl.github.io/"/>
-  <updated>2021-03-15T12:22:27.503Z</updated>
+  <updated>2021-03-16T05:05:21.521Z</updated>
   <id>https://lovebettygirl.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://lovebettygirl.github.io/posts/e809bf36/"/>
     <id>https://lovebettygirl.github.io/posts/e809bf36/</id>
     <published>2021-03-15T03:04:10.000Z</published>
-    <updated>2021-03-15T12:22:27.503Z</updated>
+    <updated>2021-03-16T05:05:21.521Z</updated>
     
     <content type="html"><![CDATA[<p>今天想要用实验室的一台Ubuntu 18的虚拟机（一直处于运行状态，但是也没有做任何操作），打开它的界面之后出现了莫名其妙的错误，屏幕整个都是黑的，一直在输出类似如下的文字，也不能用命令行操作：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemd-journald[404]: Failed to write entry (22 items，750 bytes),ignoring: Read-only file system</span><br></pre></td></tr></table></figure><p>之前遇到这样的问题我都是直接用虚拟机快照恢复到最近的的状态，但是这台虚拟机我并没有备份快照……</p><p>从网上找了一些解决方案，总算找到了解决方法，现在记录在这里。</p><a id="more"></a><h2 id="ssh登录">SSH登录</h2><p>因为出现问题的虚拟机不能直接用命令行操作，所以先尝试使用SSH登录来使用命令行操作这台虚拟机。可以使用另外一台正常的虚拟机，打开终端，输入以下命令登录到出问题的虚拟机：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 用户名@IP地址</span><br></pre></td></tr></table></figure><p>如果不记得这台虚拟机的IP地址，可以在虚拟机列表当中右击这台虚拟机，找到SSH选项，再点击「连接到SSH」</p><figure><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142441090.png" alt><figcaption>image-20210315142441090</figcaption></figure><p>首次连接会出现以下对话框，填写当前用户名，点击连接，即可登录。</p><p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142635078.png" alt="image-20210315142635078" style="zoom:50%;"></p><h2 id="修复错误">修复错误</h2><p>登录到这台虚拟机之后，通过执行以下命令发现系统无法创建日志文件：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl --verify</span><br></pre></td></tr></table></figure><figure><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104333744.png" alt><figcaption>image-20210315104333744</figcaption></figure><p>然后执行此命令修复根目录挂载点下的文件系统：（注意：最好不要贸然执行这条命令，可能也会导致系统无法正常启动）</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fsck -y /</span><br></pre></td></tr></table></figure><figure><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104414931.png" alt><figcaption>image-20210315104414931</figcaption></figure><figure><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104923282.png" alt><figcaption>image-20210315104923282</figcaption></figure><p>可以发现是 <code>/dev/sda1</code> 分区出了问题，并且现在已经修复，重启虚拟机：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -r now</span><br></pre></td></tr></table></figure><p>这样虚拟机重启之后，居然也没有进入 initramfs 命令行，直接正常进入系统了。</p><h2 id="参考">参考</h2><p><a href="https://blog.csdn.net/qin1137248135/article/details/108273596">https://blog.csdn.net/qin1137248135/article/details/108273596</a></p>]]></content>
     
@@ -33,6 +33,14 @@
     
     
     
+    <category term="Linux" scheme="https://lovebettygirl.github.io/categories/Linux/"/>
+    
+    
+    <category term="VMware" scheme="https://lovebettygirl.github.io/tags/VMware/"/>
+    
+    <category term="Linux" scheme="https://lovebettygirl.github.io/tags/Linux/"/>
+    
+    <category term="Ubuntu" scheme="https://lovebettygirl.github.io/tags/Ubuntu/"/>
     
   </entry>
   
@@ -180,9 +188,9 @@
     
     <category term="Hexo" scheme="https://lovebettygirl.github.io/tags/Hexo/"/>
     
-    <category term="NexT" scheme="https://lovebettygirl.github.io/tags/NexT/"/>
-    
     <category term="npm" scheme="https://lovebettygirl.github.io/tags/npm/"/>
+    
+    <category term="NexT" scheme="https://lovebettygirl.github.io/tags/NexT/"/>
     
     <category term="Butterfly" scheme="https://lovebettygirl.github.io/tags/Butterfly/"/>
     

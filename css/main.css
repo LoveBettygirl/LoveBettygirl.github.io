@@ -3019,7 +3019,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #0120ff;
+  background: #f047ff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -3217,7 +3217,8 @@ code {
   color: #f47466;
 }
 .posts-expand .post-tags a {
-  border-radius: 8px;
+  border-radius: 16px;
+  padding: 1px 15px;
 }
 .post-copyright ul {
   position: relative;
@@ -3229,24 +3230,24 @@ code {
   background: transparent;
 }
 .post-copyright ul:hover {
-  box-shadow: 0 0 8px 0 rgba(34,34,34,0.5), 0 2px 4px 0 rgba(34,34,34,0.4);
+  box-shadow: 0 0 8px 0 rgba(217,217,217,0.5), 0 2px 4px 0 rgba(217,217,217,0.4);
 }
-.post-body p a {
+.post-body a:not(.post-button .btn) {
   color: #49b1f5;
   border-bottom: none;
   border-bottom: 1px solid #49b1f5;
 }
-.post-body p a:hover {
+.post-body a:not(.post-button .btn):hover {
   color: #ff7242;
   border-bottom: none;
   border-bottom: 1px solid #ff7242;
 }
-figure,
+figure:not(.highlight),
 .post-body p a.fancybox {
   text-align: center;
 }
 .post-body p a.fancybox {
-  border-bottom: none;
+  border-bottom: none !important;
   display: block;
 }
 figcaption,
