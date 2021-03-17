@@ -6,7 +6,7 @@
   <link href="https://lovebettygirl.github.io/atom.xml" rel="self"/>
   
   <link href="https://lovebettygirl.github.io/"/>
-  <updated>2021-03-16T05:05:21.521Z</updated>
+  <updated>2021-03-17T13:11:11.328Z</updated>
   <id>https://lovebettygirl.github.io/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo NexT 主题v8.0版本深度定制（三）：样式自定义</title>
+    <link href="https://lovebettygirl.github.io/posts/d1cbbcd1/"/>
+    <id>https://lovebettygirl.github.io/posts/d1cbbcd1/</id>
+    <published>2021-03-17T10:11:44.000Z</published>
+    <updated>2021-03-17T13:11:11.328Z</updated>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+      
+      
+    <summary type="html">
+</summary>
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo NexT 主题v8.0版本深度定制（二）：插件</title>
+    <link href="https://lovebettygirl.github.io/posts/b09f2018/"/>
+    <id>https://lovebettygirl.github.io/posts/b09f2018/</id>
+    <published>2021-03-17T10:11:25.000Z</published>
+    <updated>2021-03-17T13:11:01.982Z</updated>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    
+      
+      
+    <summary type="html">
+</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>解决VMware Linux虚拟机出现的Read-only file system的问题</title>
@@ -188,9 +230,9 @@
     
     <category term="Hexo" scheme="https://lovebettygirl.github.io/tags/Hexo/"/>
     
-    <category term="npm" scheme="https://lovebettygirl.github.io/tags/npm/"/>
-    
     <category term="NexT" scheme="https://lovebettygirl.github.io/tags/NexT/"/>
+    
+    <category term="npm" scheme="https://lovebettygirl.github.io/tags/npm/"/>
     
     <category term="Butterfly" scheme="https://lovebettygirl.github.io/tags/Butterfly/"/>
     
@@ -498,64 +540,6 @@
     <category term="哈希表" scheme="https://lovebettygirl.github.io/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
     
     <category term="二分查找" scheme="https://lovebettygirl.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【LeetCode】383. 赎金信</title>
-    <link href="https://lovebettygirl.github.io/posts/d4af32e4/"/>
-    <id>https://lovebettygirl.github.io/posts/d4af32e4/</id>
-    <published>2020-12-08T02:23:20.000Z</published>
-    <updated>2021-02-09T13:02:49.727Z</updated>
-    
-    <content type="html"><![CDATA[<p>题目链接：https://leetcode-cn.com/problems/ransom-note/</p><a id="more"></a><p>这道题关键在于题意理解，返回 <code>true</code> 的条件即 <code>ransom</code> 字符串中出现的该字符数量不能大于 <code>magazine</code> 字符串中出现的该字符的数量。（起初看到给的示例还以为是判断 <code>ransom</code> 是不是 <code>magazine</code>的子串，但是看到了括号里面的题目说明才觉得可能是想错了）</p><p>所以就用了两个哈希表来统计两个字符串出现字符的数量再分别对比：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canConstruct</span><span class="params">(<span class="built_in">string</span> ransomNote, <span class="built_in">string</span> magazine)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m1, m2;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; magazine.length(); i++)</span><br><span class="line">            m1[magazine[i]]++;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ransomNote.length(); i++)</span><br><span class="line">            m2[ransomNote[i]]++;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;::iterator i = m2.begin(); i != m2.end(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (m1.find(i-&gt;first) == m1.end() || m1[i-&gt;first] &lt; i-&gt;second)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>更省空间的方法（我怎么就没有想到呢，我好菜）：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">canConstruct</span><span class="params">(<span class="built_in">string</span> ransomNote, <span class="built_in">string</span> magazine)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; m;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; magazine.length(); i++)</span><br><span class="line">            m[magazine[i]]++;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ransomNote.length(); i++)</span><br><span class="line">        &#123;</span><br><span class="line">            m[ransomNote[i]]--;</span><br><span class="line">            <span class="keyword">if</span> (m[ransomNote[i]] &lt; <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;题目链接：https://leetcode-cn.com/problems/ransom-note/&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="刷题 - LeetCode" scheme="https://lovebettygirl.github.io/categories/%E5%88%B7%E9%A2%98-LeetCode/"/>
-    
-    
-    <category term="LeetCode" scheme="https://lovebettygirl.github.io/tags/LeetCode/"/>
-    
-    <category term="算法" scheme="https://lovebettygirl.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="C++" scheme="https://lovebettygirl.github.io/tags/C/"/>
-    
-    <category term="字符串" scheme="https://lovebettygirl.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    
-    <category term="哈希表" scheme="https://lovebettygirl.github.io/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【LeetCode】125. 验证回文串 &amp; 345. 反转字符串中的元音字母</title>
-    <link href="https://lovebettygirl.github.io/posts/c52b8313/"/>
-    <id>https://lovebettygirl.github.io/posts/c52b8313/</id>
-    <published>2020-12-07T16:40:28.000Z</published>
-    <updated>2021-02-09T13:02:49.717Z</updated>
-    
-    <content type="html"><![CDATA[<p>这次依然是两道简单题，嗯，又水了一天……</p><a id="more"></a><h2 id="验证回文串">125. 验证回文串</h2><p>题目链接：https://leetcode-cn.com/problems/valid-palindrome/</p><p>一看到这道题就知道又是熟悉的判断回文串的算法，只是这里的回文串需要忽略除了字母和数字以外的其他字符，也不区分大小写。</p><p>可以先对字符串进行预处理，然后判断回文串可以使用一对对撞指针：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> size = s.length();</span><br><span class="line">        <span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">string</span> s1;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; size; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">isdigit</span>(s[i]) || <span class="built_in">isalpha</span>(s[i]))</span><br><span class="line">                s1.push_back(<span class="built_in">tolower</span>(s[i]));</span><br><span class="line">        &#125;</span><br><span class="line">        size = s1.length();</span><br><span class="line">        i = <span class="number">0</span>;</span><br><span class="line">        j = size - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j &amp;&amp; i &lt; size &amp;&amp; j &gt;= <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (s1[i] != s1[j])</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            i++;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>时间、空间复杂度均为 <span class="math inline">\(O(n)\)</span>，<span class="math inline">\(n\)</span> 为字符串 <span class="math inline">\(s\)</span> 的长度。</p><p>事实上并不需要做预处理，只需要在判断回文串时手动忽略掉无关字符即可：（可以使空间复杂度降至 <span class="math inline">\(O(1)\)</span>）</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> size = s.length(), i = <span class="number">0</span>, j = size - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j &amp;&amp; i &lt; size &amp;&amp; j &gt;= <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="built_in">isalnum</span>(s[i]))</span><br><span class="line">                i++;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (!<span class="built_in">isalnum</span>(s[j]))</span><br><span class="line">                j--;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">tolower</span>(s[i]) != <span class="built_in">tolower</span>(s[j]))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                i++;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><h2 id="反转字符串中的元音字母">345. 反转字符串中的元音字母</h2><p>题目链接：https://leetcode-cn.com/problems/reverse-vowels-of-a-string/</p><p>和上一题一样，这次的无关字符是非元音字母（即a、e、i、o、u以外的字母），反转字符串和判断回文串不同的是前者要交换当前两字符位置，后者判断当前两字符是否相等（否则不是回文串）：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isVowel</span><span class="params">(<span class="keyword">char</span> c)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        c = <span class="built_in">tolower</span>(c);</span><br><span class="line">        <span class="keyword">if</span> (c == <span class="string">&#x27;a&#x27;</span> || c == <span class="string">&#x27;e&#x27;</span> || c == <span class="string">&#x27;i&#x27;</span> || c == <span class="string">&#x27;o&#x27;</span> || c == <span class="string">&#x27;u&#x27;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">reverseVowels</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> size = s.length(), i = <span class="number">0</span>, j = size - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j &amp;&amp; i &lt; size &amp;&amp; j &gt;= <span class="number">0</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isVowel(s[i]))</span><br><span class="line">                i++;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (!isVowel(s[j]))</span><br><span class="line">                j--;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                swap(s[i++], s[j--]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>时间复杂度为 <span class="math inline">\(O(n)\)</span>（<span class="math inline">\(n\)</span> 为字符串 <span class="math inline">\(s\)</span> 的长度），空间复杂度为 <span class="math inline">\(O(1)\)</span>。</p><h2 id="额外收获">额外收获</h2><p>这次从题解里面 get 了一个判断字符是字母或数字的库函数 <code>isalnum()</code> （头文件 <code>cctype</code>），顺便复习了回文串判断和字符串反转的算法（虽然算法从大一以来就记得烂熟，但是没有想到可以使用两个对撞指针解决，还可以无视无关字符）</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;这次依然是两道简单题，嗯，又水了一天……&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="刷题 - LeetCode" scheme="https://lovebettygirl.github.io/categories/%E5%88%B7%E9%A2%98-LeetCode/"/>
-    
-    
-    <category term="LeetCode" scheme="https://lovebettygirl.github.io/tags/LeetCode/"/>
-    
-    <category term="算法" scheme="https://lovebettygirl.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-    <category term="C++" scheme="https://lovebettygirl.github.io/tags/C/"/>
-    
-    <category term="双指针" scheme="https://lovebettygirl.github.io/tags/%E5%8F%8C%E6%8C%87%E9%92%88/"/>
-    
-    <category term="字符串" scheme="https://lovebettygirl.github.io/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     
   </entry>
   
