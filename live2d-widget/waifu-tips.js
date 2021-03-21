@@ -123,10 +123,7 @@ function loadWidget(config) {
 			text = randomSelection(["关于本站和主人的一切都在这里哦～", "本站和主人的一切尽在掌握之中～"]);
 		} else if (location.pathname.indexOf("/talking") === 0) {
 			text = "这里是主人畅所欲言的空间～";
-		} else if (location.pathname.indexOf("/404") === 0 || localStorage.getItem('404')) {
-			if (localStorage.getItem('404')) {
-				localStorage.removeItem('404');
-			}
+		} else if (document.title.indexOf("404 Not Found") >= 0 && location.pathname.indexOf("/posts") < 0) {
 			text = randomSelection(["你来到了没有文章存在的荒原。", "你看起来迷路了，喝杯茶休息一下呗？", "非常抱歉，你想看的内容已经飞向外太空啦 (≧∇≦)"]);
 		} else if (document.referrer !== "") {
 			const referrer = new URL(document.referrer),
