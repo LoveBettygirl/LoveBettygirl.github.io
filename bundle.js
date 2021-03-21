@@ -1,47 +1,3 @@
-// 注意：live2d_path 参数应使用绝对路径
-// const live2d_path = "https://cdn.jsdelivr.net/gh/stevenjoezhang/live2d-widget@latest/";
-const live2d_path = "/live2d-widget/";
-
-// 封装异步加载资源的方法
-function loadExternalResource(url, type) {
-	return new Promise((resolve, reject) => {
-		let tag;
-
-		if (type === "css") {
-			tag = document.createElement("link");
-			tag.rel = "stylesheet";
-			tag.href = url;
-		}
-		else if (type === "js") {
-			tag = document.createElement("script");
-			tag.src = url;
-		}
-		if (tag) {
-			tag.onload = () => resolve(url);
-			tag.onerror = () => reject(url);
-			document.head.appendChild(tag);
-		}
-	});
-}
-
-// 加载 waifu.css live2d.min.js waifu-tips.js
-if (screen.width >= 768) {
-	Promise.all([
-		loadExternalResource(live2d_path + "waifu.css", "css"),
-		loadExternalResource(live2d_path + "live2d.min.js", "js"),
-		loadExternalResource(live2d_path + "waifu-tips.js", "js")
-	]).then(() => {
-		initWidget({
-			waifuPath: live2d_path + "waifu-tips.json",
-			//apiPath: "https://live2d.fghrsh.net/api/",
-			cdnPath: "https://cdn.jsdelivr.net/gh/fghrsh/live2d_api/"
-		});
-	});
-}
-// initWidget 第一个参数为 waifu-tips.json 的路径，第二个参数为 API 地址
-// API 后端可自行搭建，参考 https://github.com/fghrsh/live2d_api
-// 初始化看板娘会自动加载指定目录下的 waifu-tips.json
-;
 (function () {
     const enableDarkMode = function () {
         document.body.classList.add('dark-mode');
@@ -568,44 +524,6 @@ return /******/ (function(modules) { // webpackBootstrap
 });
 ;
 ;
-function clickWaifu() {
-    if (localStorage.getItem('waifu-display') && Date.now() - localStorage.getItem('waifu-display') <= 86400000) {
-		document.getElementById('waifu-toggle').click();
-	} else {
-		document.querySelector('#waifu-tool .fa-times').click();
-	}
-}
-
-document.querySelector('#moon-menu-item-waifu').addEventListener('click', () => {
-    clickWaifu();
-});
-;
-function clickSidebar() {
-    const isRight = CONFIG.sidebar.position === 'right';
-    const toggle = {
-        showSidebar: function () {
-            document.body.classList.add('sidebar-active');
-            const animateAction = isRight ? 'fadeInRight' : 'fadeInLeft';
-            document.querySelectorAll('.sidebar .animated').forEach((element, index) => {
-                element.style.animationDelay = (100 * index) + 'ms';
-                element.classList.remove(animateAction);
-                setTimeout(() => {
-                    // Trigger a DOM reflow
-                    element.classList.add(animateAction);
-                });
-            });
-        },
-        hideSidebar: function () {
-            document.body.classList.remove('sidebar-active');
-        }
-    }
-    document.body.classList.contains('sidebar-active') ? toggle.hideSidebar() : toggle.showSidebar();
-}
-
-document.querySelector('#moon-menu-item-sidebar').addEventListener('click', () => {
-    clickSidebar();
-});
-;
 let adjust = document.querySelector('#moon-menu-item-adjust');
 let icon = adjust.querySelector('i');
 
@@ -638,6 +556,44 @@ function clickAdjust() {
 
 adjust.addEventListener('click', () => {
     clickAdjust();
+});
+;
+function clickSidebar() {
+    const isRight = CONFIG.sidebar.position === 'right';
+    const toggle = {
+        showSidebar: function () {
+            document.body.classList.add('sidebar-active');
+            const animateAction = isRight ? 'fadeInRight' : 'fadeInLeft';
+            document.querySelectorAll('.sidebar .animated').forEach((element, index) => {
+                element.style.animationDelay = (100 * index) + 'ms';
+                element.classList.remove(animateAction);
+                setTimeout(() => {
+                    // Trigger a DOM reflow
+                    element.classList.add(animateAction);
+                });
+            });
+        },
+        hideSidebar: function () {
+            document.body.classList.remove('sidebar-active');
+        }
+    }
+    document.body.classList.contains('sidebar-active') ? toggle.hideSidebar() : toggle.showSidebar();
+}
+
+document.querySelector('#moon-menu-item-sidebar').addEventListener('click', () => {
+    clickSidebar();
+});
+;
+function clickWaifu() {
+    if (localStorage.getItem('waifu-display') && Date.now() - localStorage.getItem('waifu-display') <= 86400000) {
+		document.getElementById('waifu-toggle').click();
+	} else {
+		document.querySelector('#waifu-tool .fa-times').click();
+	}
+}
+
+document.querySelector('#moon-menu-item-waifu').addEventListener('click', () => {
+    clickWaifu();
 });
 ;
 "use strict";((e,t)=>{const o=function(){const o=t.documentElement.offsetHeight,n=t.documentElement.scrollHeight,l=t.documentElement.scrollTop||e.pageYOffset||t.body.scrollTop;let s=Math.round(l/(n-o)*100);s>100&&(s=100);const c=t.querySelector(".moon-menu-icon"),r=t.querySelector(".moon-menu-text");s?(c.style.display="none",r.style.display="block",r.innerHTML=s+"%"):(s=0,c.style.display="block",r.style.display="none");t.querySelector(".moon-menu-border").style.strokeDasharray=196*s/100+" 196"};e.addEventListener("load",(()=>{o()})),e.addEventListener("scroll",o),t.querySelector(".moon-menu-button").addEventListener("click",(()=>{t.querySelector(".moon-menu-icon").classList.toggle("active");const e=t.querySelector(".moon-menu-items");e.classList.toggle("active");const o=t.querySelectorAll(".moon-menu-item");if(e.classList.contains("active"))for(let e=0;e<o.length;e++)o[e].style.top=-3-3*e+"em",o[e].style.opacity=.9;else for(let e=0;e<o.length;e++)o[e].style.top="1em",o[e].style.opacity=0}));const n=(e,o)=>{const n=t.querySelector(e);n&&n.addEventListener("click",o)};n("#moon-menu-item-back2top",(()=>{e.scroll({top:0,behavior:"smooth"})})),n("#moon-menu-item-back2bottom",(()=>{const o=t.documentElement.offsetHeight,n=t.documentElement.scrollHeight;e.scroll({top:n-o,behavior:"smooth"})}))})(window,document);
