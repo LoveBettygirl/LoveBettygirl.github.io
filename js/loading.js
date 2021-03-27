@@ -1677,7 +1677,6 @@ var pageLoading = {
             //     pageLoading.spinner.setComplete();
             // }, 6000);
             window.addEventListener('load', () => {
-                console.log('load');
                 document.getElementById('loading').style.display = 'none';
                 pageLoading.spinner.setComplete();
             });
