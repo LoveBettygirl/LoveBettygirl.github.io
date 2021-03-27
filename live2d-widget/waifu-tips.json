@@ -54,13 +54,13 @@
 		"selector": ".site-author",
 		"text": ["我家主人好看吗？", "这是我家主人(*´∇｀*)"]
 	}, {
-		"selector": ".site-state",
+		"selector": ".site-state, .site-state a",
 		"text": ["这是文章的统计信息～", "要不要点进去看看？"]
 	}, {
 		"selector": ".feed-link a, .links-of-author-item a[href^='/atom.xml']",
 		"text": ["这里可以使用 RSS 订阅呢！", "利用 feed 订阅器，就能快速知道博客有没有更新了呢。"]
 	}, {
-		"selector": ".github-corner, .links-of-author-item a[title^='GitHub']",
+		"selector": ".github-corner svg, .github-corner path, .links-of-author-item a[title^='GitHub']",
 		"text": ["这里有主人的所有代码哦。", "来都来了，不来看看主人的 GitHub 吗？"]
 	}, {
 		"selector": ".cc-opacity, .post-copyright-author",
@@ -90,11 +90,11 @@
 		"selector": "a[href^='/categories/']",
 		"text": ["要去看看 <span>{text}</span> 分类么？", "点它可以查看此分类下的所有文章哟！"]
 	}, {
-		"selector": ".post-title-link",
-		"text": ["要看看 <span>{text}</span> 这篇文章吗？"]
-	}, {
-		"selector": "a[rel='contents']",
+		"selector": ".post-button a[rel='contents']",
 		"text": ["点击来阅读全文哦。"]
+	}, {
+		"selector": ".post-title-link, a[href^='/posts/'], .post-title-link span",
+		"text": ["要看看 <span>{text}</span> 这篇文章吗？"]
 	}, {
 		"selector": "a[itemprop='discussionUrl']",
 		"text": ["要去看看评论吗？"]
@@ -153,6 +153,9 @@
 		"selector": ".extend.prev",
 		"text": ["去上一页看看吧。", "点它可以后退哦！", "要翻到上一页吗？"]
 	}, {
+		"selector": "a.page-number",
+		"text": ["去第 <span>{text}</span> 页看看吧。", "要翻到第 <span>{text}</span> 页吗？"]
+	}, {
 		"selector": "input.vnick",
 		"text": ["该怎么称呼你呢？", "留下你的尊姓大名！"]
 	}, {
@@ -180,7 +183,7 @@
 		"selector": ".vcontent",
 		"text": ["哇，快看看这个精彩评论！", "如果有疑问，请尽快留言哦～"]
 	}, {
-		"selector": ".moon-menu-button",
+		"selector": ".moon-menu-text, .moon-menu-icon",
 		"text": ["要看看菜单里面都有什么吗？", "点击就可以查看菜单啦！", "菜单里面有更多功能，走过路过不要错过～", "这里有惊喜哦。"]
 	}, {
 		"selector": "#moon-menu-item-adjust",
@@ -194,6 +197,9 @@
 	}, {
 		"selector": ".book-mark-link",
 		"text": ["点击可以保存当前阅读进度哦。", "怕记不住看到哪里了？点击这里就可以啦～"]
+	}, {
+		"selector": "a",
+		"text": ["要点进去看看吗？", "快看看里面都有什么呢？"]
 	}],
 	"click": [{
 		"selector": "#waifu #live2d",

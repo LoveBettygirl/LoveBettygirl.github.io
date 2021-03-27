@@ -2976,7 +2976,7 @@ hr {
   transition: all 0.2s ease-in-out;
 }
 .links-of-author a::before {
-  background: #ff1c09;
+  background: #ffe788;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -7012,7 +7012,7 @@ div.timenode:after {
   content: '';
   z-index: 1;
   position: absolute;
-  background: #a7a7a7;
+  background: #a7a7a7 !important;
   width: 2px;
   left: 7px;
 }
@@ -7049,14 +7049,14 @@ div.timenode .meta:after {
 }
 div.timenode .meta:before {
 /* background: rgba(83, 83, 83, 0.5); */
-  background: var(--time-node-before-color);
+  background: var(--time-node-before-color) !important;
   width: 16px;
   height: 16px;
   border-radius: 8px;
 }
 div.timenode .meta:after {
 /* background: #111; */
-  background: var(--time-node-after-color);
+  background: var(--time-node-after-color) !important;
   margin-left: 2px;
   margin-top: 2px;
   width: 12px;
@@ -7106,7 +7106,7 @@ div.timenode .body {
   padding: 16px;
   border-radius: 8px;
 /* background: #f6f6f6; */
-  background: var(--time-node-body-color);
+  background: var(--time-node-body-color) !important;
   display: inline-block;
 }
 /* Local Search */

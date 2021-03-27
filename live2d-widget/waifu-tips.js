@@ -103,7 +103,9 @@ function loadWidget(config) {
 
 	(function welcomeMessage() {
 		let text;
-		if (location.pathname === "/" || location.pathname.indexOf("/index.html") === 0) { // 如果是主页
+		if (document.title.indexOf("404 Not Found") >= 0) {
+			text = randomSelection(["你来到了没有文章存在的荒原。", "你看起来迷路了，喝杯茶休息一下呗？", "非常抱歉，你想看的内容已经飞向外太空啦 (≧∇≦)"]);
+		} else if (location.pathname === "/" || location.pathname.indexOf("/index.html") === 0 || location.pathname.indexOf("/page") === 0) { // 如果是主页
 			const now = new Date().getHours();
 			if (now > 5 && now <= 7) text = "早上好！一日之计在于晨，美好的一天就要开始了。";
 			else if (now > 7 && now <= 11) text = "上午好！工作顺利嘛，不要久坐，多起来走动走动哦！";
@@ -123,8 +125,6 @@ function loadWidget(config) {
 			text = randomSelection(["关于本站和主人的一切都在这里哦～", "本站和主人的一切尽在掌握之中～"]);
 		} else if (location.pathname.indexOf("/talking") === 0) {
 			text = "这里是主人畅所欲言的空间～";
-		} else if (document.title.indexOf("404 Not Found") >= 0 && location.pathname.indexOf("/posts") < 0) {
-			text = randomSelection(["你来到了没有文章存在的荒原。", "你看起来迷路了，喝杯茶休息一下呗？", "非常抱歉，你想看的内容已经飞向外太空啦 (≧∇≦)"]);
 		} else if (document.referrer !== "") {
 			const referrer = new URL(document.referrer),
 				domain = referrer.hostname.split(".")[1];
@@ -169,25 +169,15 @@ function loadWidget(config) {
 		}, timeout);
 	}
 
-	function registerDynamicElement(result, eventType, elSelector) {
-		$(document).on(eventType, elSelector, (event) => {
-			for (let { selector, text } of result[eventType]) {
-				if (selector.indexOf(elSelector) < 0) continue;
-				text = randomSelection(text);
-				text = text.replace("{text}", event.target.innerText);
-				showMessage(text, 4000, 8);
-				return;
-			}
-		});
-	}
-
 	(function initModel() {
 		let modelId = localStorage.getItem("modelId"),
 			modelTexturesId = localStorage.getItem("modelTexturesId");
 		if (modelId === null) {
 			// 首次访问加载 指定模型 的 指定材质
-			modelId = 1; // 模型 ID
-			modelTexturesId = 53; // 材质 ID
+			// modelId = 1; // 模型 ID
+			// modelTexturesId = 53; // 材质 ID
+			modelId = 6; // 模型 ID
+			modelTexturesId = 0; // 材质 ID
 		}
 		loadModel(modelId, modelTexturesId);
 		fetch(waifuPath)
@@ -211,13 +201,6 @@ function loadWidget(config) {
 						return;
 					}
 				});
-				registerDynamicElement(result, "mouseover", ".github-corner");
-				registerDynamicElement(result, "mouseover", ".moon-menu-button");
-				registerDynamicElement(result, "mouseover", "#moon-menu-item-back2top");
-				registerDynamicElement(result, "mouseover", "#moon-menu-item-back2bottom");
-				registerDynamicElement(result, "mouseover", "#moon-menu-item-adjust");
-				registerDynamicElement(result, "mouseover", "#moon-menu-item-waifu");
-				registerDynamicElement(result, "mouseover", "#moon-menu-item-sidebar");
 				result.seasons.forEach(({ date, text }) => {
 					const now = new Date(),
 						after = date.split("-")[0],
