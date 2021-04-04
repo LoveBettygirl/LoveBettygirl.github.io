@@ -158,6 +158,289 @@ document.querySelectorAll(".popup-trigger").forEach(e=>{e.addEventListener("clic
 setTimeout(()=>n.focus(),500),t||i()})});
 // Monitor main search box
 const a=()=>{document.body.classList.remove("search-active")};document.querySelector(".search-pop-overlay").addEventListener("click",e=>{e.target===document.querySelector(".search-pop-overlay")&&a()}),document.querySelector(".popup-btn-close").addEventListener("click",a),document.addEventListener("pjax:success",()=>{l(),a()}),window.addEventListener("keyup",e=>{"Escape"===e.key&&a()})});;
+;(function ($) {
+  $.fn.circleMagic = function (options) {
+
+    var width, height, canvas, ctx, animateHeader = true;
+    var circles = [];
+
+    var settings = $.extend({
+      color: 'rgba(255,255,255,.5)',
+      radius: 10,
+      density: 0.3,
+      clearOffset: 0.2
+    }, options);
+
+    //  Main
+
+    var container = this['0'];
+    initContainer();
+    addListeners();
+
+    function initContainer() {
+      width = container.offsetWidth;
+      height = container.offsetHeight;
+
+      //  create canvas element
+
+      initCanvas();
+      canvas = document.getElementById('homeTopCanvas');
+      canvas.width = width;
+      canvas.height = height;
+      canvas.style.position = 'absolute';
+      canvas.style.left = '0';
+      canvas.style.bottom = '0';
+      ctx = canvas.getContext('2d');
+
+      //  create circles
+      for (var x = 0; x < width * settings.density; x++) {
+        var c = new Circle();
+        circles.push(c);
+      }
+      animate();
+    }
+
+    //Init canvas element
+    function initCanvas() {
+      var canvasElement = document.createElement('canvas');
+      canvasElement.id = 'homeTopCanvas';
+      container.appendChild(canvasElement);
+      canvasElement.parentElement.style.overflow = 'hidden';
+
+    }
+
+    // Event handling
+    function addListeners() {
+      window.addEventListener('scroll', scrollCheck, false);
+      window.addEventListener('resize', resize, false);
+    }
+
+    function scrollCheck() {
+      if (document.body.scrollTop > height) {
+        animateHeader = false;
+      }
+      else {
+        animateHeader = true;
+      }
+    }
+
+    function resize() {
+      width = container.clientWidth;
+      height = container.clientHeight;
+      container.height = height + 'px';
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    function animate() {
+      if (animateHeader) {
+        ctx.clearRect(0, 0, width, height);
+        for (var i in circles) {
+          circles[i].draw();
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function randomColor() {
+      var r = Math.floor(Math.random() * 255);
+      var g = Math.floor(Math.random() * 255);
+      var b = Math.floor(Math.random() * 255);
+      var alpha = Math.random().toPrecision(2);
+      return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + alpha + ')';
+    }
+
+    //  Canvas manipulation
+
+    function Circle() {
+      var that = this;
+
+      // constructor
+      (function () {
+        that.pos = {};
+        init();
+      })();
+
+      function init() {
+        that.pos.x = Math.random() * width;
+        that.pos.y = height + Math.random() * 100;
+        that.alpha = 0.1 + Math.random() * settings.clearOffset;
+        that.scale = 0.1 + Math.random() * 0.3;
+        that.speed = Math.random();
+        if (settings.color === 'random') {
+          that.color = randomColor();
+        }
+        else {
+          that.color = settings.color;
+        }
+      }
+
+      this.draw = function () {
+        if (that.alpha <= 0) {
+          init();
+        }
+        that.pos.y -= that.speed;
+        that.alpha -= 0.0005;
+        ctx.beginPath();
+        ctx.arc(that.pos.x, that.pos.y, that.scale * settings.radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = that.color;
+        ctx.fill();
+        ctx.closePath();
+      };
+    }
+  }
+})(jQuery);;
+let randomNum = function(minNum, maxNum) {
+    switch(arguments.length){
+        case 1:
+            return parseInt(Math.random()*minNum+1); break;
+        case 2:
+            return parseInt(Math.random()*(maxNum-minNum+1)+minNum); break;
+        default:
+            return 0; break;
+    }
+};
+let setDomHomePosition = function () {
+    $('#main').css('margin-top', ($('.main-cover').outerHeight() + 120) + 'px');
+};
+let temScroll = null;
+let scrollMonitor = function () {
+
+};
+(function () {
+    // scrollMonitor();
+    let mainCover = document.querySelector('.main-cover');
+    if (mainCover === null) {
+        return;
+    }
+    let hitokoto = $('#hitokoto');
+    // let bgImg = "https://img.paulzzh.tech/touhou/random?tag=night";
+    // let bgImg = "https://img.onesnas.com";
+    let bgImg = `/images/wallpaper/${randomNum(1, 35)}.png`;
+    $('.main-cover').css({
+        'background': '#222 url("'+encodeURI(bgImg)+'")  center center no-repeat',
+        'background-size': 'cover'
+    });
+    $('.main-cover .cover-mask').circleMagic({
+        radius: 15,
+        density: 0.2,
+        color: 'rgba(255, 255, 255, .2)',
+        clearOffset: 0.3
+    });
+
+    let topTitleList = [
+        '每一个不曾起舞的日子，都是对生命的辜负。',
+        '公主死去了，屠龙的少年还在燃烧',
+        '我们听过无数的道理，却仍旧过不好这一生。',
+        '生如夏花之绚烂，死如秋叶之静美。',
+        '但凡不能杀死你的，最终都会使你更强大。',
+        '好看的皮囊千篇一律，有趣的灵魂万里挑一。',
+        '青春是一本太仓促的书，我们含着泪，一读再读。',
+        '教育就是当一个人把在学校所学全部忘光之后剩下的东西。',
+        '孤独不是一种脾性，而是一种无奈。',
+        '有时候你以为天要塌下来了，其实是自己站歪了。',
+        '温柔正确的人总是难以生存，因为这世界既不温柔，也不正确。',
+        '死并非生的对立面，而作为生的一部分永存。',
+        '不要努力成为一个成功者，要努力成为一个有价值的人。',
+        '不要因为走得太远，忘了我们为什么出发。',
+        '你的问题主要在于读书不多而想得太多。',
+        '岁月不饶人，我亦未曾饶过岁月。',
+        '当你凝视深渊时，深渊也在凝视着你。',
+        '有的人25岁就死了，只是到75岁才埋葬'
+    ], settings = {};
+
+    let type = 2;
+
+    switch (type) {
+    case 1: //  ONE . 每日一句
+        settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://sentence.iciba.com/index.php?callback=onecallback&c=dailysentence&m=getdetail&title=" + tools.getNowFormatDate(),
+            "method": "POST",
+            "dataType": 'jsonp',
+            "headers": {
+                "content-type": "application/x-www-form-urlencoded",
+            },
+            "data": {
+                "TransCode": "030111",
+                "OpenId": "123456789",
+                "Body": ""
+            }
+        };
+
+        $.ajax(settings).done(function (response) {
+            if (response.errno === 0) {
+                hitokoto.text(response.note).css('display', '-webkit-box');
+                $('#hitokotoAuthor').text(response.content).show();
+            } else {
+                let listIndex = randomNum(0, topTitleList.length - 1);
+                hitokoto.text(topTitleList[listIndex]).css('display', '-webkit-box');
+            }
+            // setDomHomePosition();
+            return false;
+        });
+        break;
+
+    case 2:
+    default: // 今日诗词
+        settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://v2.jinrishici.com/one.json",
+            "method": "GET"
+        };
+
+        $.ajax(settings).done(function (response) {
+            if (response && response.status === "success") {
+                hitokoto.text(response.data.content).css('display', '-webkit-box');
+                $('#hitokotoAuthor').text('《'+response.data.origin.title+'》 - '+response.data.origin.dynasty+' - '+response.data.origin.author).show();
+            } else {
+                let listIndex = randomNum(0, topTitleList.length - 1);
+                hitokoto.text(topTitleList[listIndex]).css('display', '-webkit-box');
+            }
+            // setDomHomePosition();
+            return false;
+        });
+        break;
+    }
+    $('.scroll-down').click(function () {
+        // $('.main-cover').hide();
+        let endScroll;
+        endScroll = $('.main-inner').offset().top - 80; 
+        $('html,body').stop().animate({scrollTop: endScroll}, 1000);
+        // window.setTimeout(function () {
+        //     scrollMonitor();
+        // }, 1000);
+    });
+    // $(window).scroll(function() { scrollMonitor(); });
+})();;
+(function () {
+    // scrollMonitor();
+    let postCover = document.querySelector('.post-cover');
+    if (postCover === null) {
+        return;
+    }
+    // let bgImg = "https://img.paulzzh.tech/touhou/random?tag=night";
+    // let bgImg = "https://img.onesnas.com";
+    let bgImg = `/images/wallpaper/${randomNum(1, 35)}.png`;
+    $('.post-cover').css({
+        'background': '#222 url("'+encodeURI(bgImg)+'")  center center no-repeat',
+        'background-size': 'cover'
+    });
+    let postHeader;
+    if (location.pathname.indexOf('/archives') === 0) {
+        postHeader = new DOMParser().parseFromString('<header class="post-header">'+
+        `<h1 class="post-title" itemprop="name headline">${document.title.split(' | ')[0]}</h1>`+
+        '<div class="post-meta-container"></div>'+
+        '</header>', 'text/html').querySelector('header');
+    }
+    else {
+        postHeader = document.querySelector('.post-block .post-header').cloneNode(true);
+    }
+    document.querySelector('.post-cover #cover-post-header').appendChild(postHeader);
+})();
+;
 var now = new Date();
 
 function createtime() {
@@ -233,18 +516,6 @@ adjust.addEventListener('click', () => {
     clickAdjust();
 });
 ;
-function clickWaifu() {
-    if (localStorage.getItem('waifu-display') && Date.now() - localStorage.getItem('waifu-display') <= 86400000) {
-		document.getElementById('waifu-toggle').click();
-	} else {
-		document.querySelector('#waifu-tool .fa-times').click();
-	}
-}
-
-document.querySelector('#moon-menu-item-waifu').addEventListener('click', () => {
-    clickWaifu();
-});
-;
 function clickSidebar() {
     const isRight = CONFIG.sidebar.position === 'right';
     const toggle = {
@@ -269,6 +540,18 @@ function clickSidebar() {
 
 document.querySelector('#moon-menu-item-sidebar').addEventListener('click', () => {
     clickSidebar();
+});
+;
+function clickWaifu() {
+    if (localStorage.getItem('waifu-display') && Date.now() - localStorage.getItem('waifu-display') <= 86400000) {
+		document.getElementById('waifu-toggle').click();
+	} else {
+		document.querySelector('#waifu-tool .fa-times').click();
+	}
+}
+
+document.querySelector('#moon-menu-item-waifu').addEventListener('click', () => {
+    clickWaifu();
 });
 ;
 "use strict";((e,t)=>{const o=function(){const o=t.documentElement.offsetHeight,n=t.documentElement.scrollHeight,l=t.documentElement.scrollTop||e.pageYOffset||t.body.scrollTop;let s=Math.round(l/(n-o)*100);s>100&&(s=100);const c=t.querySelector(".moon-menu-icon"),r=t.querySelector(".moon-menu-text");s?(c.style.display="none",r.style.display="block",r.innerHTML=s+"%"):(s=0,c.style.display="block",r.style.display="none");t.querySelector(".moon-menu-border").style.strokeDasharray=196*s/100+" 196"};e.addEventListener("load",(()=>{o()})),e.addEventListener("scroll",o),t.querySelector(".moon-menu-button").addEventListener("click",(()=>{t.querySelector(".moon-menu-icon").classList.toggle("active");const e=t.querySelector(".moon-menu-items");e.classList.toggle("active");const o=t.querySelectorAll(".moon-menu-item");if(e.classList.contains("active"))for(let e=0;e<o.length;e++)o[e].style.top=-3-3*e+"em",o[e].style.opacity=.9;else for(let e=0;e<o.length;e++)o[e].style.top="1em",o[e].style.opacity=0}));const n=(e,o)=>{const n=t.querySelector(e);n&&n.addEventListener("click",o)};n("#moon-menu-item-back2top",(()=>{e.scroll({top:0,behavior:"smooth"})})),n("#moon-menu-item-back2bottom",(()=>{const o=t.documentElement.offsetHeight,n=t.documentElement.scrollHeight;e.scroll({top:n-o,behavior:"smooth"})}))})(window,document);
