@@ -416,29 +416,32 @@ let scrollMonitor = function () {
     // $(window).scroll(function() { scrollMonitor(); });
 })();;
 (function () {
-    // scrollMonitor();
     let postCover = document.querySelector('.post-cover');
     if (postCover === null) {
         return;
     }
-    // let bgImg = "https://img.paulzzh.tech/touhou/random?tag=night";
-    // let bgImg = "https://img.onesnas.com";
-    let bgImg = `/images/wallpaper/${randomNum(1, 35)}.png`;
-    $('.post-cover').css({
-        'background': '#222 url("'+encodeURI(bgImg)+'")  center center no-repeat',
-        'background-size': 'cover'
-    });
-    let postHeader;
-    if (location.pathname.indexOf('/archives') === 0) {
+    let postHeader = document.querySelector('.post .post-header') || document.querySelector('.page .post-header');
+    if (postHeader === null) {
         postHeader = new DOMParser().parseFromString('<header class="post-header">'+
         `<h1 class="post-title" itemprop="name headline">${document.title.split(' | ')[0]}</h1>`+
         '<div class="post-meta-container"></div>'+
         '</header>', 'text/html').querySelector('header');
     }
-    else {
-        postHeader = document.querySelector('.post-block .post-header').cloneNode(true);
+    // let bgImg = "https://img.paulzzh.tech/touhou/random?tag=night";
+    // let bgImg = "https://img.onesnas.com";
+    // let bgImg = `/images/wallpaper/${randomNum(1, 35)}.png`;
+    let bgImg;
+    if (postHeader.getAttribute('topImg') != null) {
+        bgImg = postHeader.getAttribute('topImg');
     }
-    document.querySelector('.post-cover #cover-post-header').appendChild(postHeader);
+    else {
+        bgImg = `/images/wallpaper/${randomNum(1, 35)}.png`;
+    }
+    $('.post-cover').css({
+        'background': '#222 url("'+encodeURI(bgImg)+'")  center center no-repeat',
+        'background-size': 'cover'
+    });
+    document.querySelector('.post-cover #cover-post-header').appendChild(postHeader.cloneNode(true));
 })();
 ;
 var now = new Date();
@@ -482,6 +485,32 @@ setInterval('createtime()', 250);;
 })();
 ;
 "use strict";function updateCoords(e){pointerX=(e.clientX||e.touches[0].clientX)-canvasEl.getBoundingClientRect().left,pointerY=e.clientY||e.touches[0].clientY-canvasEl.getBoundingClientRect().top}function setParticuleDirection(e){var t=anime.random(0,360)*Math.PI/180,a=anime.random(50,180),n=[-1,1][anime.random(0,1)]*a;return{x:e.x+n*Math.cos(t),y:e.y+n*Math.sin(t)}}function createParticule(e,t){var a={};return a.x=e,a.y=t,a.color=colors[anime.random(0,colors.length-1)],a.radius=anime.random(16,32),a.endPos=setParticuleDirection(a),a.draw=function(){ctx.beginPath(),ctx.arc(a.x,a.y,a.radius,0,2*Math.PI,!0),ctx.fillStyle=a.color,ctx.fill()},a}function createCircle(e,t){var a={};return a.x=e,a.y=t,a.color="#F00",a.radius=.1,a.alpha=.5,a.lineWidth=6,a.draw=function(){ctx.globalAlpha=a.alpha,ctx.beginPath(),ctx.arc(a.x,a.y,a.radius,0,2*Math.PI,!0),ctx.lineWidth=a.lineWidth,ctx.strokeStyle=a.color,ctx.stroke(),ctx.globalAlpha=1},a}function renderParticule(e){for(var t=0;t<e.animatables.length;t++)e.animatables[t].target.draw()}function animateParticules(e,t){for(var a=createCircle(e,t),n=[],i=0;i<numberOfParticules;i++)n.push(createParticule(e,t));anime.timeline().add({targets:n,x:function(e){return e.endPos.x},y:function(e){return e.endPos.y},radius:.1,duration:anime.random(1200,1800),easing:"easeOutExpo",update:renderParticule}).add({targets:a,radius:anime.random(80,160),lineWidth:0,alpha:{value:0,easing:"linear",duration:anime.random(600,800)},duration:anime.random(1200,1800),easing:"easeOutExpo",update:renderParticule,offset:0})}function debounce(e,t){var a;return function(){var n=this,i=arguments;clearTimeout(a),a=setTimeout(function(){e.apply(n,i)},t)}}var canvasEl=document.querySelector(".fireworks");if(canvasEl){var ctx=canvasEl.getContext("2d"),numberOfParticules=30,pointerX=0,pointerY=0,tap="mousedown",colors=["#FF1461","#18FF92","#5A87FF","#FBF38C"],setCanvasSize=debounce(function(){canvasEl.width=2*window.innerWidth,canvasEl.height=2*window.innerHeight,canvasEl.style.width=window.innerWidth+"px",canvasEl.style.height=window.innerHeight+"px",canvasEl.getContext("2d").scale(2,2)},500),render=anime({duration:1/0,update:function(){ctx.clearRect(0,0,canvasEl.width,canvasEl.height)}});document.addEventListener(tap,function(e){"sidebar"!==e.target.id&&"toggle-sidebar"!==e.target.id&&"A"!==e.target.nodeName&&"IMG"!==e.target.nodeName&&(render.play(),updateCoords(e),animateParticules(pointerX,pointerY))},!1),setCanvasSize(),window.addEventListener("resize",setCanvasSize,!1)};
+function clickSidebar() {
+    const isRight = CONFIG.sidebar.position === 'right';
+    const toggle = {
+        showSidebar: function () {
+            document.body.classList.add('sidebar-active');
+            const animateAction = isRight ? 'fadeInRight' : 'fadeInLeft';
+            document.querySelectorAll('.sidebar .animated').forEach((element, index) => {
+                element.style.animationDelay = (100 * index) + 'ms';
+                element.classList.remove(animateAction);
+                setTimeout(() => {
+                    // Trigger a DOM reflow
+                    element.classList.add(animateAction);
+                });
+            });
+        },
+        hideSidebar: function () {
+            document.body.classList.remove('sidebar-active');
+        }
+    }
+    document.body.classList.contains('sidebar-active') ? toggle.hideSidebar() : toggle.showSidebar();
+}
+
+document.querySelector('#moon-menu-item-sidebar').addEventListener('click', () => {
+    clickSidebar();
+});
+;
 let adjust = document.querySelector('#moon-menu-item-adjust');
 let icon = adjust.querySelector('i');
 
@@ -514,32 +543,6 @@ function clickAdjust() {
 
 adjust.addEventListener('click', () => {
     clickAdjust();
-});
-;
-function clickSidebar() {
-    const isRight = CONFIG.sidebar.position === 'right';
-    const toggle = {
-        showSidebar: function () {
-            document.body.classList.add('sidebar-active');
-            const animateAction = isRight ? 'fadeInRight' : 'fadeInLeft';
-            document.querySelectorAll('.sidebar .animated').forEach((element, index) => {
-                element.style.animationDelay = (100 * index) + 'ms';
-                element.classList.remove(animateAction);
-                setTimeout(() => {
-                    // Trigger a DOM reflow
-                    element.classList.add(animateAction);
-                });
-            });
-        },
-        hideSidebar: function () {
-            document.body.classList.remove('sidebar-active');
-        }
-    }
-    document.body.classList.contains('sidebar-active') ? toggle.hideSidebar() : toggle.showSidebar();
-}
-
-document.querySelector('#moon-menu-item-sidebar').addEventListener('click', () => {
-    clickSidebar();
 });
 ;
 function clickWaifu() {

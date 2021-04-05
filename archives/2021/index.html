@@ -920,7 +920,8 @@
                 text: titleText,
                 left: 'center',
                 textStyle: {
-                    color: '#3C4858'
+                    // color: '#3C4858'
+                    color: '#999'
                 }
             },
             tooltip: {
@@ -946,7 +947,10 @@
                 itemHeight: 12,
                 orient: 'horizontal',
                 left: 'center',
-                bottom: 0
+                bottom: 0,
+                textStyle: {
+                    color: '#999'
+                }
             },
             calendar: [{
                 left: 'center',
@@ -957,7 +961,7 @@
                 },
                 itemStyle: {
                     color: '#196127',
-                    borderColor: '#fff',
+                    borderColor: '#ccc',
                     borderWidth: 2
                 },
                 yearLabel: {
@@ -965,12 +969,18 @@
                 },
                 monthLabel: {
                     nameMap: nameMap,
-                    fontSize: 11
+                    fontSize: 11,
+                    textStyle: {
+                        color: '#999'
+                    }
                 },
                 dayLabel: {
                     formatter: '{start}  1st',
                     nameMap: nameMap,
-                    fontSize: 11
+                    fontSize: 11,
+                    textStyle: {
+                        color: '#999'
+                    }
                 }
             }],
             series: [{
