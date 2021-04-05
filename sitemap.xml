@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lovebettygirl.github.io/about/index.html</loc>
+    
+    <lastmod>2021-04-05</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lovebettygirl.github.io/posts/e980311c/</loc>
     
     <lastmod>2021-04-05</lastmod>
@@ -124,13 +131,6 @@
     <loc>https://lovebettygirl.github.io/posts/97940cff/</loc>
     
     <lastmod>2021-03-24</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://lovebettygirl.github.io/about/index.html</loc>
-    
-    <lastmod>2021-03-22</lastmod>
     
   </url>
   
@@ -340,6 +340,13 @@
   </url>
   
   <url>
+    <loc>https://lovebettygirl.github.io/tags/flags/</loc>
+    <lastmod>2021-04-05</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://lovebettygirl.github.io/tags/Git/</loc>
     <lastmod>2021-04-05</lastmod>
     <changefreq>daily</changefreq>
@@ -348,13 +355,6 @@
   
   <url>
     <loc>https://lovebettygirl.github.io/tags/GitHub/</loc>
-    <lastmod>2021-04-05</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://lovebettygirl.github.io/tags/flags/</loc>
     <lastmod>2021-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -657,14 +657,14 @@
   </url>
   
   <url>
-    <loc>https://lovebettygirl.github.io/categories/Git/</loc>
+    <loc>https://lovebettygirl.github.io/categories/%E6%9D%82%E8%B0%88/</loc>
     <lastmod>2021-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://lovebettygirl.github.io/categories/%E6%9D%82%E8%B0%88/</loc>
+    <loc>https://lovebettygirl.github.io/categories/Git/</loc>
     <lastmod>2021-04-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
