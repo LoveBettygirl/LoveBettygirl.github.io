@@ -512,7 +512,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-05-06 20:12:18 / 修改时间：20:22:35" itemprop="dateCreated datePublished" datetime="2021-05-06T20:12:18+08:00">2021-05-06</time>
+      <time title="创建时间：2021-05-06 20:12:18 / 修改时间：20:37:30" itemprop="dateCreated datePublished" datetime="2021-05-06T20:12:18+08:00">2021-05-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -536,7 +536,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>4k</span>
+      <span>4.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -554,74 +554,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sliding-window-maximum/" class="uri">https://leetcode-cn.com/problems/sliding-window-maximum/</a></p>
+          <p>题目链接：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/sliding-window-maximum/">https://leetcode-cn.com/problems/sliding-window-maximum/</a></p>
 <p>好难啊</p>
-<h2 id="题目描述">题目描述</h2>
-<p>给你一个整数数组 <code>nums</code>，有一个大小为 <code>k</code> 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 <code>k</code> 个数字。滑动窗口每次只向右移动一位。</p>
-<p>返回滑动窗口中的最大值。</p>
-<p><strong>示例 1：</strong></p>
-<figure class="highlight subunit"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [1,3,<span class="string">-1</span>,<span class="string">-3</span>,5,3,6,7], k = 3</span><br><span class="line">输出：[3,3,5,5,6,7]</span><br><span class="line">解释：</span><br><span class="line">滑动窗口的位置                最大值</span><br><span class="line">---------------               -----</span><br><span class="line">[1  3  <span class="string">-1</span>] <span class="string">-3</span>  5  3  6  7       3</span><br><span class="line"> 1 [3  <span class="string">-1</span>  <span class="string">-3</span>] 5  3  6  7       3</span><br><span class="line"> 1  3 [<span class="string">-1</span>  <span class="string">-3</span>  5] 3  6  7       5</span><br><span class="line"> 1  3  <span class="string">-1</span> [<span class="string">-3</span>  5  3] 6  7       5</span><br><span class="line"> 1  3  <span class="string">-1</span>  <span class="string">-3</span> [5  3  6] 7       6</span><br><span class="line"> 1  3  <span class="string">-1</span>  <span class="string">-3</span>  5 [3  6  7]      7</span><br></pre></td></tr></tbody></table></figure>
-<p><strong>示例 2：</strong></p>
-<figure class="highlight inform7"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = <span class="comment">[1]</span>, k = 1</span><br><span class="line">输出：<span class="comment">[1]</span></span><br></pre></td></tr></tbody></table></figure>
-<p><strong>示例 3：</strong></p>
-<figure class="highlight inform7"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = <span class="comment">[1,-1]</span>, k = 1</span><br><span class="line">输出：<span class="comment">[1,-1]</span></span><br></pre></td></tr></tbody></table></figure>
-<p><strong>示例 4：</strong></p>
-<figure class="highlight inform7"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = <span class="comment">[9,11]</span>, k = 2</span><br><span class="line">输出：<span class="comment">[11]</span></span><br></pre></td></tr></tbody></table></figure>
-<p><strong>示例 5：</strong></p>
-<figure class="highlight inform7"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = <span class="comment">[4,-2]</span>, k = 2</span><br><span class="line">输出：<span class="comment">[4]</span></span><br></pre></td></tr></tbody></table></figure>
-<p><strong>提示：</strong></p>
-<ul>
-<li><code>1 &lt;= nums.length &lt;= 10^5</code></li>
-<li><code>-10^4 &lt;= nums[i] &lt;= 10^4</code></li>
-<li><code>1 &lt;= k &lt;= nums.length</code></li>
-</ul>
-<h2 id="优先队列">优先队列</h2>
-<p>这道题需要一个数据结构，来存储滑动窗口中最大值、第二大的值、第三大的值、……的下标。（最初我只想到了用变量去存滑动窗口中最大值和第二大的值的下标，结果当窗口移动之后变量总是不能正确被更新，然后就做不对了；居然还想到了用栈，我真的太菜了）</p>
-<p>首先最直观的想法应该是使用优先队列（大根堆），这样，优先队列的队头（即大根堆的堆顶）就是滑动窗口内最大的值在 <code>nums</code> 数组的下标。</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">maxSlidingWindow</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>{</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</span><br><span class="line">        <span class="built_in">priority_queue</span>&lt;<span class="built_in">pair</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; q; <span class="comment">// std::priority_queue默认是大根堆</span></span><br><span class="line">        <span class="comment">// 窗口在初始位置时，将此时窗口中的数组元素加入到优先队列中</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++)</span><br><span class="line">            q.emplace(nums[i], i);</span><br><span class="line">        result.push_back(q.top().first);</span><br><span class="line">        <span class="comment">// 向右移动滑动窗口</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = k; i &lt; size; i++) {</span><br><span class="line">            q.emplace(nums[i], i);</span><br><span class="line">            <span class="comment">// 需要将所有已经移出窗口的数组元素从优先队列中删除</span></span><br><span class="line">            <span class="keyword">while</span> (q.top().second &lt;= i - k)</span><br><span class="line">                q.pop();</span><br><span class="line">            result.push_back(q.top().first);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n\log n)\)</span>（一个元素进入优先队列）</p>
-<p>空间复杂度：<span class="math inline">\(O(n)\)</span>（优先队列所占用的空间）</p>
-<h2 id="单调队列">单调队列</h2>
-<p>单调队列就是队列中的所有元素都是单调递增或递减的队列。</p>
-<p>这里的想法是用队列来存储滑动窗口中最大值的下标，以及在最大值右边的第二大的值、第三大的值、……的下标。这样，一旦窗口向右移动，并且窗口内的最大值移出了窗口，就能知道下一个该成为窗口中最大值的元素是哪个。</p>
-<p>窗口每向右移动一格，需要做的事情：</p>
-<ul>
-<li>将新进入窗口的元素的下标插入到队尾，为了保持队列中存储的下标对应的元素是递减的，需要先将队列中所有比该元素小的值从队尾删除。</li>
-<li>将队列中已经被移出窗口的下标从队头删除，队列中剩下的值可能会成为窗口内最大值的候选值。</li>
-</ul>
-<p>为了能够实现从队头和队尾都能删除元素，需要使用双端队列（deque）。</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">maxSlidingWindow</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>{</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; result;</span><br><span class="line">        <span class="built_in">deque</span>&lt;<span class="keyword">int</span>&gt; q;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) {</span><br><span class="line">            <span class="keyword">while</span> (!q.empty() &amp;&amp; nums[i] &gt;= nums[q.back()])</span><br><span class="line">                q.pop_back();</span><br><span class="line">            q.push_back(i);</span><br><span class="line">        }</span><br><span class="line">        result.push_back(nums[q.front()]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = k; i &lt; size; i++) {</span><br><span class="line">            <span class="keyword">while</span> (!q.empty() &amp;&amp; nums[i] &gt;= nums[q.back()])</span><br><span class="line">                q.pop_back();</span><br><span class="line">            q.push_back(i);</span><br><span class="line">            <span class="comment">// 将已经移出窗口的下标删除</span></span><br><span class="line">            <span class="keyword">while</span> (q.front() &lt;= i - k)</span><br><span class="line">                q.pop_front();</span><br><span class="line">            result.push_back(nums[q.front()]);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n)\)</span>（最坏情况是每个元素都要进入到队列和从队列中删除各一次，例如数组中的元素大小是递增的）</p>
-<p>空间复杂度：<span class="math inline">\(O(n)\)</span>（单调队列所占用的空间）</p>
-<h2 id="动态规划">动态规划</h2>
-<p>从官方题解来的，卡了好半天了，哎，还是从下面两篇题解看出了一些眉目</p>
-<p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/sliding-window-maximum/discuss/458121/Java-All-Solutions-(B-F-PQ-Deque-DP)-with-Explanation-and-Complexity-Analysis" class="uri">https://leetcode.com/problems/sliding-window-maximum/discuss/458121/Java-All-Solutions-(B-F-PQ-Deque-DP)-with-Explanation-and-Complexity-Analysis</a></p>
-<p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/sliding-window-maximum/discuss/951894/C%2B%2B-Easy-DP-or-O(n)-or-Explained-or-No-Deque-Required-%3AD" class="uri">https://leetcode.com/problems/sliding-window-maximum/discuss/951894/C%2B%2B-Easy-DP-or-O(n)-or-Explained-or-No-Deque-Required-%3AD</a></p>
-<p>先将整个 <code>nums</code> 数组（长度为 <code>n</code> ）分成几个互不相交且长度为 <code>k</code> 的块（最后一个块的长度可能小于 <code>k</code>），如下所示：</p>
-<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">1 </span> <span class="number">3</span>  -<span class="number">1</span> ｜ -<span class="number">3</span>  <span class="number">5</span>  <span class="number">3</span> ｜ <span class="number">6</span>  <span class="number">7</span></span><br></pre></td></tr></tbody></table></figure>
-<p>那么，从下标 <code>i</code> 开始，长度为 <code>k</code> 的滑动窗口可能刚好在一个块，也有可能跨越两个块。</p>
-<p>如果 <code>i</code> 刚好是 <code>k</code> 的倍数，那么窗口刚好只占一个块，例如：</p>
-<figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">1 </span> <span class="number">3</span>  -<span class="number">1</span> ｜ [-<span class="number">3</span>  <span class="number">5</span>  <span class="number">3</span>] ｜ <span class="number">6</span>  <span class="number">7</span></span><br></pre></td></tr></tbody></table></figure>
-<p>否则，窗口就会跨越两个块，例如：</p>
-<figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">        <span class="selector-tag">i</span>     j  <span class="selector-tag">i</span>+k-<span class="number">1</span></span><br><span class="line">        ↓     ↓  ↓</span><br><span class="line"><span class="number">1</span>  <span class="number">3</span>  <span class="selector-attr">[-1 ｜ -3  5]</span>  <span class="number">3</span> ｜ <span class="number">6</span>  <span class="number">7</span></span><br></pre></td></tr></tbody></table></figure>
-<p>可以看出，这种情况下，一个块被窗口的边界分成了左半部分和右半部分，分别使用两个长度为 <code>n</code> 的数组 <code>left</code> 和 <code>right</code>：</p>
-<ul>
-<li><code>left[i + k - 1]</code> 表示从 <code>nums[j]</code> 到 <code>nums[i + k - 1]</code> 中（窗口中的右半部分）的最大值，同时是第二个块的左半部分的最大值（以窗口右边界分隔）</li>
-<li><code>right[i]</code> 表示从 <code>nums[i]</code> 到 <code>nums[j - 1]</code> 中（窗口中的左半部分）的最大值，同时是第一个块的右半部分的最大值（以窗口左边界分隔）</li>
-</ul>
-<p>因此，当窗口的起始位置为 <code>i</code> 时，窗口中的最大值可以描述为窗口中左半部分和右半部分的最大值： <span class="math display">\[
-\max(right[i],left[i + k - 1])
-\]</span> 其中，<code>left</code> 数组中的元素的递推式为（需要从左向右遍历 <code>nums</code> 数组得到）： <span class="math display">\[
-left[i]=\begin{cases}nums[i]&amp;i\  \text{mod} \  k=0\\ \max \left( left[i-1],nums[i]\right)  &amp;\text{else} \end{cases}
-\]</span> <code>right</code> 数组中的元素的递推式为（需要从右向左遍历 <code>nums</code> 数组得到）： <span class="math display">\[
-right[i]=\begin{cases}nums[i]&amp;i=n-1\  \text{or} \  (i+1)\  \text{mod} \  k=0\\ \max \left( right[i+1],nums[i]\right)  &amp;\text{else} \end{cases}
-\]</span> 注意，当窗口起始位置 <code>i</code> 刚好是 <code>k</code> 的倍数时，有： <span class="math display">\[
-right[i]=left[i+k-1]
-\]</span></p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">maxSlidingWindow</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>{</span><br><span class="line">        <span class="keyword">int</span> size = nums.size();</span><br><span class="line">        vector&lt;int&gt; left(size), right(size), result;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) {</span><br><span class="line">            <span class="keyword">if</span> (i % k == <span class="number">0</span>)</span><br><span class="line">                left[i] = nums[i];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                left[i] = max(left[i - <span class="number">1</span>], nums[i]);</span><br><span class="line">        }</span><br><span class="line">        right[size - <span class="number">1</span>] = nums[size - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = size - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) {</span><br><span class="line">            <span class="keyword">if</span> ((i + <span class="number">1</span>) % k == <span class="number">0</span>)</span><br><span class="line">                right[i] = nums[i];</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                right[i] = max(right[i + <span class="number">1</span>], nums[i]);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= size - k; i++) {</span><br><span class="line">            result.push_back(max(right[i], left[i + k - <span class="number">1</span>]));</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    }</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
-<p>时间复杂度：<span class="math inline">\(O(n)\)</span></p>
-<p>空间复杂度：<span class="math inline">\(O(n)\)</span></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/c2b11f10/#more" rel="contents">
+                阅读全文 »
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1507,7 +1449,7 @@ right[i]=left[i+k-1]
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">126k</span>
+    <span title="站点总字数">127k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
