@@ -1,0 +1,880 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+
+<link rel="preconnect" href="/fonts" crossorigin="">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/flower128px.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/flower32px.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/flower16px.ico">
+  <link rel="mask-icon" href="/images/flower128px.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="/fonts/css?family=Lato:300,300italic,400,400italic,700,700italic%7CDancing+Script:300,300italic,400,400italic,700,700italic&amp;display=swap&amp;subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css">
+  <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.js"></script>
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lovebettygirl.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="我在 19 年下半年使用 Hexo 搭建了这个博客，使用了 NexT 主题。到现在 Hexo 版本一直停留在 3.9.0，现在版本已经都到 5.3.0 了；NexT 主题停留在 7.3.0 版本，现在都已经到 8.x 了。至于选择更新的动机，是因为我想升级一下博客的 UI （之前自己手动在 NexT 主题上搞了一个暗黑的 UI 配上 canvas next 动画之后的界面简直像虫子爬，现在觉得好丑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 更新到 5.0 版本之后遇到的坑及解决">
+<meta property="og:url" content="https://lovebettygirl.github.io/posts/4ceb5096/index.html">
+<meta property="og:site_name" content="LoveBettygirl">
+<meta property="og:description" content="我在 19 年下半年使用 Hexo 搭建了这个博客，使用了 NexT 主题。到现在 Hexo 版本一直停留在 3.9.0，现在版本已经都到 5.3.0 了；NexT 主题停留在 7.3.0 版本，现在都已经到 8.x 了。至于选择更新的动机，是因为我想升级一下博客的 UI （之前自己手动在 NexT 主题上搞了一个暗黑的 UI 配上 canvas next 动画之后的界面简直像虫子爬，现在觉得好丑">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/Snipaste_2021-02-17_23-16-26.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218003902347.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004345647.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004411360.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004453609.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004643537.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004948348.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218005827267.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218005953747.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218010921123.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218011622499.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218012914787.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218020603184.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218022534857.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218021730351.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218025850814.png">
+<meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218030101699.png">
+<meta property="article:published_time" content="2021-02-17T15:15:33.000Z">
+<meta property="article:modified_time" content="2021-02-17T20:07:12.771Z">
+<meta property="article:author" content="LoveBettygirl">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="NexT">
+<meta property="article:tag" content="npm">
+<meta property="article:tag" content="Butterfly">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/Snipaste_2021-02-17_23-16-26.png">
+
+
+<link rel="canonical" href="https://lovebettygirl.github.io/posts/4ceb5096/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      'use strict';
+      const hasMobileUA = function() {
+        var nav = window.navigator;
+        var ua = nav.userAgent;
+        var pa = /iPad|iPhone|Android|Opera Mini|BlackBerry|webOS|UCWEB|Blazer|PSP|IEMobile|Symbian/g;
+
+        return pa.test(ua);
+      };
+
+      const isMobile = function() {
+        return window.screen.width < 767 && this.hasMobileUA();
+      };
+
+      
+        if (isMobile()) return;
+      
+      let time, hidden, visible, title = document.title;
+      let favicon = document.querySelector('link[rel="icon"]');
+      
+        hidden = '╭(°A°`)╮ 页面崩溃啦 ~';
+        visible = '(ฅ>ω<*ฅ) 噫又好了~';
+      
+      let random = t => t[Math.floor(Math.random() * t.length)];
+      const change = () => {
+        if (document.hidden) {
+          favicon.setAttribute('href', '/images/warning32px.ico');
+          
+            document.title = hidden;
+          
+          clearTimeout(time);
+        } else {
+          favicon.setAttribute('href', '/images/flower32px.ico');
+          
+            document.title = visible;
+          
+          time = setTimeout(() => {
+            document.title = title;
+          }, 2019);
+        }
+      }
+      document.addEventListener('visibilitychange', change, false);
+    });
+  </script>
+
+
+
+
+
+
+
+<script src="/js/loading.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/injector.css">
+<title>Hexo 更新到 5.0 版本之后遇到的坑及解决 | LoveBettygirl</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="LoveBettygirl" type="application/atom+xml">
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" class="use-motion">
+  <div id="loading"></div>
+  <div class="post-cover">
+    <div class="cover-mask">
+        <div class="vertical">
+            <div class="post-cover-content inner">
+                <span id="cover-post-header">
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">LoveBettygirl</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, stay foolish.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">50</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">23</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">68</span></a></li>
+        <li class="menu-item menu-item-talking"><a href="/talking/" rel="section"><i class="fa fa-comment-dots fa-fw"></i>说说</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="搜索..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">更新步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E5%8F%8A%E8%A7%A3%E5%86%B3"><span class="nav-number">2.</span> <span class="nav-text">遇到的坑及解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LoveBettygirl" src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">LoveBettygirl</p>
+  <div class="site-description" itemprop="description">人生得意须尽欢，莫使金樽空对月。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="sidebar-button site-overview-item animated"><i class="fa fa-comment"></i>
+    Chat
+  
+  </div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LoveBettygirl" title="GitHub → https://github.com/LoveBettygirl" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:bettycyygirl@163.com" title="E-Mail → mailto:bettycyygirl@163.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → /atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+<!-- CloudCalendar -->
+<div class="widget-wrap" style="width: 90%;margin-left: auto;margin-right: auto; opacity: 0.97;">
+	<div class="widget" id="CloudCalendar"></div>
+</div>
+    <div class="links-of-blogroll motion-element links-of-blogroll-block site-overview-item animated">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+        
+          <li>
+            <a href="/posts/75df0b52/" title="安装CUDA的一些坑" target="_blank">安装CUDA的一些坑</a>
+          </li>
+        
+          <li>
+            <a href="/posts/a8e1e305/" title="编写第一个WebAssembly模块" target="_blank">编写第一个WebAssembly模块</a>
+          </li>
+        
+          <li>
+            <a href="/posts/4a9603aa/" title="《MySQL是怎样运行的》笔记：InnoDB数据页 &amp; 记录存储结构" target="_blank">《MySQL是怎样运行的》笔记：InnoDB数据页 &amp; 记录存储结构</a>
+          </li>
+        
+          <li>
+            <a href="/posts/a6ee4d0c/" title="C++ explicit关键字" target="_blank">C++ explicit关键字</a>
+          </li>
+        
+          <li>
+            <a href="/posts/a0e4304d/" title="Linux -bash 挖矿病毒查杀记" target="_blank">Linux -bash 挖矿病毒查杀记</a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <a href="https://github.com/LoveBettygirl" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope="" itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://lovebettygirl.github.io/posts/4ceb5096/">
+
+    <span hidden="" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="LoveBettygirl">
+      <meta itemprop="description" content="人生得意须尽欢，莫使金樽空对月。">
+    </span>
+
+    <span hidden="" itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LoveBettygirl">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo 更新到 5.0 版本之后遇到的坑及解决<a href="https://github.com/LoveBettygirl/Personal-Blog/tree/master/source/_posts/Hexo-%E6%9B%B4%E6%96%B0%E5%88%B0-5-0-%E7%89%88%E6%9C%AC%E4%B9%8B%E5%90%8E%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E5%8F%8A%E8%A7%A3%E5%86%B3.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-17 23:15:33" itemprop="dateCreated datePublished" datetime="2021-02-17T23:15:33+08:00">2021-02-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-02-18 04:07:12" itemprop="dateModified" datetime="2021-02-18T04:07:12+08:00">2021-02-18</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+          <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 ≈</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>我在 19 年下半年使用 Hexo 搭建了这个博客，使用了 NexT 主题。到现在 Hexo 版本一直停留在 3.9.0，现在版本已经都到 5.3.0 了；NexT 主题停留在 7.3.0 版本，现在都已经到 8.x 了。至于选择更新的动机，是因为我想升级一下博客的 UI （之前自己手动在 NexT 主题上搞了一个暗黑的 UI 配上 canvas next 动画之后的界面简直像虫子爬，现在觉得好丑），然后从 Butterfly 等比较现代的主题中学习一些升级的思路。然而，我把新版本 Butterfly 下载下来之后，准备启用它试试看，结果报了这个错：</p>
+<a id="more"></a>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/Snipaste_2021-02-17_23-16-26.png" alt="1" style="zoom:50%;"></p>
+<p>因为我的 Hexo 版本太低不支持。那就先更新 Hexo 试试看吧。</p>
+<h2 id="更新步骤">更新步骤</h2>
+<p>首先在自己的博客文件夹下打开终端。</p>
+<p>首先输入 <code>hexo -v</code> 检查一下版本：</p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218003902347.png" alt="2" style="zoom:50%;"></p>
+<p>然后输入以下命令：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install -g npm-check</span><br><span class="line">npm-check <span class="comment"># 检查安装的所有插件当中需要升级的插件</span></span><br><span class="line">npm install -g npm-upgrade</span><br><span class="line">npm-upgrade <span class="comment"># 更新 package.json</span></span><br><span class="line">npm update <span class="comment"># 更新所有插件及依赖</span></span><br></pre></td></tr></tbody></table></figure>
+<p>出现了很多警告：</p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004345647.png" alt="3" style="zoom:50%;"></p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004411360.png" alt="4" style="zoom:50%;"></p>
+<p>deprecated可以忽略，然后又发现了这个：</p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004453609.png" alt="5" style="zoom:50%;"></p>
+<p>输入以下命令手动安装未成功安装的依赖：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install chokidar@^3.3.0</span><br></pre></td></tr></tbody></table></figure>
+<p>最后检查一下版本，可以看到升级成功了：</p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004643537.png" alt="6" style="zoom:50%;"></p>
+<h2 id="遇到的坑及解决">遇到的坑及解决</h2>
+<p>注意上图的错误，我最初给忽略了（虽然不知道忽略了会带来什么问题）。</p>
+<p>在同一个终端中，我先手贱输了命令 <code>hexo s --debug</code> ，结果通过浏览器打开 http://localhost:/4000 发现看不到正常页面了，只能看到没有被渲染的源代码：</p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004948348.png" alt=""><figcaption>7</figcaption>
+</figure>
+<p>先解决上面那个 <code>external_link</code> 的问题吧，在 Hexo 的 <code>_config.yml</code> 中搜索 <code>external_link</code> 属性发现的确是布尔值。按照提示打开<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration.html">链接</a>，参考这里给出的默认值：</p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218005827267.png" alt=""><figcaption>8</figcaption>
+</figure>
+<p>修改 Hexo 的 <code>_config.yml</code> 如下：</p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218005953747.png" alt="9" style="zoom:50%;"></p>
+<p>重新输入命令 <code>hexo s --debug</code> 之后还是这样，<code>hexo clean</code> 也运行了，浏览器缓存也清了也没用。我打开别的页面也还是这样：</p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218010921123.png" alt=""><figcaption>10</figcaption>
+</figure>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218011622499.png" alt="11">输入命令 <code>hexo g</code> 重新生成静态文件居然没报错。从上面两个图来看，应该就是页面渲染出问题了。我也没有改对应的 layout 文件。</p>
+<p>然后我就尝试更换主题，从 NexT 更换到 Butterfly 也有同样的问题：</p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218012914787.png" alt=""><figcaption>12</figcaption>
+</figure>
+<p>更换到默认主题 landscape 就没有问题。值得注意的是 landscape 使用的是 ejs 模版引擎（我安装了 <code>Hexo-renderer-ejs</code>），但是 NexT 使用的是 swig ，Butterfly 使用的是 pug。后两个主题我没有安装对应的 renderer（之前就没安装过但是也能用 NexT）。</p>
+<p>我执行以下命令重新安装插件也不起作用，<code>package.json</code> 里面的 Hexo 版本也对得上，</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -rf node_modules</span><br><span class="line">npm cache clean --force</span><br><span class="line">npm install <span class="comment"># 重新安装</span></span><br></pre></td></tr></tbody></table></figure>
+<p>经过一番搜索，我终于找到了这个<a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next/issues/4">链接</a>，这是 NexT 官方写的 issue。这里写着：</p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218020603184.png" alt=""><figcaption>13</figcaption>
+</figure>
+<p>可以知道 swig 缺乏维护，Hexo 从 5.0 版本开始不再提供对 swig 的支持，但是仍然可以安装 swig renderer。根据上图提示，输入如下命令安装：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-swig</span><br></pre></td></tr></tbody></table></figure>
+<p>同理，Butterfly 主题无法渲染的问题可以这样解决：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-pug</span><br></pre></td></tr></tbody></table></figure>
+<p>重新执行：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></tbody></table></figure>
+<p>打开 http://localhost:4000 终于能看到页面而不是源代码了：</p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218022534857.png" alt=""><figcaption>14</figcaption>
+</figure>
+<blockquote>
+<p>上图参考了 BNDong 大佬的<a target="_blank" rel="noopener" href="https://github.com/BNDong/Cnblogs-Theme-SimpleMemory">代码</a>自己瞎整了一个封面，由于我太菜了，现在改的不太好，如果有时间我单独写一篇博客描述这个。先感谢 BNDong 大佬！！！</p>
+</blockquote>
+<p>但是导航栏又不能正常显示了，在同一个 issue 中看到这里才知道这是 Hexo 高版本带来的图标无法正常显示的问题：</p>
+<p><img id="15" data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218021730351.png" alt="15" style="zoom:50%;"></p>
+<p>所以为了升级 UI 我决定升级 NexT 到 8.x 吧。毕竟现在 NexT 也提供了对黑暗模式的支持。然而我又才知道 NexT 8.x 版本<strong>又又又换了个仓库</strong>（而且两次换仓库还都是因为上一个仓库的管理者放弃了维护），而且模版文件格式也改成了 <code>.njk</code>（和 <code>.swig</code> 语法类似），这就说明我必须得用新的代码升级主题了！！！</p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218025850814.png" alt=""><figcaption>16</figcaption>
+</figure>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218030101699.png" alt=""><figcaption>17</figcaption>
+</figure>
+<h2 id="总结">总结</h2>
+<p>综上，</p>
+<ul>
+<li><p>如果使用了旧版本 NexT 主题并且 Hexo 升级到了 5.0 及以上版本，并且模版文件无法渲染（只能看到源代码），可以先在博客文件夹下尝试以下命令：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-swig</span><br></pre></td></tr></tbody></table></figure>
+<p>Butterfly 主题出现同样的问题也可以尝试以下命令解决：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-pug</span><br></pre></td></tr></tbody></table></figure>
+<p>再执行以下命令，再用浏览器打开 http://localhost:/4000 （浏览器先清缓存）应该就能看到页面了。</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></tbody></table></figure>
+<p>NexT 主题的其他兼容性问题（例如图标不能正常显示）只能通过升级 NexT 或者降级 Hexo 解决，参考官方 <a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next/issues/4">issue</a> 和<a href="#15">图15</a>。<del>如果你是大佬也可以徒手修改旧版 NexT 主题在新版 Hexo 中出问题的地方。</del></p></li>
+<li><p>NexT 主题实在太难用了，绝大多数自定义教程都过时了，换主题吧。</p></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/1f255d04/" rel="bookmark">Hexo NexT 主题v8.0版本深度定制（一）：基础配置</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/ff05b5bf/" rel="bookmark">第一篇博客</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/posts/e7168358/" rel="bookmark">如何将hexo博客站点迁移到其他电脑上</a></div>
+    </li>
+  </ul>
+
+
+    <footer class="post-footer"><div style="text-align: center; color: #ccc; font-size: 1em;">------------- EOF -------------</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>LoveBettygirl
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://lovebettygirl.github.io/posts/4ceb5096/" title="Hexo 更新到 5.0 版本之后遇到的坑及解决">https://lovebettygirl.github.io/posts/4ceb5096/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+              <a href="/tags/NexT/" rel="tag"><i class="fa fa-tag"></i> NexT</a>
+              <a href="/tags/npm/" rel="tag"><i class="fa fa-tag"></i> npm</a>
+              <a href="/tags/Butterfly/" rel="tag"><i class="fa fa-tag"></i> Butterfly</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/f449b2f7/" rel="prev" title="在vue-cli项目定制Ant Design Vue主题的各种坑">
+                  <i class="fa fa-chevron-left"></i> 在vue-cli项目定制Ant Design Vue主题的各种坑
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/7ce21a5/" rel="next" title="使用Wireshark抓包分析TCP协议">
+                  使用Wireshark抓包分析TCP协议 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  © 2019 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heartbeat"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LoveBettygirl</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">156k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 ≈</span>
+    <span title="站点阅读时长">2:22</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div><div class="run-time">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-clock"></i>
+    </span>
+    <span id="timeDate"> Loading...</span>
+    <span id="times"></span>
+</div>
+
+<footer-background>
+    <figure class="clouds"></figure>
+    <figure class="background"></figure>
+    <figure class="foreground"></figure>
+</footer-background>
+
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zindex="-2" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+  
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js"></script>
+  
+<!-- calendar widget -->
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/gh/LoveBettygirl/live2d-widget@latest/autoload.js"></script>
+
+
+
+
+
+
+
+
+
+  
+    <canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;"></canvas>
+    <script src="https://cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script>
+    
+  
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/activate-power-mode@1.0.0/dist/activate-power-mode.js"></script>
+  
+
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class="fas fa-chevron-down"></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class="fas fa-chevron-up"></i>    </div>
+    
+    <div id="moon-menu-item-sidebar" class="moon-menu-item">
+      <i class="fas fa-list-ul"></i>    </div>
+    
+    <div id="moon-menu-item-adjust" class="moon-menu-item">
+      <i class="fas fa-adjust"></i>    </div>
+    
+    <div id="moon-menu-item-waifu" class="moon-menu-item">
+      <i class="fas fa-kiss-wink-heart"></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class="fas fa-ellipsis-v"></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div>
+
+
+<script src="/bundle.js"></script><script>pageLoading.init();;
+
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+;
+
+if (document.querySelectorAll('.pdf-container').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/pdfobject@2.2.4/pdfobject.min.js', () => {
+    document.querySelectorAll('.pdf-container').forEach(element => {
+      PDFObject.embed(element.dataset.target, element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.dataset.height
+      });
+    });
+  }, window.PDFObject);
+}
+;
+
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/mermaid@8.9.1/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+;
+
+    NProgress.configure({
+      showSpinner: true
+    });
+    NProgress.start();
+    document.addEventListener('readystatechange', () => {
+      if (document.readyState === 'interactive') {
+        NProgress.inc(0.8);
+      }
+      if (document.readyState === 'complete') {
+        NProgress.done();
+      }
+    });
+    document.addEventListener('pjax:send', () => {
+      NProgress.start();
+    });
+    document.addEventListener('pjax:success', () => {
+      NProgress.done();
+    });
+  ;
+
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'none'
+      },
+      options: {
+        renderActions: {
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+;
+
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://lovebettygirl.github.io/posts/4ceb5096/',]
+      });
+      });
+  ;
+
+    POWERMODE.colorful = true;
+    POWERMODE.shake = true;
+    document.body.addEventListener('input', POWERMODE);
+  </script></body></html>
