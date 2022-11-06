@@ -257,7 +257,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text"> 背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text"> 解决方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text"> 参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -442,13 +442,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="背景">背景</h2>
+        <h2 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h2>
 <p>我的Ubuntu系统版本是 18.04，系统内核版本是 <code>5.4.0-72-generic</code></p>
 <a id="more"></a>
 <p>按照以下步骤降低内核版本，却没有降低成功</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo apt search <span class="string">'linux-image-5.0.0-23-generic'</span> </span><br><span class="line">sudo apt install <span class="string">'linux-image-5.0.0-23-generic'</span> -y </span><br><span class="line">sudo apt install <span class="string">'linux-headers-5.0.0-23-generic'</span> -y</span><br><span class="line">sudo update-initramfs -u -k all </span><br><span class="line">sudo update-grub</span><br></pre></td></tr></tbody></table></figure>
 <p>原来是因为Grub默认以最高内核版本启动。我就想能在启动的时候显示Grub，就可以自己选择内核版本了，也可以切换到原来的内核版本。</p>
-<h2 id="解决方法">解决方法</h2>
+<h2 id="解决方法"><a class="markdownIt-Anchor" href="#解决方法"></a> 解决方法</h2>
 <p>编辑文件 <code>/etc/default/grub</code></p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/default/grub</span><br></pre></td></tr></tbody></table></figure>
 <p>注释掉 <code>GRUB_HIDDEN_TIMEOUT=0</code> 这一行（如果有），再将<code>GRUB_TIMEOUT</code>的值更改为-1。</p>
@@ -456,9 +456,9 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo update-grub</span><br></pre></td></tr></tbody></table></figure>
 <p>然后重启就可以看到Grub界面了。</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo reboot</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="参考">参考</h2>
+<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://ubuntuqa.com/article/1780.html" class="uri">https://ubuntuqa.com/article/1780.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://ubuntuqa.com/article/1780.html">https://ubuntuqa.com/article/1780.html</a></li>
 </ul>
 
     </div>
@@ -552,14 +552,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">158k</span>
+    <span title="站点总字数">159k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 ≈</span>
-    <span title="站点阅读时长">2:23</span>
+    <span title="站点阅读时长">2:24</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动

@@ -259,7 +259,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">下载和安装步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">一些命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%96%E6%B6%88%E9%BB%98%E8%AE%A4%E6%BF%80%E6%B4%BB-base-%E7%8E%AF%E5%A2%83"><span class="nav-number">3.1.</span> <span class="nav-text">取消默认激活 base 环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E6%8D%A2-python-%E7%89%88%E6%9C%AC"><span class="nav-number">3.2.</span> <span class="nav-text">切换 Python 版本</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text"> 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text"> 下载和安装步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text"> 一些命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%96%E6%B6%88%E9%BB%98%E8%AE%A4%E6%BF%80%E6%B4%BB-base-%E7%8E%AF%E5%A2%83"><span class="nav-number">3.1.</span> <span class="nav-text"> 取消默认激活 base 环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%87%E6%8D%A2-python-%E7%89%88%E6%9C%AC"><span class="nav-number">3.2.</span> <span class="nav-text"> 切换 Python 版本</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -450,25 +450,31 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="简介">简介</h2>
+        <h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
 <p>Miniconda 是 Anaconda 的轻量级版本，不包含很多的科学计算包，只有 Python 、conda 以及相关依赖。考虑到想省空间和不需要很多科学计算包的需求，就选择安装了 Miniconda，其他包有需要了再去单独下载。</p>
 <a id="more"></a>
-<h2 id="下载和安装步骤">下载和安装步骤</h2>
-<ol type="1">
-<li><p>由于官网下载很慢，所以进入清华大学开源镜像站去<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/">下载</a> 安装包，选择与当前操作系统匹配的最新版本即可。</p></li>
-<li><p>双击 <code>.exe</code> 或者 <code>.pkg</code> 安装包执行安装步骤（略）</p></li>
-<li><p>以 Linux 系统为例，安装包是 <code>.sh</code> 文件，则在终端中定位到该文件所在的文件夹，执行以下命令：</p>
+<h2 id="下载和安装步骤"><a class="markdownIt-Anchor" href="#下载和安装步骤"></a> 下载和安装步骤</h2>
+<ol>
+<li>
+<p>由于官网下载很慢，所以进入清华大学开源镜像站去<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/">下载</a> 安装包，选择与当前操作系统匹配的最新版本即可。</p>
+</li>
+<li>
+<p>双击 <code>.exe</code> 或者 <code>.pkg</code> 安装包执行安装步骤（略）</p>
+</li>
+<li>
+<p>以 Linux 系统为例，安装包是 <code>.sh</code> 文件，则在终端中定位到该文件所在的文件夹，执行以下命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash ./&lt;installer&gt;.sh</span><br></pre></td></tr></tbody></table></figure>
 <p>我下载的是 Miniconda3，如果是给单个用户安装，默认安装路径 <code>&lt;install-dir&gt;</code> 为 <code>$HOME/miniconda3/</code></p>
 <p>终端输出忘记截图了，但是最后一步会问是否需要执行 <code>conda init</code> 要选择 yes</p>
-<p>如果不选择 yes 但之后想要执行的话，则需要执行 <code>&lt;install-dir&gt;/bin/conda init</code></p></li>
+<p>如果不选择 yes 但之后想要执行的话，则需要执行 <code>&lt;install-dir&gt;/bin/conda init</code></p>
+</li>
 </ol>
-<h2 id="一些命令">一些命令</h2>
-<h3 id="取消默认激活-base-环境">取消默认激活 base 环境</h3>
+<h2 id="一些命令"><a class="markdownIt-Anchor" href="#一些命令"></a> 一些命令</h2>
+<h3 id="取消默认激活-base-环境"><a class="markdownIt-Anchor" href="#取消默认激活-base-环境"></a> 取消默认激活 base 环境</h3>
 <p>安装完且首次执行 <code>conda init</code> 之后，打开终端都会默认激活 base 环境（即在命令提示符左边能看到 <code>(base)</code>），如果不想每次打开终端都要自动激活 base 环境，可以执行以下命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda config --<span class="built_in">set</span> auto_activate_base <span class="literal">false</span></span><br></pre></td></tr></tbody></table></figure>
 <p>这样下次打开终端就不会再自动激活 base 环境了。</p>
-<h3 id="切换-python-版本">切换 Python 版本</h3>
+<h3 id="切换-python-版本"><a class="markdownIt-Anchor" href="#切换-python-版本"></a> 切换 Python 版本</h3>
 <p>如果需要其他版本的 Python 环境，例如 Python 3.7，则先新建一个环境：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n py37 python=3.7</span><br></pre></td></tr></tbody></table></figure>
 <p>这样 conda 就会自动下载在 Python 3.7 中版本最新（例如，3.7.9）的 Python 环境。</p>
@@ -477,7 +483,7 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate py37</span><br></pre></td></tr></tbody></table></figure>
 <p>查看 Python 版本号：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python --version</span><br></pre></td></tr></tbody></table></figure>
-<p><img data-src="/posts/715f63dd/image-20210204175611627.png" alt="image-20210204175611627" style="zoom:50%;"></p>
+<img data-src="/posts/715f63dd/image-20210204175611627.png" alt="image-20210204175611627" style="zoom:50%;">
 <p>这可以证明目前已经切换到对应的 Python 版本。另外也可以使用这个环境的 pip 去下载包了。</p>
 <p>如果现在不需要使用这个 Python 环境了，可以取消激活：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda deactivate</span><br></pre></td></tr></tbody></table></figure>
@@ -575,14 +581,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">158k</span>
+    <span title="站点总字数">159k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 ≈</span>
-    <span title="站点阅读时长">2:23</span>
+    <span title="站点阅读时长">2:24</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动

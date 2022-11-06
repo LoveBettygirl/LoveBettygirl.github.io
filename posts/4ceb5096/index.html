@@ -276,7 +276,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">更新步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E5%8F%8A%E8%A7%A3%E5%86%B3"><span class="nav-number">2.</span> <span class="nav-text">遇到的坑及解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text"> 更新步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91%E5%8F%8A%E8%A7%A3%E5%86%B3"><span class="nav-number">2.</span> <span class="nav-text"> 遇到的坑及解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text"> 总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -469,84 +469,72 @@
     <div class="post-body" itemprop="articleBody">
         <p>我在 19 年下半年使用 Hexo 搭建了这个博客，使用了 NexT 主题。到现在 Hexo 版本一直停留在 3.9.0，现在版本已经都到 5.3.0 了；NexT 主题停留在 7.3.0 版本，现在都已经到 8.x 了。至于选择更新的动机，是因为我想升级一下博客的 UI （之前自己手动在 NexT 主题上搞了一个暗黑的 UI 配上 canvas next 动画之后的界面简直像虫子爬，现在觉得好丑），然后从 Butterfly 等比较现代的主题中学习一些升级的思路。然而，我把新版本 Butterfly 下载下来之后，准备启用它试试看，结果报了这个错：</p>
 <a id="more"></a>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/Snipaste_2021-02-17_23-16-26.png" alt="1" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/Snipaste_2021-02-17_23-16-26.png" alt="1" style="zoom:50%;">
 <p>因为我的 Hexo 版本太低不支持。那就先更新 Hexo 试试看吧。</p>
-<h2 id="更新步骤">更新步骤</h2>
+<h2 id="更新步骤"><a class="markdownIt-Anchor" href="#更新步骤"></a> 更新步骤</h2>
 <p>首先在自己的博客文件夹下打开终端。</p>
 <p>首先输入 <code>hexo -v</code> 检查一下版本：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218003902347.png" alt="2" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218003902347.png" alt="2" style="zoom:50%;">
 <p>然后输入以下命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install -g npm-check</span><br><span class="line">npm-check <span class="comment"># 检查安装的所有插件当中需要升级的插件</span></span><br><span class="line">npm install -g npm-upgrade</span><br><span class="line">npm-upgrade <span class="comment"># 更新 package.json</span></span><br><span class="line">npm update <span class="comment"># 更新所有插件及依赖</span></span><br></pre></td></tr></tbody></table></figure>
 <p>出现了很多警告：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004345647.png" alt="3" style="zoom:50%;"></p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004411360.png" alt="4" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004345647.png" alt="3" style="zoom:50%;">
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004411360.png" alt="4" style="zoom:50%;">
 <p>deprecated可以忽略，然后又发现了这个：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004453609.png" alt="5" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004453609.png" alt="5" style="zoom:50%;">
 <p>输入以下命令手动安装未成功安装的依赖：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install chokidar@^3.3.0</span><br></pre></td></tr></tbody></table></figure>
 <p>最后检查一下版本，可以看到升级成功了：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004643537.png" alt="6" style="zoom:50%;"></p>
-<h2 id="遇到的坑及解决">遇到的坑及解决</h2>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004643537.png" alt="6" style="zoom:50%;">
+<h2 id="遇到的坑及解决"><a class="markdownIt-Anchor" href="#遇到的坑及解决"></a> 遇到的坑及解决</h2>
 <p>注意上图的错误，我最初给忽略了（虽然不知道忽略了会带来什么问题）。</p>
-<p>在同一个终端中，我先手贱输了命令 <code>hexo s --debug</code> ，结果通过浏览器打开 http://localhost:/4000 发现看不到正常页面了，只能看到没有被渲染的源代码：</p>
-<figure>
-<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004948348.png" alt=""><figcaption>7</figcaption>
-</figure>
+<p>在同一个终端中，我先手贱输了命令 <code>hexo s --debug</code> ，结果通过浏览器打开 <a target="_blank" rel="noopener" href="http://localhost">http://localhost</a>:/4000 发现看不到正常页面了，只能看到没有被渲染的源代码：</p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218004948348.png" alt="7"></p>
 <p>先解决上面那个 <code>external_link</code> 的问题吧，在 Hexo 的 <code>_config.yml</code> 中搜索 <code>external_link</code> 属性发现的确是布尔值。按照提示打开<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/configuration.html">链接</a>，参考这里给出的默认值：</p>
-<figure>
-<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218005827267.png" alt=""><figcaption>8</figcaption>
-</figure>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218005827267.png" alt="8"></p>
 <p>修改 Hexo 的 <code>_config.yml</code> 如下：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218005953747.png" alt="9" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218005953747.png" alt="9" style="zoom:50%;">
 <p>重新输入命令 <code>hexo s --debug</code> 之后还是这样，<code>hexo clean</code> 也运行了，浏览器缓存也清了也没用。我打开别的页面也还是这样：</p>
-<figure>
-<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218010921123.png" alt=""><figcaption>10</figcaption>
-</figure>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218010921123.png" alt="10"></p>
 <p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218011622499.png" alt="11">输入命令 <code>hexo g</code> 重新生成静态文件居然没报错。从上面两个图来看，应该就是页面渲染出问题了。我也没有改对应的 layout 文件。</p>
 <p>然后我就尝试更换主题，从 NexT 更换到 Butterfly 也有同样的问题：</p>
-<figure>
-<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218012914787.png" alt=""><figcaption>12</figcaption>
-</figure>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218012914787.png" alt="12"></p>
 <p>更换到默认主题 landscape 就没有问题。值得注意的是 landscape 使用的是 ejs 模版引擎（我安装了 <code>Hexo-renderer-ejs</code>），但是 NexT 使用的是 swig ，Butterfly 使用的是 pug。后两个主题我没有安装对应的 renderer（之前就没安装过但是也能用 NexT）。</p>
 <p>我执行以下命令重新安装插件也不起作用，<code>package.json</code> 里面的 Hexo 版本也对得上，</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm -rf node_modules</span><br><span class="line">npm cache clean --force</span><br><span class="line">npm install <span class="comment"># 重新安装</span></span><br></pre></td></tr></tbody></table></figure>
 <p>经过一番搜索，我终于找到了这个<a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next/issues/4">链接</a>，这是 NexT 官方写的 issue。这里写着：</p>
-<figure>
-<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218020603184.png" alt=""><figcaption>13</figcaption>
-</figure>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218020603184.png" alt="13"></p>
 <p>可以知道 swig 缺乏维护，Hexo 从 5.0 版本开始不再提供对 swig 的支持，但是仍然可以安装 swig renderer。根据上图提示，输入如下命令安装：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-swig</span><br></pre></td></tr></tbody></table></figure>
 <p>同理，Butterfly 主题无法渲染的问题可以这样解决：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-pug</span><br></pre></td></tr></tbody></table></figure>
 <p>重新执行：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></tbody></table></figure>
-<p>打开 http://localhost:4000 终于能看到页面而不是源代码了：</p>
-<figure>
-<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218022534857.png" alt=""><figcaption>14</figcaption>
-</figure>
+<p>打开 <a target="_blank" rel="noopener" href="http://localhost:4000">http://localhost:4000</a> 终于能看到页面而不是源代码了：</p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218022534857.png" alt="14"></p>
 <blockquote>
 <p>上图参考了 BNDong 大佬的<a target="_blank" rel="noopener" href="https://github.com/BNDong/Cnblogs-Theme-SimpleMemory">代码</a>自己瞎整了一个封面，由于我太菜了，现在改的不太好，如果有时间我单独写一篇博客描述这个。先感谢 BNDong 大佬！！！</p>
 </blockquote>
 <p>但是导航栏又不能正常显示了，在同一个 issue 中看到这里才知道这是 Hexo 高版本带来的图标无法正常显示的问题：</p>
-<p><img id="15" data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218021730351.png" alt="15" style="zoom:50%;"></p>
+<img id="15" data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218021730351.png" alt="15" style="zoom:50%;">
 <p>所以为了升级 UI 我决定升级 NexT 到 8.x 吧。毕竟现在 NexT 也提供了对黑暗模式的支持。然而我又才知道 NexT 8.x 版本<strong>又又又换了个仓库</strong>（而且两次换仓库还都是因为上一个仓库的管理者放弃了维护），而且模版文件格式也改成了 <code>.njk</code>（和 <code>.swig</code> 语法类似），这就说明我必须得用新的代码升级主题了！！！</p>
-<figure>
-<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218025850814.png" alt=""><figcaption>16</figcaption>
-</figure>
-<figure>
-<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218030101699.png" alt=""><figcaption>17</figcaption>
-</figure>
-<h2 id="总结">总结</h2>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218025850814.png" alt="16"></p>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210218030101699.png" alt="17"></p>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
 <p>综上，</p>
 <ul>
-<li><p>如果使用了旧版本 NexT 主题并且 Hexo 升级到了 5.0 及以上版本，并且模版文件无法渲染（只能看到源代码），可以先在博客文件夹下尝试以下命令：</p>
+<li>
+<p>如果使用了旧版本 NexT 主题并且 Hexo 升级到了 5.0 及以上版本，并且模版文件无法渲染（只能看到源代码），可以先在博客文件夹下尝试以下命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-swig</span><br></pre></td></tr></tbody></table></figure>
 <p>Butterfly 主题出现同样的问题也可以尝试以下命令解决：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-pug</span><br></pre></td></tr></tbody></table></figure>
-<p>再执行以下命令，再用浏览器打开 http://localhost:/4000 （浏览器先清缓存）应该就能看到页面了。</p>
+<p>再执行以下命令，再用浏览器打开 <a target="_blank" rel="noopener" href="http://localhost">http://localhost</a>:/4000 （浏览器先清缓存）应该就能看到页面了。</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo s --debug</span><br></pre></td></tr></tbody></table></figure>
-<p>NexT 主题的其他兼容性问题（例如图标不能正常显示）只能通过升级 NexT 或者降级 Hexo 解决，参考官方 <a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next/issues/4">issue</a> 和<a href="#15">图15</a>。<del>如果你是大佬也可以徒手修改旧版 NexT 主题在新版 Hexo 中出问题的地方。</del></p></li>
-<li><p>NexT 主题实在太难用了，绝大多数自定义教程都过时了，换主题吧。</p></li>
+<p>NexT 主题的其他兼容性问题（例如图标不能正常显示）只能通过升级 NexT 或者降级 Hexo 解决，参考官方 <a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next/issues/4">issue</a> 和<a href="#15">图15</a>。<s>如果你是大佬也可以徒手修改旧版 NexT 主题在新版 Hexo 中出问题的地方。</s></p>
+</li>
+<li>
+<p>NexT 主题实在太难用了，绝大多数自定义教程都过时了，换主题吧。</p>
+</li>
 </ul>
 
     </div>
@@ -641,14 +629,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">158k</span>
+    <span title="站点总字数">159k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 ≈</span>
-    <span title="站点阅读时长">2:23</span>
+    <span title="站点阅读时长">2:24</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动

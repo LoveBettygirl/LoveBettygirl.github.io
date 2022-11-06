@@ -25,12 +25,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"lovebettygirl.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="前言 一般来说，进行深度学习的任务时，为了训练的速度更快一些，一般会在GPU上进行训练。除了安装Tensorflow或Pytorch以外，还会安装CUDA和cuDNN（针对深度神经网络的加速库）来加速训练。 之前就听身边人说这东西很难安装，我当时还在想有啥东西能为难我这种配环境高手的。结果经过这一次痛苦的安装过程，自信心是真的受到了打击。 为了应对以后还有可能做同样事情的可能（当然，毕业了之后绝无">
+<meta name="description" content="前言 一般来说，进行深度学习的任务时，为了训练的速度更快一些，一般会在GPU上进行训练。除了安装Tensorflow或Pytorch以外，还会安装CUDA和cuDNN（针对深度神经网络的加速库）来加速训练。 之前就听身边人说这东西很难安装，我当时还在想有啥东西能为难我这种配环境高手的。结果经过这一次痛苦的安装过程，自信心是真的受到了打击。 为了应对以后还有可能做同样事情的可能（当然，毕业了之后绝">
 <meta property="og:type" content="article">
 <meta property="og:title" content="安装CUDA的一些坑">
 <meta property="og:url" content="https://lovebettygirl.github.io/posts/75df0b52/index.html">
 <meta property="og:site_name" content="LoveBettygirl">
-<meta property="og:description" content="前言 一般来说，进行深度学习的任务时，为了训练的速度更快一些，一般会在GPU上进行训练。除了安装Tensorflow或Pytorch以外，还会安装CUDA和cuDNN（针对深度神经网络的加速库）来加速训练。 之前就听身边人说这东西很难安装，我当时还在想有啥东西能为难我这种配环境高手的。结果经过这一次痛苦的安装过程，自信心是真的受到了打击。 为了应对以后还有可能做同样事情的可能（当然，毕业了之后绝无">
+<meta property="og:description" content="前言 一般来说，进行深度学习的任务时，为了训练的速度更快一些，一般会在GPU上进行训练。除了安装Tensorflow或Pytorch以外，还会安装CUDA和cuDNN（针对深度神经网络的加速库）来加速训练。 之前就听身边人说这东西很难安装，我当时还在想有啥东西能为难我这种配环境高手的。结果经过这一次痛苦的安装过程，自信心是真的受到了打击。 为了应对以后还有可能做同样事情的可能（当然，毕业了之后绝">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428184513462.png">
 <meta property="og:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428185206312.png">
@@ -269,7 +269,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8"><span class="nav-number">2.1.</span> <span class="nav-text">检查显卡驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85cuda%E5%92%8Ccudnn"><span class="nav-number">2.2.</span> <span class="nav-text">下载并安装CUDA和cuDNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="nav-number">2.3.</span> <span class="nav-text">检查是否安装成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E5%9C%A8pytorch%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%94%A8%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text">验证在Pytorch中的可用性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9cuda%E7%89%88%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text">如何选择CUDA版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDcuda%E7%89%88%E6%9C%AC%E5%AF%B9%E5%BA%94%E7%9A%84pytorch%E7%89%88%E6%9C%AC"><span class="nav-number">3.1.</span> <span class="nav-text">下载CUDA版本对应的Pytorch版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AAcuda%E7%89%88%E6%9C%AC%E5%B9%B6%E5%AD%98"><span class="nav-number">4.</span> <span class="nav-text">多个CUDA版本并存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text"> 安装步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8"><span class="nav-number">2.1.</span> <span class="nav-text"> 检查显卡驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85cuda%E5%92%8Ccudnn"><span class="nav-number">2.2.</span> <span class="nav-text"> 下载并安装CUDA和cuDNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E5%AE%89%E8%A3%85%E6%88%90%E5%8A%9F"><span class="nav-number">2.3.</span> <span class="nav-text"> 检查是否安装成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E5%9C%A8pytorch%E4%B8%AD%E7%9A%84%E5%8F%AF%E7%94%A8%E6%80%A7"><span class="nav-number">2.4.</span> <span class="nav-text"> 验证在Pytorch中的可用性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9cuda%E7%89%88%E6%9C%AC"><span class="nav-number">3.</span> <span class="nav-text"> 如何选择CUDA版本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDcuda%E7%89%88%E6%9C%AC%E5%AF%B9%E5%BA%94%E7%9A%84pytorch%E7%89%88%E6%9C%AC"><span class="nav-number">3.1.</span> <span class="nav-text"> 下载CUDA版本对应的Pytorch版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AAcuda%E7%89%88%E6%9C%AC%E5%B9%B6%E5%AD%98"><span class="nav-number">4.</span> <span class="nav-text"> 多个CUDA版本并存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">5.</span> <span class="nav-text"> 后记</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -454,25 +454,29 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="前言">前言</h2>
+        <h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
 <p>一般来说，进行深度学习的任务时，为了训练的速度更快一些，一般会在GPU上进行训练。除了安装Tensorflow或Pytorch以外，还会安装CUDA和cuDNN（针对深度神经网络的加速库）来加速训练。</p>
 <p>之前就听身边人说这东西很难安装，我当时还在想有啥东西能为难我这种配环境高手的。结果经过这一次痛苦的安装过程，自信心是真的受到了打击。</p>
 <p>为了应对以后还有可能做同样事情的可能（当然，毕业了之后绝无可能），决定用这篇文章备忘一下。</p>
 <a id="more"></a>
-<h2 id="安装步骤">安装步骤</h2>
-<h3 id="检查显卡驱动">检查显卡驱动</h3>
+<h2 id="安装步骤"><a class="markdownIt-Anchor" href="#安装步骤"></a> 安装步骤</h2>
+<h3 id="检查显卡驱动"><a class="markdownIt-Anchor" href="#检查显卡驱动"></a> 检查显卡驱动</h3>
 <p>首先得确认该机器是否有NVIDIA独立显卡。然后再检查是否安装了NVIDIA显卡驱动。</p>
 <p>安装了之后在终端中输入 <code>nvidia-smi</code> 检查显卡驱动的安装情况。</p>
 <p>其中，右上角的CUDA版本表示机器当前能安装的CUDA的最高版本：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428184513462.png" alt="image-20220428184513462" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428184513462.png" alt="image-20220428184513462" style="zoom:50%;">
 <p>当然，由于Pytorch和Tensorflow目前不一定支持这个最高版本，所以一般不按照这个最高版本安装！</p>
 <p>由于我用的机器已经有了显卡驱动，所以这一步的坑还没有踩，以后再说。</p>
-<h3 id="下载并安装cuda和cudnn">下载并安装CUDA和cuDNN</h3>
-<ol type="1">
-<li><p>在<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-toolkit-archive">这里</a>找到想安装的CUDA版本，如果是Ubuntu，可以按照如下选择，按照如下方式安装（记住如果安装了显卡驱动，在安装的时候就不要勾选安装驱动了，否则会重复安装）：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428185206312.png" alt="image-20220428185206312" style="zoom:50%;"></p></li>
-<li><p>然后在<a target="_blank" rel="noopener" href="https://developer.nvidia.com/rdp/cudnn-archive">这里</a>根据上一步选择的CUDA版本，下载对应版本的cuDNN。第一次下载需要注册。</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428185538492.png" alt="image-20220428185538492" style="zoom:50%;"></p></li>
+<h3 id="下载并安装cuda和cudnn"><a class="markdownIt-Anchor" href="#下载并安装cuda和cudnn"></a> 下载并安装CUDA和cuDNN</h3>
+<ol>
+<li>
+<p>在<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-toolkit-archive">这里</a>找到想安装的CUDA版本，如果是Ubuntu，可以按照如下选择，按照如下方式安装（记住如果安装了显卡驱动，在安装的时候就不要勾选安装驱动了，否则会重复安装）：</p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428185206312.png" alt="image-20220428185206312" style="zoom:50%;">
+</li>
+<li>
+<p>然后在<a target="_blank" rel="noopener" href="https://developer.nvidia.com/rdp/cudnn-archive">这里</a>根据上一步选择的CUDA版本，下载对应版本的cuDNN。第一次下载需要注册。</p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428185538492.png" alt="image-20220428185538492" style="zoom:50%;">
+</li>
 </ol>
 <p>下载了cuDNN之后，解压下载下来的压缩包：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf &lt;压缩包&gt;</span><br></pre></td></tr></tbody></table></figure>
@@ -482,56 +486,64 @@
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/cuda-版本号/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/usr/<span class="built_in">local</span>/cuda-版本号/lib64:<span class="variable">$LD_LIBRARY_PATH</span></span><br></pre></td></tr></tbody></table></figure>
 <p>让设置的环境变量立即生效：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br><span class="line"><span class="comment"># 如果编辑的是/etc/bash.bashrc：</span></span><br><span class="line"><span class="built_in">source</span> /etc/bash.bashrc</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="检查是否安装成功">检查是否安装成功</h3>
+<h3 id="检查是否安装成功"><a class="markdownIt-Anchor" href="#检查是否安装成功"></a> 检查是否安装成功</h3>
 <p>在终端中输入命令：</p>
 <figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvcc -V</span><br></pre></td></tr></tbody></table></figure>
 <p>如果见到了类似如下的信息，说明已经安装了。（如果之前不知道是否安装了CUDA，如果没见到以下的信息，大概率就是没安装了）。</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428191021091.png" alt="image-20220428191021091" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428191021091.png" alt="image-20220428191021091" style="zoom:50%;">
 <p>但是仅凭上述信息无法判断是否安装成功，需要编译并运行CUDA提供的 <code>deviceQuery</code> 工具：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/cuda-版本号/samples/1_Utilities/deviceQuery</span><br><span class="line">sudo make</span><br><span class="line">./deviceQuery</span><br></pre></td></tr></tbody></table></figure>
 <p>输出以下信息说明安装成功：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428192129022.png" alt="image-20220428192129022" style="zoom:50%;"></p>
-<h3 id="验证在pytorch中的可用性">验证在Pytorch中的可用性</h3>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428192129022.png" alt="image-20220428192129022" style="zoom:50%;">
+<h3 id="验证在pytorch中的可用性"><a class="markdownIt-Anchor" href="#验证在pytorch中的可用性"></a> 验证在Pytorch中的可用性</h3>
 <p>在 Python 终端中，按照如下输入如果能得到 <code>True</code> 说明Pytorch可以使用CUDA来训练了。</p>
 <figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>print(torch.cuda.is_available())</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="literal">True</span></span><br></pre></td></tr></tbody></table></figure>
 <p>如果想查看有几个GPU可以用，可以输入 <code>torch.cuda.device_count()</code> 来查看。</p>
-<h2 id="如何选择cuda版本">如何选择CUDA版本</h2>
+<h2 id="如何选择cuda版本"><a class="markdownIt-Anchor" href="#如何选择cuda版本"></a> 如何选择CUDA版本</h2>
 <p>上面的步骤乍一看很简单。但是这个东西最坑的地方在于，安装成功却不一定能正常使用。</p>
 <p>如果跑程序的时候出现了类似以下的错误，大概率是因为安装的Pytorch版本和CUDA版本不兼容。</p>
 <p>（按照支持的最高版本CUDA 11.4安装，使用项目作者推荐的Pytorch版本（1.4.0））</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428193311332.png" alt="image-20220428193311332" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428193311332.png" alt="image-20220428193311332" style="zoom:50%;">
 <p>（Pytorch升级到1.9.0，CUDA降级到11.1）</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428193425602.png" alt="image-20220428193425602" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428193425602.png" alt="image-20220428193425602" style="zoom:50%;">
 <p>那么解决的思路无非是两种：</p>
 <ul>
-<li><p>Pytorch版本较低，降低CUDA版本</p>
+<li>
+<p>Pytorch版本较低，降低CUDA版本</p>
 <ul>
-<li><p>首先是像之前提的那样，不要使用上述提到的支持的最高版本安装</p></li>
-<li><p>安装的CUDA版本不能太低，否则编译 <code>deviceQuery</code> 可能会出现如下错误。表示GPU过于新，不支持对应的架构（当然，太低的版本可能也不支持系统的gcc版本）：</p>
+<li>
+<p>首先是像之前提的那样，不要使用上述提到的支持的最高版本安装</p>
+</li>
+<li>
+<p>安装的CUDA版本不能太低，否则编译 <code>deviceQuery</code> 可能会出现如下错误。表示GPU过于新，不支持对应的架构（当然，太低的版本可能也不支持系统的gcc版本）：</p>
 <p>最初降低到了1.4.0对应的10.1版本，10.1版本也是无法运行。编译 <code>deviceQuery</code> 出错：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 降低到10.1版本出现的</span></span><br><span class="line">nvcc fatal: Unsupported gpu architecture <span class="string">'compute_30'</span></span><br></pre></td></tr></tbody></table></figure></li>
-</ul></li>
-<li><p>升级Pytorch</p></li>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 降低到10.1版本出现的</span></span><br><span class="line">nvcc fatal: Unsupported gpu architecture <span class="string">'compute_30'</span></span><br></pre></td></tr></tbody></table></figure>
+</li>
 </ul>
-<h3 id="下载cuda版本对应的pytorch版本">下载CUDA版本对应的Pytorch版本</h3>
+</li>
+<li>
+<p>升级Pytorch</p>
+</li>
+</ul>
+<h3 id="下载cuda版本对应的pytorch版本"><a class="markdownIt-Anchor" href="#下载cuda版本对应的pytorch版本"></a> 下载CUDA版本对应的Pytorch版本</h3>
 <p>可以从<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/previous-versions/">这里</a>查询Pytorch各个版本支持的CUDA版本。</p>
 <p>例如，从上述链接中查出了Pytorch 1.9.0版本支持CUDA的10.2和11.1版本。但是由于设备的GPU太新，按照10.x版本无法正常运行。所以选择CUDA 11.1版本。但还是有一个坑：</p>
 <p>通过 <code>pip</code> 安装 Pytorch 1.9.0：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install torch==1.9.0</span><br></pre></td></tr></tbody></table></figure>
 <p>在Python终端中，输入 <code>torch.version.cuda</code> 可以查看当前Pytorch版本支持的CUDA版本，输入 <code>torch.__version__</code> 查看当前Pytorch的版本。</p>
 <p>输出如下：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428200117828.png" alt="image-20220428200117828" style="zoom:50%;"></p>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428200117828.png" alt="image-20220428200117828" style="zoom:50%;">
 <p>说明上述方法安装的Pytorch 1.9.0版本只支持CUDA 10.2，但是机器安装的是CUDA 11.1，两者之间还是不兼容。</p>
 <p>因此需要安装支持CUDA 11.1的Pytorch1.9.0版本：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install torch==1.9.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html</span><br></pre></td></tr></tbody></table></figure>
 <p>这样输出就正常了，程序也能正常运行了：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428200546030.png" alt="image-20220428200546030" style="zoom:50%;"></p>
-<h2 id="多个cuda版本并存">多个CUDA版本并存</h2>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428200546030.png" alt="image-20220428200546030" style="zoom:50%;">
+<h2 id="多个cuda版本并存"><a class="markdownIt-Anchor" href="#多个cuda版本并存"></a> 多个CUDA版本并存</h2>
 <p>由于第一次安装，当时安装的时候也没做好功课。结果面临要卸载之前安装好的CUDA的问题，很麻烦，而且也未必能卸载干净。</p>
 <p>其实可以不用卸载，多个版本共存也是可以的，这样对于不同的Pytorch版本，也比较灵活。</p>
 <p>只要修改好环境变量即可，不用的版本就注释掉：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428201045821.png" alt="image-20220428201045821" style="zoom:50%;"></p>
-<h2 id="后记">后记</h2>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20220428201045821.png" alt="image-20220428201045821" style="zoom:50%;">
+<h2 id="后记"><a class="markdownIt-Anchor" href="#后记"></a> 后记</h2>
 <p>在无奈之下，我最终选择升级Pytorch，降级CUDA。不过侥幸的是，我运行的推荐使用Pytorch 1.4.0的代码也能正常运行。但是换了其他代码就不一定行了。因此在有些情况下，必须要使用低版本的Pytorch。至于怎么解决CUDA版本低带来的问题，到时候遇到了再说吧。</p>
 
     </div>
@@ -626,14 +638,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">158k</span>
+    <span title="站点总字数">159k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 ≈</span>
-    <span title="站点阅读时长">2:23</span>
+    <span title="站点阅读时长">2:24</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动

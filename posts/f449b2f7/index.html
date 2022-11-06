@@ -39,8 +39,8 @@
 <meta property="article:author" content="LoveBettygirl">
 <meta property="article:tag" content="Vue">
 <meta property="article:tag" content="vue-cli">
-<meta property="article:tag" content="前端">
 <meta property="article:tag" content="Antd">
+<meta property="article:tag" content="前端">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210306012605946.png">
 
@@ -261,7 +261,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#module-build-failed-typeerror-this.getoptions-is-not-a-function"><span class="nav-number">2.1.</span> <span class="nav-text">Module build failed: TypeError: this.getOptions is not a function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-javascript-is-not-enabled"><span class="nav-number">2.2.</span> <span class="nav-text">Inline JavaScript is not enabled</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#operation-on-an-invalid-type"><span class="nav-number">2.3.</span> <span class="nav-text">Operation on an invalid type</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> 问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text"> 解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#module-build-failed-typeerror-thisgetoptions-is-not-a-function"><span class="nav-number">2.1.</span> <span class="nav-text"> Module build failed: TypeError: this.getOptions is not a function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inline-javascript-is-not-enabled"><span class="nav-number">2.2.</span> <span class="nav-text"> Inline JavaScript is not enabled</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#operation-on-an-invalid-type"><span class="nav-number">2.3.</span> <span class="nav-text"> Operation on an invalid type</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text"> 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text"> 参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -452,7 +452,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="问题描述">问题描述</h2>
+        <h2 id="问题描述"><a class="markdownIt-Anchor" href="#问题描述"></a> 问题描述</h2>
 <p>这段时间在学习用Vue（版本2.x）写一个简单的网页，然后将其重构成一个vue-cli项目。界面的UI使用了Ant Design Vue（版本1.x）。由于自己有严重的强迫症，不想让所有控件都使用默认的配色和样式，所以就尝试按照官网提供的方法重新定制主题。</p>
 <a id="more"></a>
 <p>创建Vue 2.x项目：</p>
@@ -468,27 +468,27 @@
 <p><code>xxx/src/style/theme.less</code> 的内容：</p>
 <figure class="highlight less"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@primary-color:</span> <span class="number">#4499c2</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.@{popover-prefix-cls}</span> {</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-tag">-title</span> {</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">15px</span> <span class="number">20px</span>;</span><br><span class="line">        <span class="attribute">font-size</span>: <span class="number">16px</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-tag">-inner</span> {</span><br><span class="line">        <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-tag">-inner-content</span> {</span><br><span class="line">        <span class="attribute">padding</span>: <span class="number">20px</span> <span class="number">20px</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.@{card-prefix-cls}</span> {</span><br><span class="line">    <span class="selector-tag">&amp;</span><span class="selector-tag">-bordered</span> {</span><br><span class="line">        <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#e8e8e8</span>;</span><br><span class="line">        <span class="attribute">border-radius</span>: <span class="number">4px</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 <p>在 <code>xxx/src/main.js</code> 中增加这些内容：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210306012605946.png" alt="image-20210306012605946" style="zoom:50%;"></p>
-<h2 id="解决方法">解决方法</h2>
-<h3 id="module-build-failed-typeerror-this.getoptions-is-not-a-function">Module build failed: TypeError: this.getOptions is not a function</h3>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210306012605946.png" alt="image-20210306012605946" style="zoom:50%;">
+<h2 id="解决方法"><a class="markdownIt-Anchor" href="#解决方法"></a> 解决方法</h2>
+<h3 id="module-build-failed-typeerror-thisgetoptions-is-not-a-function"><a class="markdownIt-Anchor" href="#module-build-failed-typeerror-thisgetoptions-is-not-a-function"></a> Module build failed: TypeError: this.getOptions is not a function</h3>
 <p>修改主题之后定制项目出现如下的报错：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> error  <span class="keyword">in</span> ./src/style/index.less</span><br><span class="line"></span><br><span class="line">Module build failed: TypeError: this.getOptions is not a <span class="keyword">function</span></span><br><span class="line">    at Object.lessLoader (/Users/betty/vue/xxx/node_modules/less-loader/dist/index.js:21:24)</span><br><span class="line"></span><br><span class="line"> @ ./src/style/index.less 4:14-198 13:3-17:5 14:22-206</span><br><span class="line"> @ ./src/main.js</span><br><span class="line"> @ multi (webpack)-dev-server/client?http://localhost:8080 webpack/hot/dev-server ./src/main.js</span><br></pre></td></tr></tbody></table></figure>
 <p><code>less-loader</code> 版本太高，需要降级（原来的版本可以在 <code>xxx/package.json</code> 中查看，忘截图了）：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall less-loader</span><br><span class="line">npm install less-loader@5.0.0 --save</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="inline-javascript-is-not-enabled">Inline JavaScript is not enabled</h3>
+<h3 id="inline-javascript-is-not-enabled"><a class="markdownIt-Anchor" href="#inline-javascript-is-not-enabled"></a> Inline JavaScript is not enabled</h3>
 <p>上一个问题解决了之后又报错了：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> error  <span class="keyword">in</span> ./src/style/index.less</span><br><span class="line"></span><br><span class="line">Module build failed: </span><br><span class="line"></span><br><span class="line">// https://github.com/ant-design/ant-motion/issues/44</span><br><span class="line">.bezierEasingMixin();</span><br><span class="line">^</span><br><span class="line">Inline JavaScript is not enabled. Is it <span class="built_in">set</span> <span class="keyword">in</span> your options?</span><br><span class="line">      <span class="keyword">in</span> /Users/betty/vue/xxx/node_modules/ant-design-vue/lib/style/color/bezierEasing.less (line 110, column 0)</span><br><span class="line"></span><br><span class="line"> @ ./src/style/index.less 4:14-198 13:3-17:5 14:22-206</span><br><span class="line"> @ ./src/main.js</span><br><span class="line"> @ multi (webpack)-dev-server/client?http://localhost:8080 webpack/hot/dev-server ./src/main.js</span><br></pre></td></tr></tbody></table></figure>
 <p>由于项目的Vue版本是2.x，故按照下图修改 <code>xxx/build/utils.js</code> ：</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210306011339784.png" alt="image-20210306011339784" style="zoom:50%;"></p>
-<h3 id="operation-on-an-invalid-type">Operation on an invalid type</h3>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210306011339784.png" alt="image-20210306011339784" style="zoom:50%;">
+<h3 id="operation-on-an-invalid-type"><a class="markdownIt-Anchor" href="#operation-on-an-invalid-type"></a> Operation on an invalid type</h3>
 <p>上一个问题解决了之后又又又报错了：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> error  <span class="keyword">in</span> ./src/style/index.less</span><br><span class="line"></span><br><span class="line">Module build failed: </span><br><span class="line"></span><br><span class="line">    position: absolute;</span><br><span class="line">    top: 8px + @font-size-base * @line-height-base / 2 - @font-size-base / 2;</span><br><span class="line">  ^</span><br><span class="line">Operation on an invalid <span class="built_in">type</span></span><br><span class="line">      <span class="keyword">in</span> /Users/betty/vue/xxx/node_modules/ant-design-vue/lib/alert/style/index.less (line 29, column 4)</span><br><span class="line"></span><br><span class="line"> @ ./src/style/index.less 4:14-198 13:3-17:5 14:22-206</span><br><span class="line"> @ ./src/main.js</span><br><span class="line"> @ multi (webpack)-dev-server/client?http://localhost:8080 webpack/hot/dev-server ./src/main.js</span><br></pre></td></tr></tbody></table></figure>
 <p>降低 <code>less</code> 版本到 4.0 以下成功解决：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall less</span><br><span class="line">npm install less@2.7.3 --save</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="总结">总结</h2>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
 <p>为了避免上述问题，在vue-cli中的Vue 2.x项目中使用Antd定制主题的时候，安装 <code>less</code> 和 <code>less-loader</code> 的时候应该指定低版本：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install less@2.7.3 less-loader@5.0.0 --save</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="参考">参考</h2>
+<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43438052/article/details/114140449">https://blog.csdn.net/weixin_43438052/article/details/114140449</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45748897/article/details/103701003">https://blog.csdn.net/weixin_45748897/article/details/103701003</a></li>
@@ -533,8 +533,8 @@
           <div class="post-tags">
               <a href="/tags/Vue/" rel="tag"><i class="fa fa-tag"></i> Vue</a>
               <a href="/tags/vue-cli/" rel="tag"><i class="fa fa-tag"></i> vue-cli</a>
-              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 前端</a>
               <a href="/tags/Antd/" rel="tag"><i class="fa fa-tag"></i> Antd</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"><i class="fa fa-tag"></i> 前端</a>
           </div>
 
         
@@ -583,14 +583,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">158k</span>
+    <span title="站点总字数">159k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 ≈</span>
-    <span title="站点阅读时长">2:23</span>
+    <span title="站点阅读时长">2:24</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> &amp; <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
