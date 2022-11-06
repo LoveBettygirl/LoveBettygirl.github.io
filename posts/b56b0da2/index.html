@@ -259,7 +259,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text"> 背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text"> 解决方案</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -432,7 +432,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>712</span>
+      <span>735</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -450,37 +450,31 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="背景"><a class="markdownIt-Anchor" href="#背景"></a> 背景</h2>
+        <h2 id="背景">背景</h2>
 <p>使用 <code>git push</code> 将本地仓库分支推送到 GitHub 远程仓库的对应分支的时候，可能会出现以下问题：</p>
 <figure class="highlight basic"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">remote: error: File XXX is 102.79 MB; thie exceeds GitHub's file size limit of 100.00 MB</span></span><br></pre></td></tr></tbody></table></figure>
 <p>这表明 GitHub 默认不允许上传大小超过 100 MB 文件，但还是想上传应该如何解决？</p>
 <a id="more"></a>
-<h2 id="解决方案"><a class="markdownIt-Anchor" href="#解决方案"></a> 解决方案</h2>
+<h2 id="解决方案">解决方案</h2>
 <p>此时就需要使用 Git LFS 了。Git LFS （Large File Storage） 是 GitHub 开发的 Git 扩展，用于 Git 传大型文件的。下载安装步骤自行百度。</p>
 <p>如果要推送的分支仅仅是最新的提交包含了大文件（否则就没有下面的步骤这么简单了），可以通过以下步骤来重新提交：</p>
-<ol>
-<li>
-<p>首先取消该大文件的版本控制：</p>
+<ol type="1">
+<li><p>首先取消该大文件的版本控制：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached XXX</span><br></pre></td></tr></tbody></table></figure>
 <p>如果是文件夹则是</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached -r XXX</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p>将该大文件放入 LFS 中，此时会生成或修改 <code>.gitattributes</code> 文件：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git lfs track XXX</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p>将该大文件和 <code>.gitattributes</code> 文件一并加入到暂存区中：</p>
-<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .gitattributes XXX</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p>重新提交：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached -r XXX</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>将该大文件放入 LFS 中，此时会生成或修改 <code>.gitattributes</code> 文件：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git lfs track XXX</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>将该大文件和 <code>.gitattributes</code> 文件一并加入到暂存区中：</p>
+<figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .gitattributes XXX</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>重新提交：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br></pre></td></tr></tbody></table></figure>
-</li>
+<p>之后再用刚才使用的 <code>git push</code> 命令重新推送分支即可。</p></li>
 </ol>
-<p>之后再用刚才使用的 <code>git push</code> 命令重新推送分支即可。</p>
 <p>注意，Git LFS 有一个大坑，就是它可能并不是免费并且无限使用的。使用了 LFS 的文件会单独存放在 GitHub 的远程 LFS 存储服务器中，普通用户只能免费使用 1.5 GB LFS 存储空间（对于该用户的所有仓库而言），如果超出了这个限制需要每个月交至少 5 美元（对应50 GB）来扩大个人 LFS 容量。而且不同的代码托管平台有不同的收费标准。所以非必要情况下还是少用 LFS 或者不要上传过大的文件了。</p>
-<p><img data-src="/posts/b56b0da2/image-20210131124802085.png" alt="image-20210131124802085"></p>
+<figure>
+<img data-src="/posts/b56b0da2/image-20210131124802085.png" alt=""><figcaption>image-20210131124802085</figcaption>
+</figure>
 
     </div>
 
@@ -567,7 +561,7 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">159k</span>
+    <span title="站点总字数">158k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">

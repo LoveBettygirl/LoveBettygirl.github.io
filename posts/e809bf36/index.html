@@ -263,7 +263,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh%E7%99%BB%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text"> SSH登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8D%E9%94%99%E8%AF%AF"><span class="nav-number">2.</span> <span class="nav-text"> 修复错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text"> 参考</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh%E7%99%BB%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">SSH登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8D%E9%94%99%E8%AF%AF"><span class="nav-number">2.</span> <span class="nav-text">修复错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -436,7 +436,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>724</span>
+      <span>816</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -459,25 +459,33 @@
 <p>之前遇到这样的问题我都是直接用虚拟机快照恢复到最近的的状态，但是这台虚拟机我并没有备份快照……</p>
 <p>从网上找了一些解决方案，总算找到了解决方法，现在记录在这里。</p>
 <a id="more"></a>
-<h2 id="ssh登录"><a class="markdownIt-Anchor" href="#ssh登录"></a> SSH登录</h2>
+<h2 id="ssh登录">SSH登录</h2>
 <p>因为出现问题的虚拟机不能直接用命令行操作，所以先尝试使用SSH登录来使用命令行操作这台虚拟机。可以使用另外一台正常的虚拟机，打开终端，输入以下命令登录到出问题的虚拟机：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh 用户名@IP地址</span><br></pre></td></tr></tbody></table></figure>
 <p>如果不记得这台虚拟机的IP地址，可以在虚拟机列表当中右击这台虚拟机，找到SSH选项，再点击「连接到SSH」</p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142441090.png" alt="image-20210315142441090"></p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142441090.png" alt=""><figcaption>image-20210315142441090</figcaption>
+</figure>
 <p>首次连接会出现以下对话框，填写当前用户名，点击连接，即可登录。</p>
-<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142635078.png" alt="image-20210315142635078" style="zoom:50%;">
-<h2 id="修复错误"><a class="markdownIt-Anchor" href="#修复错误"></a> 修复错误</h2>
+<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315142635078.png" alt="image-20210315142635078" style="zoom:50%;"></p>
+<h2 id="修复错误">修复错误</h2>
 <p>登录到这台虚拟机之后，通过执行以下命令发现系统无法创建日志文件：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl --verify</span><br></pre></td></tr></tbody></table></figure>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104333744.png" alt="image-20210315104333744"></p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104333744.png" alt=""><figcaption>image-20210315104333744</figcaption>
+</figure>
 <p>然后执行此命令修复根目录挂载点下的文件系统：（注意：最好不要贸然执行这条命令，可能也会导致系统无法正常启动）</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fsck -y /</span><br></pre></td></tr></tbody></table></figure>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104414931.png" alt="image-20210315104414931"></p>
-<p><img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104923282.png" alt="image-20210315104923282"></p>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104414931.png" alt=""><figcaption>image-20210315104414931</figcaption>
+</figure>
+<figure>
+<img data-src="https://self-image-bucket.oss-cn-beijing.aliyuncs.com/img/image-20210315104923282.png" alt=""><figcaption>image-20210315104923282</figcaption>
+</figure>
 <p>可以发现是 <code>/dev/sda1</code> 分区出了问题，并且现在已经修复，重启虚拟机：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo shutdown -r now</span><br></pre></td></tr></tbody></table></figure>
 <p>这样虚拟机重启之后，居然也没有进入 initramfs 命令行，直接正常进入系统了。</p>
-<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考</h2>
+<h2 id="参考">参考</h2>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qin1137248135/article/details/108273596">https://blog.csdn.net/qin1137248135/article/details/108273596</a></p>
 
     </div>
@@ -574,7 +582,7 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">159k</span>
+    <span title="站点总字数">158k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">

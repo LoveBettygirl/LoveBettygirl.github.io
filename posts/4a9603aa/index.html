@@ -25,12 +25,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"lovebettygirl.github.io","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="本文内容来自掘金小册《MySQL是怎样运行的》。纸质书早就买了，但是还是喜欢看电子版的。  InnoDB数据页基本概念 InnoDB是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。InnoDB将数据划分为若干个页，以页作为磁盘和">
+<meta name="description" content="本文内容来自掘金小册《MySQL是怎样运行的》。纸质书早就买了，但是还是喜欢看电子版的。 InnoDB数据页基本概念 InnoDB是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。InnoDB将数据划分为若干个页，以页作为磁盘和内">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《MySQL是怎样运行的》笔记：InnoDB数据页 &amp; 记录存储结构">
 <meta property="og:url" content="https://lovebettygirl.github.io/posts/4a9603aa/index.html">
 <meta property="og:site_name" content="LoveBettygirl">
-<meta property="og:description" content="本文内容来自掘金小册《MySQL是怎样运行的》。纸质书早就买了，但是还是喜欢看电子版的。  InnoDB数据页基本概念 InnoDB是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。InnoDB将数据划分为若干个页，以页作为磁盘和">
+<meta property="og:description" content="本文内容来自掘金小册《MySQL是怎样运行的》。纸质书早就买了，但是还是喜欢看电子版的。 InnoDB数据页基本概念 InnoDB是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。InnoDB将数据划分为若干个页，以页作为磁盘和内">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c10773d8cee~tplv-t2oaga2asx-watermark.image">
 <meta property="og:image" content="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c1084c440b4~tplv-t2oaga2asx-watermark.image">
@@ -271,7 +271,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#innodb%E6%95%B0%E6%8D%AE%E9%A1%B5%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text"> InnoDB数据页基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#innodb%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text"> InnoDB行格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E9%A2%9D%E5%A4%96%E4%BF%A1%E6%81%AF"><span class="nav-number">2.1.</span> <span class="nav-text"> 记录的额外信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E7%9C%9F%E5%AE%9E%E6%95%B0%E6%8D%AE"><span class="nav-number">2.2.</span> <span class="nav-text"> 记录的真实数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E5%88%97"><span class="nav-number">2.2.1.</span> <span class="nav-text"> 隐藏列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compact%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text"> Compact行格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E9%A2%9D%E5%A4%96%E4%BF%A1%E6%81%AF-2"><span class="nav-number">2.3.1.</span> <span class="nav-text"> 记录的额外信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E7%9C%9F%E5%AE%9E%E6%95%B0%E6%8D%AE-2"><span class="nav-number">2.3.2.</span> <span class="nav-text"> 记录的真实数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redundant%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text"> Redundant行格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E9%A2%9D%E5%A4%96%E4%BF%A1%E6%81%AF-3"><span class="nav-number">2.4.1.</span> <span class="nav-text"> 记录的额外信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E7%9C%9F%E5%AE%9E%E6%95%B0%E6%8D%AE-3"><span class="nav-number">2.4.2.</span> <span class="nav-text"> 记录的真实数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E6%BA%A2%E5%87%BA"><span class="nav-number">2.5.</span> <span class="nav-text"> 行溢出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dynamic%E5%92%8Ccompressed%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.6.</span> <span class="nav-text"> Dynamic和Compressed行格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#innodb%E6%95%B0%E6%8D%AE%E9%A1%B5%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text"> InnoDB数据页结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#user-records-free-space"><span class="nav-number">3.1.</span> <span class="nav-text"> User Records、Free Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#infinum-suprenum"><span class="nav-number">3.2.</span> <span class="nav-text"> Infinum + Suprenum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#page-directory"><span class="nav-number">3.3.</span> <span class="nav-text"> Page Directory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#page-header"><span class="nav-number">3.4.</span> <span class="nav-text"> Page Header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file-header"><span class="nav-number">3.5.</span> <span class="nav-text"> File Header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file-trailer"><span class="nav-number">3.6.</span> <span class="nav-text"> File Trailer</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#innodb%E6%95%B0%E6%8D%AE%E9%A1%B5%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">InnoDB数据页基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#innodb%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">InnoDB行格式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E9%A2%9D%E5%A4%96%E4%BF%A1%E6%81%AF"><span class="nav-number">2.1.</span> <span class="nav-text">记录的额外信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E7%9C%9F%E5%AE%9E%E6%95%B0%E6%8D%AE"><span class="nav-number">2.2.</span> <span class="nav-text">记录的真实数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E5%88%97"><span class="nav-number">2.2.1.</span> <span class="nav-text">隐藏列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compact%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">Compact行格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E9%A2%9D%E5%A4%96%E4%BF%A1%E6%81%AF-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">记录的额外信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E7%9C%9F%E5%AE%9E%E6%95%B0%E6%8D%AE-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">记录的真实数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redundant%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text">Redundant行格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E9%A2%9D%E5%A4%96%E4%BF%A1%E6%81%AF-2"><span class="nav-number">2.4.1.</span> <span class="nav-text">记录的额外信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9A%84%E7%9C%9F%E5%AE%9E%E6%95%B0%E6%8D%AE-2"><span class="nav-number">2.4.2.</span> <span class="nav-text">记录的真实数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E6%BA%A2%E5%87%BA"><span class="nav-number">2.5.</span> <span class="nav-text">行溢出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dynamic%E5%92%8Ccompressed%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.6.</span> <span class="nav-text">Dynamic和Compressed行格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#innodb%E6%95%B0%E6%8D%AE%E9%A1%B5%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">InnoDB数据页结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#user-recordsfree-space"><span class="nav-number">3.1.</span> <span class="nav-text">User Records、Free Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#infinum-suprenum"><span class="nav-number">3.2.</span> <span class="nav-text">Infinum + Suprenum</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#page-directory"><span class="nav-number">3.3.</span> <span class="nav-text">Page Directory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#page-header"><span class="nav-number">3.4.</span> <span class="nav-text">Page Header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file-header"><span class="nav-number">3.5.</span> <span class="nav-text">File Header</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#file-trailer"><span class="nav-number">3.6.</span> <span class="nav-text">File Trailer</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -442,7 +442,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>8.6k</span>
+      <span>8.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -461,25 +461,31 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>本文内容来自<a target="_blank" rel="noopener" href="https://juejin.cn/book/6844733769996304392">掘金小册《MySQL是怎样运行的》</a>。纸质书早就买了，但是还是喜欢看电子版的。</p>
-<h1 id="innodb数据页基本概念"><a class="markdownIt-Anchor" href="#innodb数据页基本概念"></a> InnoDB数据页基本概念</h1>
-<p><code>InnoDB</code>是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。<code>InnoDB</code>将数据划分为若干个<strong>页</strong>，以页作为磁盘和内存之间交互的基本单位，InnoDB中页的大小一般为 <em><strong>16</strong></em> KB。也就是在一般情况下，一次最少从磁盘中读取16KB的内容到内存中，一次最少把内存中的16KB内容刷新到磁盘中。</p>
+<h1 id="innodb数据页基本概念">InnoDB数据页基本概念</h1>
+<p><code>InnoDB</code>是一个将表中的数据存储到磁盘上的存储引擎，所以即使关机后重启我们的数据还是存在的。而真正处理数据的过程是发生在内存中的，所以需要把磁盘中的数据加载到内存中，如果是处理写入或修改请求的话，还需要把内存中的内容刷新到磁盘上。<code>InnoDB</code>将数据划分为若干个<strong>页</strong>，以页作为磁盘和内存之间交互的基本单位，InnoDB中页的大小一般为 <strong><em>16</em></strong> KB。也就是在一般情况下，一次最少从磁盘中读取16KB的内容到内存中，一次最少把内存中的16KB内容刷新到磁盘中。</p>
 <a id="more"></a>
 <blockquote>
 <p>为什么页的大小默认16kb？The default 16KB page size or larger is appropriate for a wide range of workloads, particularly for queries involving table scans and DML operations involving bulk updates</p>
 </blockquote>
 <p><code>InnoDB</code> 有多种不同类型的页。存放表中记录的页面称为数据页（官方称为索引（<code>INDEX</code>）页）。</p>
-<h1 id="innodb行格式"><a class="markdownIt-Anchor" href="#innodb行格式"></a> InnoDB行格式</h1>
+<h1 id="innodb行格式">InnoDB行格式</h1>
 <p>我们平时是<strong>以记录为单位</strong>来向表中插入数据的，行格式是表中的每个记录（行）在磁盘上的存储格式。</p>
 <p>InnoDB一共有4种行格式：<code>Compact</code>、<code>Redundant</code>、<code>Dynamic</code>、<code>Compressed</code>。其中 <code>Dynamic</code> 是InnoDB默认的行格式。</p>
 <p>可以在创建或修改表的语句中指定行格式：</p>
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> 表名 (列的信息) ROW_FORMAT<span class="operator">=</span>行格式名称</span><br><span class="line">    </span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> 表名 ROW_FORMAT<span class="operator">=</span>行格式名称</span><br></pre></td></tr></tbody></table></figure>
 <p>一条记录（行）包含两个基本部分：记录的额外信息、记录的真实数据。</p>
-<h2 id="记录的额外信息"><a class="markdownIt-Anchor" href="#记录的额外信息"></a> 记录的额外信息</h2>
+<h2 id="记录的额外信息">记录的额外信息</h2>
 <p>存储这一行中每一列的额外信息：数据长度、是否为NULL。以及固定字节数的记录头信息，用于存储该行的其他信息。</p>
 <p>常见的记录头信息：</p>
 <table>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 53%">
+<col style="width: 16%">
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>名称</th>
 <th>大小（单位：bit）</th>
 <th>描述</th>
@@ -487,61 +493,61 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>预留位1</code></td>
 <td><code>1</code></td>
 <td>没有使用</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>预留位2</code></td>
 <td><code>1</code></td>
 <td>没有使用</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>delete_mask</code></td>
 <td><code>1</code></td>
 <td>标记该记录是否被删除，1为已被删除</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>min_rec_mask</code></td>
 <td><code>1</code></td>
 <td>B+树的每层非叶子节点中的最小记录都会标记为1</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>n_owned</code></td>
 <td><code>4</code></td>
 <td>一个页面中的记录被分为若干个组，<code>n_owned</code> 表示当前记录所在分组拥有的记录数，只有该分组的最后一条记录 <code>n_owned</code> 的值才大于0。用于辅助在该页内根据主键查找对应记录。</td>
 <td></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>heap_no</code></td>
 <td><code>13</code></td>
 <td>表示当前记录在记录堆的位置信息（当前记录在本页中存放的相对位置），自己插入的记录从2开始，0和1分别表示最小记录和最大记录</td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>record_type</code></td>
 <td><code>3</code></td>
 <td>表示当前记录的类型，<code>0</code>表示普通记录，<code>1</code>表示B+树非叶子节点记录，<code>2</code>表示最小记录，<code>3</code>表示最大记录；自己插入的记录的都是普通记录</td>
 <td>Redundant行格式没有</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>n_field</code></td>
 <td><code>10</code></td>
 <td>表示记录中列的数量</td>
 <td>Redundant行格式特有</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>1byte_offs_flag</code></td>
 <td><code>1</code></td>
 <td>标记字段长度偏移列表中每个列对应的偏移量是使用1字节还是2字节表示的，1为1字节，0为2字节</td>
 <td>Redundant行格式特有</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>next_record</code></td>
 <td><code>16</code></td>
 <td>表示下一条记录的相对位置，即表示从当前记录的真实数据到下一条记录的真实数据的地址偏移量。</td>
@@ -550,38 +556,32 @@
 </tbody>
 </table>
 <ul>
-<li>
-<p><code>next_record</code>：表示从当前记录的真实数据到下一条记录的真实数据的地址偏移量。从最小记录到最大记录，未被删除的每一条记录按照主键值从小到大顺序链接成一个<strong>单向链表</strong>，链表第一个节点是最小记录，链表最后一个节点是最大记录。</p>
+<li><p><code>next_record</code>：表示从当前记录的真实数据到下一条记录的真实数据的地址偏移量。从最小记录到最大记录，未被删除的每一条记录按照主键值从小到大顺序链接成一个<strong>单向链表</strong>，链表第一个节点是最小记录，链表最后一个节点是最大记录。</p>
 <p>由下图可知：</p>
 <ul>
 <li>一条记录中的 <code>next_record</code> 值为：<code>当前行所有自定义列数据长度</code> + <code>下一行记录的额外信息长度</code> + <code>下一行所有隐藏列数据长度</code></li>
 <li>最大记录前的记录的 <code>next_record</code> 值为：-（<code>当前行记录的额外信息长度</code> + <code>当前行之前所有数据行的长度</code> + <code>最大记录suprenum长度</code> ）</li>
 <li>最大记录是最后一条记录， <code>next_record</code> 值为0</li>
 </ul>
-<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c10773d8cee~tplv-t2oaga2asx-watermark.image" alt="image_1c9qs1mn2t3j1nt344116nk15uf2p.png-119.7kB" style="zoom:67%;">
-<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c1084c440b4~tplv-t2oaga2asx-watermark.image" alt="image_1cot1r96210ph1jng1td41ouj85c13.png-120.5kB" style="zoom: 67%;">
-</li>
-<li>
-<p><code>delete_mask</code>：标记该记录是否被删除，1为已被删除。这些被删除的记录之所以不立即从磁盘上移除，是因为移除它们之后把其他的记录在磁盘上重新排列需要性能消耗，所以只是打一个删除标记而已，所有被删除掉的记录都会根据 <code>next_record</code> 属性，按照主键从小到大的顺序链接成一个的<code>垃圾链表</code>，在这个链表中的记录占用的空间称为<code>可重用空间</code>，之后如果有新记录插入到表中的话，可能会重用这些空间，把这些被删除的记录占用的存储空间覆盖掉。避免空间的频繁分配和释放。</p>
+<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c10773d8cee~tplv-t2oaga2asx-watermark.image" alt="image_1c9qs1mn2t3j1nt344116nk15uf2p.png-119.7kB" style="zoom:67%;"></p>
+<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c1084c440b4~tplv-t2oaga2asx-watermark.image" alt="image_1cot1r96210ph1jng1td41ouj85c13.png-120.5kB" style="zoom: 67%;"></p></li>
+<li><p><code>delete_mask</code>：标记该记录是否被删除，1为已被删除。这些被删除的记录之所以不立即从磁盘上移除，是因为移除它们之后把其他的记录在磁盘上重新排列需要性能消耗，所以只是打一个删除标记而已，所有被删除掉的记录都会根据 <code>next_record</code> 属性，按照主键从小到大的顺序链接成一个的<code>垃圾链表</code>，在这个链表中的记录占用的空间称为<code>可重用空间</code>，之后如果有新记录插入到表中的话，可能会重用这些空间，把这些被删除的记录占用的存储空间覆盖掉。避免空间的频繁分配和释放。</p>
 <p>将 <code>delete_mask</code> 位设置为1和将被删除的记录加入到垃圾链表中其实是两个阶段，涉及到事务。</p>
-<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c108ee1da43~tplv-t2oaga2asx-watermark.image" alt="image_1cul8slbp1om0p31b3u1be11gco9.png-119.6kB" style="zoom:67%;">
-</li>
-<li>
-<p><code>heap_no</code>：表示当前记录在本<code>页</code>中的相对位置，从图中可以看出来，自己插入的记录在本<code>页</code>中的位置从2开始依次往后递增，自己插入的第一条记录 <code>heap_no</code> 是2，第二条记录 <code>heap_no</code> 是3，以此类推。<code>heap_no</code> 为0和1的记录分别表示两条虚拟记录（自动创建的）：最小记录和最大记录。</p>
+<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c108ee1da43~tplv-t2oaga2asx-watermark.image" alt="image_1cul8slbp1om0p31b3u1be11gco9.png-119.6kB" style="zoom:67%;"></p></li>
+<li><p><code>heap_no</code>：表示当前记录在本<code>页</code>中的相对位置，从图中可以看出来，自己插入的记录在本<code>页</code>中的位置从2开始依次往后递增，自己插入的第一条记录 <code>heap_no</code> 是2，第二条记录 <code>heap_no</code> 是3，以此类推。<code>heap_no</code> 为0和1的记录分别表示两条虚拟记录（自动创建的）：最小记录和最大记录。</p>
 <ul>
 <li>在页面前面的记录 <code>heap_no</code> 相对较小</li>
 <li>在页面后面的记录 <code>heap_no</code> 相对较大</li>
 <li>每申请一条记录的存储空间时，该记录比物理位置在它之前的那条记录的 <code>heap_no</code> 值大 1</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="记录的真实数据"><a class="markdownIt-Anchor" href="#记录的真实数据"></a> 记录的真实数据</h2>
+<h2 id="记录的真实数据">记录的真实数据</h2>
 <p>存储这一行中每一列的真实数据。</p>
-<h3 id="隐藏列"><a class="markdownIt-Anchor" href="#隐藏列"></a> 隐藏列</h3>
+<h3 id="隐藏列">隐藏列</h3>
 <p>除了自己定义的列以外，<code>MySQL</code>会为每个记录默认添加隐藏列，并且存放在自己定义的列前面：</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>列名</th>
 <th>存储的真实列名</th>
 <th>是否必须</th>
@@ -590,21 +590,21 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>row_id</code></td>
 <td><code>DB_ROW_ID</code></td>
 <td>否</td>
 <td><code>6</code>字节</td>
 <td>行ID，唯一标识一条记录</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>transaction_id</code></td>
 <td><code>DB_TRX_ID</code></td>
 <td>是</td>
 <td><code>6</code>字节</td>
 <td>事务ID</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>roll_pointer</code></td>
 <td><code>DB_ROLL_PTR</code></td>
 <td>是</td>
@@ -614,27 +614,23 @@
 </tbody>
 </table>
 <p>其中 <code>row_id</code> 可有可无，在没有自定义主键以及<code>Unique</code>键的情况下才会添加该列。如果用户没有定义主键，则选取一个<code>Unique</code>键作为主键，如果表中连<code>Unique</code>键都没有定义的话，则<code>InnoDB</code>会为表默认添加一个 <code>row_id</code> 列作为主键。</p>
-<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e973b70372~tplv-t2oaga2asx-watermark.image" alt="image_1c9h256f9nke14311adhtu61ie2dn.png-92kB"></p>
-<h2 id="compact行格式"><a class="markdownIt-Anchor" href="#compact行格式"></a> Compact行格式</h2>
-<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e8fafc21aa~tplv-t2oaga2asx-watermark.image" alt="image_1c9g4t114n0j1gkro2r1h8h1d1t16.png-42.4kB" style="zoom: 67%;">
-<h3 id="记录的额外信息-2"><a class="markdownIt-Anchor" href="#记录的额外信息-2"></a> 记录的额外信息</h3>
+<figure>
+<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e973b70372~tplv-t2oaga2asx-watermark.image" alt=""><figcaption>image_1c9h256f9nke14311adhtu61ie2dn.png-92kB</figcaption>
+</figure>
+<h2 id="compact行格式">Compact行格式</h2>
+<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e8fafc21aa~tplv-t2oaga2asx-watermark.image" alt="image_1c9g4t114n0j1gkro2r1h8h1d1t16.png-42.4kB" style="zoom: 67%;"></p>
+<h3 id="记录的额外信息-1">记录的额外信息</h3>
 <ul>
-<li>
-<p><strong>变长字段长度列表</strong>：这一行中变长字段（列）的长度需要在这里记录，字段的长度按照该行中列的数据存放顺序<strong>逆序</strong>存放，单位是字节。不存放使用定长数据类型且字符集为定长的字段长度，该行中值为 <code>NULL</code> 的变长字段长度也不存放。如果表中所有的列都不是变长列的话，就没有这一部分。</p>
+<li><p><strong>变长字段长度列表</strong>：这一行中变长字段（列）的长度需要在这里记录，字段的长度按照该行中列的数据存放顺序<strong>逆序</strong>存放，单位是字节。不存放使用定长数据类型且字符集为定长的字段长度，该行中值为 <code>NULL</code> 的变长字段长度也不存放。如果表中所有的列都不是变长列的话，就没有这一部分。</p>
 <ul>
 <li>变长字段（列）：数据类型为<strong>变长数据类型</strong>的列，例如 <code>VARCHAR(M)</code> 、<code>VARBINARY(M)</code>、各种TEXT类型，各种BL0B类型，<code>M</code> 表示该列存储最多<code>M</code>个字符（注意是字符不是字节）；或者采用了变长字符集（例如 <code>gbk</code>、<code>utf8</code>）、数据类型为 <code>CHAR(M)</code> 的列（存储一个空字符串也会占用 <code>字符集对应的最少字节数 * M</code>，这样设计不容易产生碎片但比较占空间）</li>
 <li>该列的长度占用的字节数：假设该列使用的字符集中表示一个字符最多需要使用的字节数为 <code>W</code>，如果该列允许存储的最大字节数（<code>M×W</code>）超过255字节并且真实存储的字节数（<code>L</code>）超过127字节，则使用2个字节，否则使用1个字节。</li>
-</ul>
-</li>
-<li>
-<p><strong>NULL值列表</strong>：统计该行中允许为 <code>NULL</code> 值的列的值是否为 <code>NULL</code>。每一列对应一个二进制位，二进制位按照该行中列的数据存放顺序逆序存放。该列如果为 <code>NULL</code> 则存1，不为 <code>NULL</code> 则存0。如果表中所有列都不允许存放 <code>NULL</code> 值，就没有这一部分。</p>
+</ul></li>
+<li><p><strong>NULL值列表</strong>：统计该行中允许为 <code>NULL</code> 值的列的值是否为 <code>NULL</code>。每一列对应一个二进制位，二进制位按照该行中列的数据存放顺序逆序存放。该列如果为 <code>NULL</code> 则存1，不为 <code>NULL</code> 则存0。如果表中所有列都不允许存放 <code>NULL</code> 值，就没有这一部分。</p>
 <ul>
 <li>占用字节数：必须用整数个字节的位表示，如果使用的二进制位个数不是整数个字节，则在字节的高位补<code>0</code>，不够则加一个字节，以此类推。</li>
-</ul>
-</li>
-<li>
-<p><strong>记录头信息</strong>：由固定的5个字节组成。</p>
-</li>
+</ul></li>
+<li><p><strong>记录头信息</strong>：由固定的5个字节组成。</p></li>
 </ul>
 <blockquote>
 <p>MySQL根据表结构来判断变长字段长度列表的哪个字节、NULL值列表的哪一位、记录的真实数据部分的哪个字节属于哪一列的。</p>
@@ -642,45 +638,38 @@
 <blockquote>
 <p>变长字段长度列表、NULL值列表中的信息都是逆序存放，这样通过 <code>next_records</code> 向左读取就是记录头信息，向右读取就是真实数据，记录中位置靠前的字段和它们对应的字段长度信息在内存中的距离更近，可能会提高高速缓存的命中率。</p>
 </blockquote>
-<h3 id="记录的真实数据-2"><a class="markdownIt-Anchor" href="#记录的真实数据-2"></a> 记录的真实数据</h3>
+<h3 id="记录的真实数据-1">记录的真实数据</h3>
 <p>对于自己定义的列，只存储该行中非 <code>NULL</code> 列的数据。如果该行中该列为 <code>NULL</code>，只会存在NULL值列表中，在记录的真实数据处就不再冗余存储。</p>
-<h2 id="redundant行格式"><a class="markdownIt-Anchor" href="#redundant行格式"></a> Redundant行格式</h2>
+<h2 id="redundant行格式">Redundant行格式</h2>
 <p>早期，在 <code>MySQL5.0</code>之前使用的一种行格式。</p>
-<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e99a69ba3d~tplv-t2oaga2asx-watermark.image" alt="image_1c9h896lcuqi16081qub1v8c12jkft.png-36.2kB" style="zoom: 67%;">
-<h3 id="记录的额外信息-3"><a class="markdownIt-Anchor" href="#记录的额外信息-3"></a> 记录的额外信息</h3>
+<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e99a69ba3d~tplv-t2oaga2asx-watermark.image" alt="image_1c9h896lcuqi16081qub1v8c12jkft.png-36.2kB" style="zoom: 67%;"></p>
+<h3 id="记录的额外信息-2">记录的额外信息</h3>
 <ul>
-<li>
-<p><strong>字段长度偏移列表</strong>：存放一行中<strong>所有列</strong>的长度信息，按照该行中列的数据存放顺序<strong>逆序</strong>存放每个列的偏移量，即每个列中的值占用的空间在「记录的真实数据」处结束的位置。</p>
+<li><p><strong>字段长度偏移列表</strong>：存放一行中<strong>所有列</strong>的长度信息，按照该行中列的数据存放顺序<strong>逆序</strong>存放每个列的偏移量，即每个列中的值占用的空间在「记录的真实数据」处结束的位置。</p>
 <ul>
 <li>偏移量的含义：例如列1的偏移量为 <code>0x06</code> ，表示列1的数据长度6字节。列2的偏移量 <code>0x0c</code>，表示列2的数据长度为 <code>0x0c - 0x06 = 0x06</code>，即6个字节。</li>
 <li>每个列的偏移量都占1字节或者都占2字节，取决于「记录的真实数据」部分所有数据的长度。
 <ul>
 <li>当记录的真实数据占用的字节数不大于127（十六进制<code>0x7F</code>）时，每个列对应的偏移量占用1个字节，否则占用2字节。</li>
 <li>「记录头信息」<code>1byte_offs_flag</code> 属性标识了偏移量占1字节还是2字节（1为1字节，0为2字节）</li>
-</ul>
-</li>
+</ul></li>
 <li>该部分中每个字节的最高位代表该列的值是否为 <code>NULL</code>，如果该位为1，那么该列的值为 <code>NULL</code>，否则不为 <code>NULL</code>。如果该列是定长数据类型，需要在记录的真实数据中存储 <code>0x00</code> 字节占位（定长数据类型的最大长度是多少个字节，就用多少个字节）；如果该列是变长数据类型，不占用记录的真实数据中任何空间，对应的长度为0（即偏移量和上一列的偏移量相同）。
 <ul>
 <li>注意，在<code>Redundant</code>行格式中，数据类型为 <code>CHAR(M)</code> 的列总是在记录的真实数据中占用对应的最大字节数（<code>M×W</code>），这样设计虽然占空间，但不会产生碎片。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>记录头信息</strong>：由固定的6个字节组成。</p>
+</ul></li>
+</ul></li>
+<li><p><strong>记录头信息</strong>：由固定的6个字节组成。</p>
 <ul>
 <li>与<code>Compact</code>行格式的记录头信息有两处不同：
 <ul>
 <li><code>Redundant</code>行格式多了<code>n_field</code>和<code>1byte_offs_flag</code>这两个属性。</li>
 <li><code>Redundant</code>行格式没有<code>record_type</code>这个属性。</li>
+</ul></li>
+</ul></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="记录的真实数据-3"><a class="markdownIt-Anchor" href="#记录的真实数据-3"></a> 记录的真实数据</h3>
+<h3 id="记录的真实数据-2">记录的真实数据</h3>
 <p>和 <code>Compact</code> 行格式类似，不同的是所有自定义的列都会存储，包括该行中 <code>NULL</code> 值且使用定长数据类型的列，都会按照该数据类型最大长度来使用 <code>0x00</code> 占位存储。</p>
-<h2 id="行溢出"><a class="markdownIt-Anchor" href="#行溢出"></a> 行溢出</h2>
+<h2 id="行溢出">行溢出</h2>
 <ul>
 <li>一行中所有的定长数据类型和 <code>VARCHAR(M)</code> 类型的列（不包括隐藏列和记录头信息，但是包括列的长度、NULL值标识占用的空间）最多总共可以存<code>65535</code>个字节（字符数量因不同字符集而异），除了 <code>BLOB</code>或者<code>TEXT</code>类型的列没有上限。</li>
 <li>MySQL中的一个页一般占16kb（16384字节），并规定一个数据页<strong>至少要存放两条记录</strong>，也就是说一行最多存到一页一半的大小就会发生溢出</li>
@@ -693,29 +682,27 @@
 <blockquote>
 <p>溢出页的数据类型为 <code>FIL_PAGE_TYPE_BLOB</code>，和数据页（索引页、<code>FIL_PAGE_INDEX</code>）类型不一样。</p>
 </blockquote>
-<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e9aab47ea5~tplv-t2oaga2asx-watermark.image" alt="image_1d48e3imu1vcp5rsh8cg0b1o169.png-149kB"></p>
-<h2 id="dynamic和compressed行格式"><a class="markdownIt-Anchor" href="#dynamic和compressed行格式"></a> Dynamic和Compressed行格式</h2>
+<figure>
+<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e9aab47ea5~tplv-t2oaga2asx-watermark.image" alt=""><figcaption>image_1d48e3imu1vcp5rsh8cg0b1o169.png-149kB</figcaption>
+</figure>
+<h2 id="dynamic和compressed行格式">Dynamic和Compressed行格式</h2>
 <p>类似于<code>Compact</code>行格式，除了对行溢出数据处理有点不同：</p>
 <ul>
-<li>
-<p><code>Compact</code> 和 <code>Redundant</code> 行格式如果某一列发生了行溢出，该列在真实数据处只存储前<code>768</code>个字节，其他字节存储到溢出页中，并在这<code>768</code>个字节后记录20字节的对应溢出页的<strong>地址</strong>和溢出页的数据的占用的<strong>长度</strong>（字节）。</p>
-<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e9a5d5637a~tplv-t2oaga2asx-watermark.image" alt="image_1conbskr7apj19ns1d194vs1buo1t.png-35.8kB" style="zoom:80%;">
-</li>
-<li>
-<p><code>Dynamic</code>和<code>Compressed</code>行格式中如果某一列发生了行溢出，是把该列所有的字节都存储到溢出页中，只在记录的真实数据处存储这20个字节。</p>
-<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e9b2c2b71e~tplv-t2oaga2asx-watermark.image" alt="image_1conbtnmr1sg1hao1nf41pi1eb72a.png-29.9kB" style="zoom:80%;">
+<li><p><code>Compact</code> 和 <code>Redundant</code> 行格式如果某一列发生了行溢出，该列在真实数据处只存储前<code>768</code>个字节，其他字节存储到溢出页中，并在这<code>768</code>个字节后记录20字节的对应溢出页的<strong>地址</strong>和溢出页的数据的占用的<strong>长度</strong>（字节）。</p>
+<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e9a5d5637a~tplv-t2oaga2asx-watermark.image" alt="image_1conbskr7apj19ns1d194vs1buo1t.png-35.8kB" style="zoom:80%;"></p></li>
+<li><p><code>Dynamic</code>和<code>Compressed</code>行格式中如果某一列发生了行溢出，是把该列所有的字节都存储到溢出页中，只在记录的真实数据处存储这20个字节。</p>
+<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/12/169710e9b2c2b71e~tplv-t2oaga2asx-watermark.image" alt="image_1conbtnmr1sg1hao1nf41pi1eb72a.png-29.9kB" style="zoom:80%;"></p>
 <ul>
 <li>相对于 <code>Compact</code> 的优势是如果发生了行溢出，能至少腾出700多的字节，这样一行数据可以存储更多列或更多其他列的数据。</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 <p><code>Compressed</code>行格式和<code>Dynamic</code>不同的一点是，<code>Compressed</code>行格式会采用压缩算法对页面（包括数据页、溢出页）进行压缩，以节省空间。</p>
-<h1 id="innodb数据页结构"><a class="markdownIt-Anchor" href="#innodb数据页结构"></a> InnoDB数据页结构</h1>
+<h1 id="innodb数据页结构">InnoDB数据页结构</h1>
 <p>一个<code>InnoDB</code>数据页的存储空间总共分为7个部分。</p>
-<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/12/17/16f13ee1e2dfac7c~tplv-t2oaga2asx-watermark.image" alt="img" style="zoom: 50%;">
+<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/12/17/16f13ee1e2dfac7c~tplv-t2oaga2asx-watermark.image" alt="img" style="zoom: 50%;"></p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>名称</th>
 <th>中文名</th>
 <th>占用空间大小</th>
@@ -723,43 +710,43 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>File Header</code></td>
 <td>文件头部</td>
 <td><code>38</code>字节</td>
 <td>页的一些通用信息</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>Page Header</code></td>
 <td>页面头部</td>
 <td><code>56</code>字节</td>
 <td>数据页专有的一些信息</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>Infimum + Supremum</code></td>
 <td>最小记录和最大记录</td>
 <td><code>26</code>字节</td>
 <td>两个虚拟的行记录</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>User Records</code></td>
 <td>用户记录</td>
 <td>不确定</td>
 <td>实际存储的行记录内容</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>Free Space</code></td>
 <td>空闲空间</td>
 <td>不确定</td>
 <td>页中尚未使用的空间</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>Page Directory</code></td>
 <td>页面目录</td>
 <td>不确定</td>
 <td>页中的某些记录的相对位置</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>File Trailer</code></td>
 <td>文件尾部</td>
 <td><code>8</code>字节</td>
@@ -767,104 +754,111 @@
 </tr>
 </tbody>
 </table>
-<h2 id="user-records-free-space"><a class="markdownIt-Anchor" href="#user-records-free-space"></a> User Records、Free Space</h2>
+<h2 id="user-recordsfree-space">User Records、Free Space</h2>
 <p>自己插入的记录会按照指定的<code>行格式</code>存储到<code>User Records</code>部分。每插入一条记录，都会从<code>Free Space</code>部分申请一个记录大小的空间划分到<code>User Records</code>部分，当<code>Free Space</code>部分的空间全部被<code>User Records</code>部分替代掉之后，也就意味着这个页使用完了，如果还有新的记录插入的话，就需要去申请新的页了。</p>
 <p>各条记录在<code>User Records</code>中存储的时候并没有空隙。</p>
-<h2 id="infinum-suprenum"><a class="markdownIt-Anchor" href="#infinum-suprenum"></a> Infinum + Suprenum</h2>
+<h2 id="infinum-suprenum">Infinum + Suprenum</h2>
 <p>存放最小记录和最大记录，对应的 <code>heap_no</code> 分别是0和1。</p>
 <p>这两条记录InnoDB自动生成的，每个都只由5字节大小的<code>记录头信息</code>和8字节大小的一个固定的部分组成。</p>
-<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c100ff0ccc2~tplv-t2oaga2asx-watermark.image" alt="image_1c9ra45eam7t1mil9o1h3ucqdhv.png-50.4kB" style="zoom:67%;">
-<h2 id="page-directory"><a class="markdownIt-Anchor" href="#page-directory"></a> Page Directory</h2>
+<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c100ff0ccc2~tplv-t2oaga2asx-watermark.image" alt="image_1c9ra45eam7t1mil9o1h3ucqdhv.png-50.4kB" style="zoom:67%;"></p>
+<h2 id="page-directory">Page Directory</h2>
 <p>将数据页里面的数据分为几个组，每个组<strong>最后一条记录</strong>的头信息的 <code>n_owned</code> 记录该组有多少条记录，将每个组最后一条记录的<strong>相对页面起始字节的地址偏移量</strong>按从小到大的顺序存储在Page Directory（页目录）这一部分，称这个地址偏移量为槽。</p>
-<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c10e3449897~tplv-t2oaga2asx-watermark.image" alt="image_1d6g64af2sgj1816ktl1q22dehp.png-189.1kB"></p>
-<p>最小记录所在的分组只能有 <em><strong>1</strong></em> 条记录，最大记录所在的分组拥有的记录条数只能在 <em><strong>1~8</strong></em> 条之间，剩下的分组中记录的条数范围只能在是 <em><strong>4~8</strong></em> 条之间。分组按照下边的步骤进行：</p>
+<figure>
+<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c10e3449897~tplv-t2oaga2asx-watermark.image" alt=""><figcaption>image_1d6g64af2sgj1816ktl1q22dehp.png-189.1kB</figcaption>
+</figure>
+<p>最小记录所在的分组只能有 <strong><em>1</em></strong> 条记录，最大记录所在的分组拥有的记录条数只能在 <strong><em>1~8</em></strong> 条之间，剩下的分组中记录的条数范围只能在是 <strong><em>4~8</em></strong> 条之间。分组按照下边的步骤进行：</p>
 <ul>
 <li>初始情况下一个数据页里只有最小记录和最大记录两条记录，它们分属于两个分组。</li>
 <li>之后每插入一条记录，都会从<code>页目录</code>中找到主键值比本记录的主键值大并且差值最小的槽，然后把该槽对应的记录的<code>n_owned</code>值加1，表示本组内又添加了一条记录，直到该组中的记录数等于8个。</li>
 <li>在一个组中的记录数等于8个后再插入一条记录时，会将组中的记录拆分成两个组，一个组中4条记录，另一个5条记录。这个过程会在<code>页目录</code>中新增一个<code>槽</code>来记录这个新增分组中最大的那条记录的偏移量。</li>
 </ul>
 <p>在一个数据页中查找指定主键值的记录的过程分为两步（假设槽的编号从0开始，槽的偏移量越大，编号也就越大）：</p>
-<ol>
+<ol type="1">
 <li>通过二分法确定该记录所在的槽的编号 <code>i</code> ，并找到该槽所在分组中主键值最小的那条记录（需要通过上一个槽 <code>i - 1</code> 的最后一条记录的<code>next_record</code>属性找到下一条记录，即当前槽的第一条记录）。</li>
 <li>通过记录的<code>next_record</code>属性遍历该槽 <code>i</code> 所在的组中的各个记录。</li>
 </ol>
-<h2 id="page-header"><a class="markdownIt-Anchor" href="#page-header"></a> Page Header</h2>
+<h2 id="page-header">Page Header</h2>
 <p>Page Header记录<strong>数据页</strong>中存储的记录的状态信息，比如本页中已经存储了多少条记录，第一条记录的地址是什么，页目录中存储了多少个槽等等。</p>
 <table>
+<colgroup>
+<col style="width: 20%">
+<col style="width: 13%">
+<col style="width: 65%">
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>名称</th>
 <th>占用空间大小</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>PAGE_N_DIR_SLOTS</code></td>
 <td><code>2</code>字节</td>
 <td>在页目录中的槽数量</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>PAGE_HEAP_TOP</code></td>
 <td><code>2</code>字节</td>
 <td>还未使用的空间最小地址，也就是说从该地址之后就是<code>Free Space</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>PAGE_N_HEAP</code></td>
 <td><code>2</code>字节</td>
 <td>本页中的记录的数量（包括最小和最大记录以及标记为删除的记录）</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>PAGE_FREE</code></td>
 <td><code>2</code>字节</td>
 <td>第一个已经标记为删除的记录地址（各个已删除的记录通过<code>next_record</code>也会组成一个单链表，这个单链表中的记录可以被重新利用）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>PAGE_GARBAGE</code></td>
 <td><code>2</code>字节</td>
 <td>已删除记录占用的字节数</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>PAGE_LAST_INSERT</code></td>
 <td><code>2</code>字节</td>
 <td>最后插入记录的位置</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>PAGE_DIRECTION</code></td>
 <td><code>2</code>字节</td>
 <td>记录插入的方向</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>PAGE_N_DIRECTION</code></td>
 <td><code>2</code>字节</td>
 <td>一个方向连续插入的记录数量</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>PAGE_N_RECS</code></td>
 <td><code>2</code>字节</td>
 <td>该页中记录的数量（不包括最小和最大记录以及被标记为删除的记录）</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>PAGE_MAX_TRX_ID</code></td>
 <td><code>8</code>字节</td>
 <td>修改当前页的最大事务ID，该值仅在二级索引中定义</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>PAGE_LEVEL</code></td>
 <td><code>2</code>字节</td>
 <td>当前页在B+树中所处的层级</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>PAGE_INDEX_ID</code></td>
 <td><code>8</code>字节</td>
 <td>索引ID，表示当前页属于哪个索引</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>PAGE_BTR_SEG_LEAF</code></td>
 <td><code>10</code>字节</td>
 <td>B+树叶子段的头部信息，仅在B+树的Root页定义</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>PAGE_BTR_SEG_TOP</code></td>
 <td><code>10</code>字节</td>
 <td>B+树非叶子段的头部信息，仅在B+树的Root页定义</td>
@@ -875,53 +869,53 @@
 <li><code>PAGE_DIRECTION</code>：假如新插入的一条记录的主键值比上一条记录的主键值大，我们说这条记录的插入方向是右边，反之则是左边。用来表示最后一条记录插入方向的状态就是<code>PAGE_DIRECTION</code>。</li>
 <li><code>PAGE_N_DIRECTION</code>：假设连续几次插入新记录的方向都是一致的，<code>InnoDB</code>会把沿着同一个方向插入记录的条数记下来，这个条数就用<code>PAGE_N_DIRECTION</code>这个状态表示。当然，如果最后一条记录的插入方向改变了的话，这个状态的值会被清零重新统计。</li>
 </ul>
-<h2 id="file-header"><a class="markdownIt-Anchor" href="#file-header"></a> File Header</h2>
+<h2 id="file-header">File Header</h2>
 <p>File Header记录页本身的信息，以及该页和其他页的关系信息，例如页的编号、上一页、下一页等。对所有类型的页通用。</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>名称</th>
 <th>占用空间大小</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_SPACE_OR_CHKSUM</code></td>
 <td><code>4</code>字节</td>
 <td>页的校验和（checksum值）</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>FIL_PAGE_OFFSET</code></td>
 <td><code>4</code>字节</td>
 <td>页号，每一个页都有一个唯一的页号，<code>InnoDB</code>通过页号来唯一定位一个页。</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_PREV</code></td>
 <td><code>4</code>字节</td>
 <td>上一个页的页号</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>FIL_PAGE_NEXT</code></td>
 <td><code>4</code>字节</td>
 <td>下一个页的页号</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_LSN</code></td>
 <td><code>8</code>字节</td>
 <td>页面被最后修改时对应的日志序列位置（英文名是：Log Sequence Number）</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>FIL_PAGE_TYPE</code></td>
 <td><code>2</code>字节</td>
 <td>该页的类型</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_FILE_FLUSH_LSN</code></td>
 <td><code>8</code>字节</td>
 <td>仅在系统表空间的一个页中定义，代表文件至少被刷新到了对应的LSN值</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>FIL_PAGE_ARCH_LOG_NO_OR_SPACE_ID</code></td>
 <td><code>4</code>字节</td>
 <td>页属于哪个表空间</td>
@@ -929,97 +923,89 @@
 </tbody>
 </table>
 <ul>
-<li>
-<p><code>FIL_PAGE_SPACE_OR_CHKSUM</code>：当前页面的校验和（checksum）。这样在比较两个很长的字节串之前先比较这两个长字节串的校验和，如果校验和都不一样两个长字节串肯定是不同的（校验和相同这两个串页未必相同），省去了直接比较两个比较长的字节串的时间损耗。</p>
-</li>
-<li>
-<p><code>FIL_PAGE_TYPE</code>：当前<code>页</code>的类型</p>
+<li><p><code>FIL_PAGE_SPACE_OR_CHKSUM</code>：当前页面的校验和（checksum）。这样在比较两个很长的字节串之前先比较这两个长字节串的校验和，如果校验和都不一样两个长字节串肯定是不同的（校验和相同这两个串页未必相同），省去了直接比较两个比较长的字节串的时间损耗。</p></li>
+<li><p><code>FIL_PAGE_TYPE</code>：当前<code>页</code>的类型</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>类型名称</th>
 <th>十六进制</th>
 <th>描述</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_TYPE_ALLOCATED</code></td>
 <td>0x0000</td>
 <td>最新分配，还没使用</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>FIL_PAGE_UNDO_LOG</code></td>
 <td>0x0002</td>
 <td>Undo日志页</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_INODE</code></td>
 <td>0x0003</td>
 <td>段信息节点</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>FIL_PAGE_IBUF_FREE_LIST</code></td>
 <td>0x0004</td>
 <td>Insert Buffer空闲列表</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_IBUF_BITMAP</code></td>
 <td>0x0005</td>
 <td>Insert Buffer位图</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>FIL_PAGE_TYPE_SYS</code></td>
 <td>0x0006</td>
 <td>系统页</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_TYPE_TRX_SYS</code></td>
 <td>0x0007</td>
 <td>事务系统数据</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>FIL_PAGE_TYPE_FSP_HDR</code></td>
 <td>0x0008</td>
 <td>表空间头部信息</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_TYPE_XDES</code></td>
 <td>0x0009</td>
 <td>扩展描述页</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>FIL_PAGE_TYPE_BLOB</code></td>
 <td>0x000A</td>
 <td>溢出页</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>FIL_PAGE_INDEX</code></td>
 <td>0x45BF</td>
 <td>索引页，也就是我们所说的<code>数据页</code></td>
 </tr>
 </tbody>
-</table>
-</li>
-<li>
-<p><code>FIL_PAGE_PREV</code> 和 <code>FIL_PAGE_NEXT</code>：分别代表本页的上一个和下一个页的页号，所有的页通过这两个属性连接成一个<strong>双向链表</strong>。<strong>并不是所有类型的页都有这两个属性</strong>，数据页（也就是类型为<code>FIL_PAGE_INDEX</code>的页）是有这两个属性的。</p>
-<p><img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c10eb9d61ce~tplv-t2oaga2asx-watermark.image" alt="image_1ca00fhg418pl1f1a1iav1uo3aou9.png-90.9kB"></p>
-</li>
+</table></li>
+<li><p><code>FIL_PAGE_PREV</code> 和 <code>FIL_PAGE_NEXT</code>：分别代表本页的上一个和下一个页的页号，所有的页通过这两个属性连接成一个<strong>双向链表</strong>。<strong>并不是所有类型的页都有这两个属性</strong>，数据页（也就是类型为<code>FIL_PAGE_INDEX</code>的页）是有这两个属性的。</p>
+<figure>
+<img data-src="https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/5/8/16a95c10eb9d61ce~tplv-t2oaga2asx-watermark.image" alt=""><figcaption>image_1ca00fhg418pl1f1a1iav1uo3aou9.png-90.9kB</figcaption>
+</figure></li>
 </ul>
-<h2 id="file-trailer"><a class="markdownIt-Anchor" href="#file-trailer"></a> File Trailer</h2>
+<h2 id="file-trailer">File Trailer</h2>
 <p>File Trailer用于检验一个页是否完整。针对各种类型的页都通用。为保证从内存中同步到磁盘的页的完整性，在页的首部和尾部都会存储页中数据的校验和和页面最后修改时对应的<code>LSN</code>值，如果首部和尾部的校验和和<code>LSN</code>值校验不成功的话，就说明同步过程出现了问题。</p>
 <p>需要检验一个页是否完整的场景：<code>InnoDB</code>存储引擎会把数据存储到磁盘上，但是磁盘速度太慢，需要以<code>页</code>为单位把数据加载到内存中处理，如果该页中的数据在内存中被修改了，那么在修改后的某个时间需要把数据同步到磁盘中。如果在同步了一半的时候中断电了，需要判断是同步完成还是失败。</p>
 <ul>
-<li>
-<p>前4个字节代表页的校验和：和<code>File Header</code>中的校验和相对应。每当一个页面在内存中修改了，在同步之前就要把它的校验和算出来，因为<code>File Header</code>在页面的前边，所以校验和会被首先同步到磁盘，当完全写完时，校验和也会被写到页的尾部，如果完全同步成功，则页的首部和尾部的校验和应该是一致的。如果写了一半儿断电了，那么磁盘中的这一页的 <code>File Header</code>中的校验和是已经修改过的页的校验和，而在<code>File Trailer</code>中的校验和是原先的页的校验和，二者不同则意味着同步中间出了错。</p>
+<li><p>前4个字节代表页的校验和：和<code>File Header</code>中的校验和相对应。每当一个页面在内存中修改了，在同步之前就要把它的校验和算出来，因为<code>File Header</code>在页面的前边，所以校验和会被首先同步到磁盘，当完全写完时，校验和也会被写到页的尾部，如果完全同步成功，则页的首部和尾部的校验和应该是一致的。如果写了一半儿断电了，那么磁盘中的这一页的 <code>File Header</code>中的校验和是已经修改过的页的校验和，而在<code>File Trailer</code>中的校验和是原先的页的校验和，二者不同则意味着同步中间出了错。</p>
 <blockquote>
 <p>面试题：innoDB数据从内存同步回磁盘时如何在断电的情况下保持同步。</p>
 <p>发现磁盘中该页的 <code>File Header</code> 和 <code>File Trailer</code> 中的校验和不同步，需要根据redo log进行恢复。</p>
-</blockquote>
-</li>
-<li>
-<p>后4个字节代表页面被最后修改时对应的日志序列位置（LSN）：也是为了校验页的完整性的。</p>
-</li>
+</blockquote></li>
+<li><p>后4个字节代表页面被最后修改时对应的日志序列位置（LSN）：也是为了校验页的完整性的。</p></li>
 </ul>
 
     </div>
@@ -1101,7 +1087,7 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">159k</span>
+    <span title="站点总字数">158k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">

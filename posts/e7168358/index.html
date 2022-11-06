@@ -260,7 +260,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text"> 在新电脑上安装必要软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E5%BF%85%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text"> 备份必要的文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="nav-number">3.</span> <span class="nav-text"> 一些踩坑记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#references"><span class="nav-number">4.</span> <span class="nav-text"> References</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8A%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E8%BD%AF%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">在新电脑上安装必要软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E5%BF%85%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">备份必要的文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="nav-number">3.</span> <span class="nav-text">一些踩坑记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#references"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -454,7 +454,7 @@
         <p>我们原先在自己的旧电脑上建立了自己的博客站点，但是换了新电脑怎么办呢？总不能重新建立一个新站点吧，这样多麻烦啊……</p>
 <p>这个问题其实一开始搭建博客的时候就想到了，但是嫌麻烦就没有学习这个问题该如何解决。直到现在真换了电脑才开始付诸实施，结果发现坑还是挺多的……</p>
 <a id="more"></a>
-<h2 id="在新电脑上安装必要软件"><a class="markdownIt-Anchor" href="#在新电脑上安装必要软件"></a> 在新电脑上安装必要软件</h2>
+<h2 id="在新电脑上安装必要软件">在新电脑上安装必要软件</h2>
 <ul>
 <li>git</li>
 <li>Node.js</li>
@@ -462,7 +462,7 @@
 </ul>
 <p>可以参考网上的教程安装git和Node.js。在安装了Node.js的情况下，安装Hexo可以通过如下命令：</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="备份必要的文件"><a class="markdownIt-Anchor" href="#备份必要的文件"></a> 备份必要的文件</h2>
+<h2 id="备份必要的文件">备份必要的文件</h2>
 <p>假设旧电脑的博客目录为<code>blog/hexo/</code>。那么最简单的方式是直接将以下文件拷贝到新电脑的对应目录中（最少应拷贝以下文件）：</p>
 <figure class="highlight gradle"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">_config.yml</span><br><span class="line"><span class="keyword">package</span>.json</span><br><span class="line">scaffolds/</span><br><span class="line"><span class="keyword">source</span>/</span><br><span class="line">themes/</span><br></pre></td></tr></tbody></table></figure>
 <p>如果会用git的话可以将旧电脑的<code>blog/hexo/</code>目录作为本地仓库，并将本地仓库的内容<code>push</code>到自己的远程私有仓库中，这样在新电脑中就可以通过以下命令</p>
@@ -470,20 +470,20 @@
 <p>快速将博客站点的文件拷贝到新电脑上。</p>
 <p>需要注意如果旧电脑的<code>blog/hexo</code>目录没有<code>.gitignore</code>文件的话需要手动添加一下，内容如下：</p>
 <figure class="highlight x86asm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">.DS_Store</span></span><br><span class="line">Thumbs<span class="number">.</span><span class="built_in">db</span></span><br><span class="line"><span class="built_in">db</span><span class="number">.</span>json</span><br><span class="line">*.log</span><br><span class="line">node_modules/</span><br><span class="line"><span class="meta">public</span>/</span><br><span class="line"><span class="meta">.deploy</span>*/</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="一些踩坑记录"><a class="markdownIt-Anchor" href="#一些踩坑记录"></a> 一些踩坑记录</h2>
+<h2 id="一些踩坑记录">一些踩坑记录</h2>
 <p>不需要拷贝<code>node_modules/</code>目录以及<code>package-lock.json</code>的原因是可以通过</p>
 <figure class="highlight bash"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo --save</span><br></pre></td></tr></tbody></table></figure>
 <p>来下载<code>package.json</code>中指定的依赖包到新创建的<code>node_modules/</code>目录中，并自动创建<code>package-lock.json</code>。</p>
 <p>注意，如果原先选择的markdown渲染器是<code>hexo-renderer-pandoc</code>，需要先安装Pandoc（或者安装会提供Pandoc的软件，例如Anaconda），安装Pandoc可以参考<a target="_blank" rel="noopener" href="https://pandoc.org/installing.html">该链接</a>提供的方法。否则会出现如下图所示的错误：</p>
-<img data-src="/posts/e7168358/Snipaste_2020-07-06_23-21-28.png" style="zoom:50%;">
+<p><img data-src="/posts/e7168358/Snipaste_2020-07-06_23-21-28.png" style="zoom:50%;"></p>
 <p>另外，在使用命令<code>hexo g</code>生成静态博客文件之后，使用命令<code>hexo s</code>在本地查看博客页面的效果，显示的页面居然是空白的，然后看到终端中的如下提示：</p>
-<img data-src="/posts/e7168358/Snipaste_2020-07-07_03-26-00.png" style="zoom:50%;">
+<p><img data-src="/posts/e7168358/Snipaste_2020-07-07_03-26-00.png" style="zoom:50%;"></p>
 <p>由于我最初是将博客站点文件备份到GitHub私有仓库中的，然后通过<code>git clone</code>将这个远程库给克隆下来，从而下载了博客站点文件。由于我最初在下载自定义主题的时候也是使用<code>git clone</code>将主题文件下载到<code>blog/hexo/themes/</code>中的（实际上是克隆了远程库），因此<code>blog/hexo/</code>就嵌套了别的仓库，这就涉及到了git的子模块（<code>submodule</code>），而之前我也并没有将旧电脑中的这些自定义主题文件（<code>blog/hexo/themes/*/</code>）加入到子模块中，导致这些主题文件并没有<code>push</code>到自己的私有仓库中，<code>git clone</code>下来的目录<code>blog/hexo/themes/*/</code>是空白的，导致显示的页面也是空白的。因此我就只能重新从旧电脑中拷贝一份主题文件了，最终问题解决（当然在下次<code>push</code>整个博客站点之前也可以先删掉目录<code>blog/hexo/themes/*/</code>下的<code>.git/</code>文件夹，让子仓库不再被git管理）。所以说如果git用得不熟练的话还是拷贝文件的老办法最靠谱。</p>
 <p>所以说以后还是要深入学习git的使用……</p>
 <p>好不容易可以查看网页效果了，想部署一下网站，又出现了下面的问题（绝望.jpg）：</p>
-<img data-src="/posts/e7168358/Snipaste_2020-07-08_00-22-03.png" style="zoom:50%;">
+<p><img data-src="/posts/e7168358/Snipaste_2020-07-08_00-22-03.png" style="zoom:50%;"></p>
 <p>差点都绝望到想重新搭建网站了，结果一查才发现Hexo低版本和Node.js v14+的版本不兼容。我的Hexo版本为v3.9.0，而我的Node.js版本为v14.5.0。不知道切换Hexo版本为最新版本又会有什么坑，因此我选择了直接覆盖安装Node.js的v12.18.2版本，问题成功解决。所幸这个问题有人通过Google解决了，以后我也要学着多用Google……</p>
-<h2 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h2>
+<h2 id="references">References</h2>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/lvonve/article/details/79587321">换了电脑如何使用hexo继续写博客</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/wxl1555/article/details/79293159">hexo系列问题之我们换了电脑怎么办</a></li>
@@ -580,7 +580,7 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">159k</span>
+    <span title="站点总字数">158k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
